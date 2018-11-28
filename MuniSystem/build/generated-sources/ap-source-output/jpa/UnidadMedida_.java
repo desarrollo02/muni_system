@@ -1,7 +1,6 @@
 package jpa;
 
 import javax.annotation.Generated;
-import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -9,7 +8,6 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(UnidadMedida.class)
 public abstract class UnidadMedida_ {
 
-	public static volatile ListAttribute<UnidadMedida, ImpuestoDetalle> impuestoDetalleList;
 	public static volatile SingularAttribute<UnidadMedida, Integer> idUnidadMedida;
 	public static volatile SingularAttribute<UnidadMedida, String> nombre;
 

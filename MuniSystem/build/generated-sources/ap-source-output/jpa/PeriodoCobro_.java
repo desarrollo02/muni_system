@@ -10,8 +10,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class PeriodoCobro_ {
 
 	public static volatile SingularAttribute<PeriodoCobro, String> descripcion;
+	public static volatile ListAttribute<PeriodoCobro, Tributo> tributoList;
+	public static volatile SingularAttribute<PeriodoCobro, Integer> valor;
 	public static volatile SingularAttribute<PeriodoCobro, Integer> idPeriodoCobro;
-	public static volatile ListAttribute<PeriodoCobro, Impuesto> impuestoList;
 
 }
 

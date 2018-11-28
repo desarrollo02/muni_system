@@ -16,6 +16,7 @@ public abstract class Contribuyente_ {
 	public static volatile SingularAttribute<Contribuyente, Integer> nroCasa;
 	public static volatile SingularAttribute<Contribuyente, String> cedula;
 	public static volatile SingularAttribute<Contribuyente, String> direccion;
+	public static volatile ListAttribute<Contribuyente, ComprobanteCabecera> comprobanteCabeceraList;
 	public static volatile SingularAttribute<Contribuyente, Integer> idContribuyente;
 	public static volatile SingularAttribute<Contribuyente, Boolean> personaJuridica;
 	public static volatile SingularAttribute<Contribuyente, String> nombres;

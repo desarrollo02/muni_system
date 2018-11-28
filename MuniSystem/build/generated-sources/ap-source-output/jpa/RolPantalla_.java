@@ -9,8 +9,12 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class RolPantalla_ {
 
 	public static volatile SingularAttribute<RolPantalla, Integer> idRolPantalla;
-	public static volatile SingularAttribute<RolPantalla, Integer> idRol;
-	public static volatile SingularAttribute<RolPantalla, Integer> idPantalla;
+	public static volatile SingularAttribute<RolPantalla, Rol> idRol;
+	public static volatile SingularAttribute<RolPantalla, Boolean> eliminar;
+	public static volatile SingularAttribute<RolPantalla, Boolean> alta;
+	public static volatile SingularAttribute<RolPantalla, Boolean> editar;
+	public static volatile SingularAttribute<RolPantalla, Pantalla> idPantalla;
+	public static volatile SingularAttribute<RolPantalla, Boolean> consultar;
 
 }
 
