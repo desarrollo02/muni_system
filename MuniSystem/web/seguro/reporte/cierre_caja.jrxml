@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cierre_caja" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3dbe0ca2-ddab-487d-a89a-a726106375b7">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="FECHA_ACTUAL" class="java.util.Date"/>
+	<parameter name="NOMBRE_COMPLETO" class="java.lang.String"/>
+	<parameter name="USUARIO" class="java.lang.String"/>
+	<parameter name="TOTAL_EFECTIVO" class="java.lang.Double"/>
+	<parameter name="TOTAL_CHEQUE" class="java.lang.Double"/>
+	<parameter name="TOTAL_TARJETA_DEBITO" class="java.lang.Double"/>
+	<parameter name="TOTAL_TARJETA_CREDITO" class="java.lang.Double"/>
+	<queryString>
+		<![CDATA[select 1]]>
+	</queryString>
+	<field name="?column?" class="java.lang.Integer"/>
+	<variable name="TOTAL" class="java.lang.Double">
+		<variableExpression><![CDATA[$P{TOTAL_EFECTIVO} + $P{TOTAL_CHEQUE} + $P{TOTAL_TARJETA_DEBITO} + $P{TOTAL_TARJETA_CREDITO}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<rectangle>
+				<reportElement x="20" y="11" width="519" height="53" uuid="bb1e5290-705b-4efa-a8eb-89637c62c418"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="126" y="11" width="321" height="53" uuid="2c84cb96-20bf-4772-8397-240b4d5faea9"/>
+			</rectangle>
+			<image>
+				<reportElement x="27" y="12" width="234" height="52" uuid="2d4690c6-1a76-4672-873f-77de260c88bf"/>
+				<imageExpression><![CDATA["C:\\MuniSystem\\reportes\\logo_muni.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement positionType="Float" x="129" y="26" width="316" height="27" uuid="194c0e7b-5666-46d2-ba02-f9250e5cdaf5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MUNICIPALIDAD DE ISLA PUCU-CORDILLERA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="449" y="33" width="38" height="13" uuid="7b4835c2-7c71-4f53-a11c-37d3046d3cb4"/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="486" y="33" width="54" height="13" uuid="0e9190f9-5e58-4370-a7a5-f1ccb5450953"/>
+				<textFieldExpression><![CDATA[$P{FECHA_ACTUAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="219" y="3" width="114" height="20" uuid="54d942bd-b203-45ee-b91b-de1b4a892cf5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CIERRE DE CAJA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="143" y="37" width="190" height="20" uuid="100b8bd0-7bbf-4945-8d9b-944767da5e2b"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NOMBRE_COMPLETO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="97" y="37" width="47" height="20" uuid="592f0761-b301-4567-90b7-eab929ef82c2"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Cajero:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="339" y="37" width="49" height="20" uuid="3f6c14d3-d49f-40d4-b224-726853501b21"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Usuario:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="387" y="37" width="100" height="20" uuid="8e793f52-2add-4e0d-ad8d-8b9cf9a3c8c0"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{USUARIO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement x="108" y="48" width="130" height="20" uuid="6e09608a-75ce-4992-8652-4474c00ed210"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Total Tarjeta Debito]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="108" y="10" width="130" height="20" uuid="ba325a57-c2d3-42c1-bedb-1ab919a3113f"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Total Efectivo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="108" y="29" width="130" height="20" uuid="1506cf3e-3c2f-4500-b2aa-ca0d541debd1"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Total Cheque]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="108" y="68" width="130" height="20" uuid="a550e906-62b1-4fd7-a016-50852337c661"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Total Tarjeta de Credito]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="237" y="10" width="100" height="20" uuid="e5f10892-4035-4e90-93b7-8587de5c5169"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TOTAL_EFECTIVO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="237" y="29" width="100" height="20" uuid="86a5e6ea-9588-4a77-8f48-30d120ed8206"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TOTAL_CHEQUE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="237" y="48" width="100" height="20" uuid="427b64a3-7bb9-43e5-b0ac-06bc45bb2ee8"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TOTAL_TARJETA_DEBITO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="237" y="68" width="100" height="20" uuid="c3b95f3a-8612-48a6-b8ef-43c74bfefc8b"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TOTAL_TARJETA_CREDITO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="321" y="94" width="90" height="20" uuid="745318be-ef11-4625-bff5-3fb880ca7a63"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total General:]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="410" y="94" width="100" height="20" uuid="02e13e81-c7a0-4cea-ad8d-83f1c6ac6100"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

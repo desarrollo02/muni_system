@@ -1,0 +1,124 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui">
+    <ui:define name="container">
+        <h:form id="form" prependId="false">
+            <p:growl id="ms"/>
+            <b:panel title="Editar Tributo" id="pnl">
+                <p:panelGrid columns="2" style="margin-left: auto; margin-right: auto;">
+                    <p:outputLabel value="Nombre "/>
+                    <p:inputText value="#{tributoBean.tributoDTOSelect.nombre}"/>
+                    <p:outputLabel value="Tipo "/>
+                    <p:selectOneMenu value="#{tributoBean.tributoDTOSelect.tipo}">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}"/>
+                        <f:selectItem itemLabel="Impuesto" itemValue="Impuesto"/>
+                        <f:selectItem itemLabel="Tasa" itemValue="Tasa"/>
+                        <f:selectItem itemLabel="Contribucion" itemValue="Contribucion"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Periodo "/>
+                    <p:selectOneMenu value="#{tributoBean.tributoDTOSelect.periodo}">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}"/>
+                        <f:selectItems value="#{tributoBean.periodos}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Primer Venc. "/>
+                    <p:selectOneMenu value="#{tributoBean.tributoDTOSelect.primerVencimiento}">
+                        <f:selectItem itemLabel="Seleccinar" itemValue="#{null}"/>
+                        <f:selectItem itemLabel="Enero" itemValue="#{1}"/>
+                        <f:selectItem itemLabel="Febrero" itemValue="#{2}"/>
+                        <f:selectItem itemLabel="Marzo" itemValue="#{3}"/>
+                        <f:selectItem itemLabel="Abril" itemValue="#{4}"/>
+                        <f:selectItem itemLabel="Mayo" itemValue="#{5}"/>
+                        <f:selectItem itemLabel="Junio" itemValue="#{6}"/>
+                        <f:selectItem itemLabel="Julio" itemValue="#{7}"/>
+                        <f:selectItem itemLabel="Agosto" itemValue="#{8}"/>
+                        <f:selectItem itemLabel="Setiembre" itemValue="#{9}"/>
+                        <f:selectItem itemLabel="Obtubre" itemValue="#{10}"/>
+                        <f:selectItem itemLabel="Noviembre" itemValue="#{11}"/>
+                        <f:selectItem itemLabel="Diciembre" itemValue="#{12}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Registro de Contribuyentes en"/>
+                    <p:selectOneMenu value="#{tributoBean.tributoDTOSelect.registrar}">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}"/>
+                        <f:selectItem itemLabel="Inmuebles" itemValue="INMUEBLE"/>
+                        <f:selectItem itemLabel="Comercios" itemValue="PATENTE"/>
+                        <f:selectItem itemLabel="Sin Registro" itemValue="NINGUNO"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+            </b:panel>
+            <p:toolbar id="tbarm">
+                <f:facet name="left">
+                    <p:commandButton value="Multa"
+                                     title="Multa" 
+                                     icon="ui-icon-circle-plus"  
+                                     actionListener="#{tributoBean.addMultaEdit}" 
+                                     update="@form"/>
+                    <p:commandButton value="Multa"
+                                     title="Multa" 
+                                     icon="ui-icon-circle-minus"  
+                                     actionListener="#{tributoBean.removeMultaEdit}" 
+                                     update="@form"/>
+                </f:facet>
+                <f:facet name="right">
+                    
+                </f:facet>
+            </p:toolbar>
+            <b:panel title="Multa a Aplicar" id="pnl2">
+                <p:dataTable value="#{tributoBean.tributoDTOSelect.multas}"
+                         var="fila"
+                         paginator="true"
+                         paginatorPosition="top"
+                         rows="10"
+                         rowKey="#{fila.key}"
+                         id="lista"
+                         selection="#{tributoBean.multaDTOselect}">
+                <p:column selectionMode="single" style="width:32px;text-align:center"/>
+                <p:column headerText="Unidad de Medida">
+                    <p:selectOneMenu value="#{fila.unidadMedida}">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}"/>
+                        <f:selectItems value="#{tributoBean.unidades}"/>
+                    </p:selectOneMenu>
+                </p:column>
+                <p:column headerText="Valor">
+                    <p:inputNumber value="#{fila.valor}" decimalPlaces="0"/>
+                </p:column>
+                <p:column headerText="Desde">
+                    <p:inputNumber value="#{fila.diasMin}" decimalPlaces="0"/>
+                </p:column>
+                <p:column headerText="Hasta">
+                    <p:inputNumber value="#{fila.diasMax}" decimalPlaces="0"/>
+                </p:column>    
+            </p:dataTable>
+            </b:panel>
+            <b:panel title="Se cobraran tambien los siguientes tributos" id="pnl3">
+                <p:pickList id="pickListReq" 
+                    showSourceControls="true"
+                    showTargetControls="true"
+                    value="#{tributoBean.anexos}"
+                    var="item"
+                    itemLabel="#{item}" 
+                    itemValue="#{item}" 
+                    responsive="true"/>
+            </b:panel>
+            <p:toolbar id="tbar">
+                <f:facet name="left">
+                       
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton title="Guardar" 
+                                     icon="ui-icon-disk"  
+                                     action="#{tributoBean.actualizar}" 
+                                     update="@form"/>
+                    <p:commandButton title="Salir"
+                                     icon="ui-icon-extlink"
+                                     action="tributos" 
+                                     ajax="false" 
+                                     immediate="true"/>
+                </f:facet>
+            </p:toolbar>
+        </h:form>
+    </ui:define>                
+</ui:composition>

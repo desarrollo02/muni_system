@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estado_cuenta" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aabdc83e-39f4-462a-80a8-47d2c4b1ba15">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="FACHA_ACTUAL" class="java.util.Date"/>
+	<parameter name="RMC" class="java.lang.Integer"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\MuniSystem\\web\\seguro\\reporte\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM CONTRIBUYENTE WHERE ID_CONTRIBUYENTE = $P{RMC}]]>
+	</queryString>
+	<field name="id_contribuyente" class="java.lang.Integer"/>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="apellidos" class="java.lang.String"/>
+	<field name="razon_social" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="persona_juridica" class="java.lang.Boolean"/>
+	<field name="activo" class="java.lang.Boolean"/>
+	<field name="linea_baja" class="java.lang.String"/>
+	<field name="celular" class="java.lang.String"/>
+	<field name="id_barrio" class="java.lang.Integer"/>
+	<field name="direccion" class="java.lang.String"/>
+	<field name="nro_casa" class="java.lang.Integer"/>
+	<field name="cedula" class="java.lang.String"/>
+	<field name="ruc" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<rectangle>
+				<reportElement x="22" y="12" width="519" height="53" uuid="fec6efc0-e642-44b4-bf87-3fea9ff97f6d"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="125" y="12" width="321" height="53" uuid="1ba79219-f18b-47c6-98e2-59f25d50f720"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="128" y="26" width="316" height="27" uuid="9fab7970-7de5-401a-bd7d-f53fa0dc6540"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MUNICIPALIDAD DE ISLA PUCU-CORDILLERA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="449" y="33" width="38" height="13" uuid="09965777-9dfc-4b3a-8214-2c137ff448cc"/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="486" y="33" width="54" height="13" uuid="d0d606d8-d1d7-4238-8030-12f218e50553"/>
+				<textFieldExpression><![CDATA[$P{FACHA_ACTUAL}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="26" y="13" width="234" height="52" uuid="fa57b3e9-8f08-4cd5-a498-d22a0e42ff91"/>
+				<imageExpression><![CDATA["C:\\MuniSystem\\reportes\\logo_muni.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="100" splitType="Stretch">
+			<staticText>
+				<reportElement x="143" y="5" width="267" height="20" uuid="412ef8a4-acb9-4141-a6f7-2c13d636ffe0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTADO DE CUENTA DEL CONTRIBUYENTE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="125" y="37" width="100" height="20" uuid="60f0f99b-4ff0-4ab1-abe2-49389140339f"/>
+				<textFieldExpression><![CDATA[$F{cedula}==null?"":$F{cedula}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="64" y="37" width="62" height="20" uuid="e261ba43-fddf-4b42-ad03-379bb53be85b"/>
+				<text><![CDATA[Nro. Cedula]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="394" y="37" width="100" height="20" uuid="85e28820-2af0-4802-8130-35a27bd75ea8"/>
+				<textFieldExpression><![CDATA[$F{ruc}==null?"":$F{ruc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="314" y="37" width="81" height="20" uuid="4885355b-2c24-404f-b116-b83689512714"/>
+				<text><![CDATA[R.U.C]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="125" y="56" width="152" height="20" uuid="9416397b-e1d1-4442-bd9e-cc16208c4339"/>
+				<textFieldExpression><![CDATA[$F{nombres}==null?"":$F{nombres}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="64" y="56" width="62" height="20" uuid="cae9c91b-67ec-4db3-9889-60cca977395d"/>
+				<text><![CDATA[Nombres]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="125" y="75" width="152" height="20" uuid="32031ed4-82fd-4144-94c8-9820910bf900"/>
+				<textFieldExpression><![CDATA[$F{apellidos}==null?"":$F{apellidos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="64" y="75" width="62" height="20" uuid="54f3d668-4e43-4fb9-9ed8-68c6caeb6dc5"/>
+				<text><![CDATA[Apellidos]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="394" y="56" width="146" height="20" uuid="736a067f-4701-489b-9042-43a177bbd13d"/>
+				<textFieldExpression><![CDATA[$F{razon_social} == null?"":$F{razon_social}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="314" y="56" width="81" height="20" uuid="9cb65afa-32bd-4286-95ef-1d544bcd5b74"/>
+				<text><![CDATA[Empresa]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="190" splitType="Stretch">
+			<subreport>
+				<reportElement positionType="Float" x="0" y="0" width="555" height="37" uuid="1369cc67-b2b8-49c2-a2ed-c85f009b9664"/>
+				<subreportParameter name="RMC">
+					<subreportParameterExpression><![CDATA[$P{RMC}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "inmueble.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="37" width="555" height="39" uuid="0cf4dc54-71b3-46c6-9bd5-76086c1fcc8c"/>
+				<subreportParameter name="RMC">
+					<subreportParameterExpression><![CDATA[$P{RMC}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "cementerio.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="76" width="555" height="38" uuid="a1c2d17d-6814-44de-b6d1-cd99e521038b"/>
+				<subreportParameter name="RMC">
+					<subreportParameterExpression><![CDATA[$F{id_contribuyente}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "patente.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="114" width="555" height="40" uuid="fd069bfe-e578-4048-9140-7af5070fda79"/>
+				<subreportParameter name="RMC">
+					<subreportParameterExpression><![CDATA[$P{RMC}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "habilitacion.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" x="0" y="154" width="555" height="36" uuid="92219c5a-c486-4040-b42f-cdba7a5fe619"/>
+				<subreportParameter name="RMC">
+					<subreportParameterExpression><![CDATA[$P{RMC}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="SUBREPORT_DIR"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "registro.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

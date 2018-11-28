@@ -1,0 +1,237 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui">
+    <ui:define name="container">
+        <h:form id="form" prependId="false">
+            <p:growl id="ms"/>
+            <b:panel title="Comercio" id="pnl">
+                <p:panelGrid columns="2" style="margin-left: auto; margin-right: auto;">
+                    <p:outputLabel value="R.M.C."/>
+                    <h:panelGroup>
+                    <p:inputText value="#{comercioBean.comercio.idContribuyente.idContribuyente}" 
+                        id="rmc"         
+                        disabled="#{!comercioBean.formEnable.rmc}"/>
+                    <p:commandButton type="button" 
+                                    icon="ui-icon-search" 
+                                    onclick="PF('dgBuscarCont').show()"
+                                    disabled="#{!comercioBean.formEnable.botonBuscarContribuyente}"/>
+                    </h:panelGroup>
+                    <p:outputLabel value="Rubro"/>
+                    <p:selectOneMenu value="#{comercioBean.comercio.idRubro}"
+                        id="rubro" 
+                        converter="ComercioRubroConverter"   
+                        disabled="#{!comercioBean.formEnable.rubro}">
+                        <f:selectItems value="#{comercioBean.rubros}" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Nombre Comercio"/>
+                    <p:inputText value="#{comercioBean.comercio.nombreFantasia}"
+                        disabled="#{!comercioBean.formEnable.nombre}"/>
+                    <p:outputLabel value="Nro. Patente"/>
+                    <p:inputNumber value="#{comercioBean.comercio.nroPatente}"
+                        disabled="#{!comercioBean.formEnable.nroPatente}"
+                        decimalPlaces="0"/>
+                    <p:outputLabel value="Barrio"/>
+                    <p:selectOneMenu value="#{comercioBean.comercio.idBarrio}"
+                        id="barrio" 
+                        converter="BarrioConverter"   
+                        disabled="#{!comercioBean.formEnable.barrio}">
+                        <f:selectItems value="#{comercioBean.barrios}" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Direccion"/>
+                    <p:inputText value="#{comercioBean.comercio.direccion}"
+                        disabled="#{!comercioBean.formEnable.direccion}"/>
+                    <p:outputLabel value="Valor Activo"/>
+                    <p:inputNumber value="#{comercioBean.comercio.valorActivo}"
+                        disabled="#{!comercioBean.formEnable.valorActivo}"
+                        decimalPlaces="0"/>
+                </p:panelGrid>
+            </b:panel>
+            <p:toolbar id="tbar">
+                <f:facet name="left">
+                    <p:commandButton value="Nuevo" 
+                                    icon="ui-icon-document"
+                                    id="nuevo"
+                                    actionListener="#{comercioBean.nuevo}"
+                                    update=":form"
+                                    disabled="#{!comercioBean.formEnable.botonNuevo}"/>
+                    <p:commandButton type="button" 
+                                    value="Buscar" 
+                                    icon="ui-icon-search" 
+                                    disabled="#{!comercioBean.formEnable.botonBuscar}"
+                                    onclick="PF('dgBuscar').show()"/>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                    </span>
+                    <p:commandButton value="Editar" 
+                                    icon="ui-icon-pencil"
+                                    disabled="#{!comercioBean.formEnable.botonEditar}"
+                                    actionListener="#{comercioBean.editar}"
+                                    update=":form"/>
+                    <p:commandButton actionListener="#{comercioBean.cancelar}" 
+                                    value="Cancelar" 
+                                    update=":form" 
+                                    icon="ui-icon-close" 
+                                    disabled="#{!comercioBean.formEnable.botonCancelar}"/>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                    </span>
+                    <p:commandButton 
+                                    value="Eliminar" 
+                                    update=":form" 
+                                    icon="ui-icon-trash" 
+                                    disabled="#{!comercioBean.formEnable.botonEliminar}"
+                                    actionListener="#{comercioBean.eliminar}"/>    
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton title="Guardar" 
+                                     icon="ui-icon-disk" 
+                                     disabled="#{!comercioBean.formEnable.botonGuardar}" 
+                                     actionListener="#{comercioBean.guardar}" 
+                                     update=":form"/>
+                    <p:commandButton title="Salir" 
+                                     action="inicio" 
+                                     icon="ui-icon-extlink" 
+                                     ajax="false" 
+                                     immediate="true"/>
+                </f:facet>
+            </p:toolbar>
+            <p:dialog widgetVar="dgBuscarCont"
+                modal="true" 
+                id="dial"
+                resizable="false"
+                position="top"
+                width="950"
+                header="Buscar Contribuyente">
+            <p:panelGrid columns="7" style="margin-left: auto; margin-right: auto;" id="pg">
+                <p:outputLabel value="R.M.C."/>
+                <p:inputNumber value="#{comercioBean.filtroRMC}"
+                               decimalPlaces="0"/>
+                <p:outputLabel value="Nro. C.I."/>
+                <p:inputText value="#{comercioBean.filtroCedula}"/>
+                <p:outputLabel value="Nombres"/>
+                <p:inputText value="#{comercioBean.filtroNombre}"/>
+                <p:commandButton value="Filtrar"
+                                 actionListener="#{comercioBean.filtrarContribuyente}"
+                                 process="pg"
+                                 update="lista"/>
+                <p:outputLabel value="Apellidos"/>
+                <p:inputText value="#{comercioBean.filtroApellido}"/>
+                <p:outputLabel value="RUC"/>
+                <p:inputText value="#{comercioBean.filtroRuc}"/>
+                <p:outputLabel value="Empresa"/>
+                <p:inputText value="#{comercioBean.filtroEmpresa}"/>
+                <p:commandButton value="Todos" 
+                                 actionListener="#{comercioBean.todosContribuyente}"
+                                 process="pg"
+                                 update="lista"/>
+            </p:panelGrid>
+            <p:dataTable value="#{comercioBean.resultFiltroContribuyenteList}"
+                         var="fila"
+                         paginator="true"
+                         paginatorPosition="top"
+                         rows="10"
+                         rowKey="#{fila.idContribuyente}"
+                         id="lista"
+                         selectionMode="single"
+                         selection="#{comercioBean.contribuyente}">
+                <p:column headerText="R.M.C">
+                    <h:outputText value="#{fila.idContribuyente}"/>
+                </p:column>
+                <p:column headerText="Nro. C.I.">
+                    <h:outputText value="#{fila.cedula}"/>
+                </p:column>
+                <p:column headerText="Nombres">
+                    <h:outputText value="#{fila.nombres}"/>
+                </p:column>
+                <p:column headerText="Apellidos">
+                    <h:outputText value="#{fila.apellidos}"/>
+                </p:column>
+                <p:column headerText="RUC">
+                    <h:outputText value="#{fila.ruc}"/>
+                </p:column>
+                <p:column headerText="Empresa">
+                    <h:outputText value="#{fila.razonSocial}"/>
+                </p:column>
+            </p:dataTable>
+                <p:commandButton value="Aceptar"
+                    process="@(#dial)"
+                    update="rmc"
+                    actionListener="#{comercioBean.aceptarSelectContribuyente}" 
+                    oncomplete="PF('dgBuscarCont').hide()"/>
+        </p:dialog>
+        <p:dialog widgetVar="dgBuscar"
+            modal="true" 
+            id="dialBusInm"
+            resizable="false"
+            position="top"
+            width="950"
+            header="Buscar Comercio">
+            <p:panelGrid columns="7" 
+                         style="margin-left: auto; margin-right: auto;" id="pgInm">
+                <p:outputLabel value="R.M.C."/>
+                <p:inputNumber value="#{comercioBean.filtroComercioRmc}"
+                               decimalPlaces="0"/>
+                <p:outputLabel value="Nro. C.I."/>
+                <p:inputText value="#{comercioBean.filtroComercioCedula}"/>
+                <p:outputLabel value="Rubro"/>
+                <p:inputText value="#{comercioBean.filtroComercioRubro}"/>
+                <p:commandButton value="Filtrar"
+                                 actionListener="#{comercioBean.filtrarComercio}"
+                                 process="pgInm"
+                                 update="listaInm"/>
+                <p:outputLabel value="Razon Social"/>
+                <p:inputText value="#{comercioBean.filtroComercioNombreComercio}"/>
+                <p:outputLabel value="Nro. Patente"/>
+                <p:inputText value="#{comercioBean.filtroComercioNroPatente}"/>
+                <p:outputLabel value="Barrio"/>
+                <p:inputText value="#{comercioBean.filtroComercioBarrio}"/>
+                <p:commandButton value="Todos" 
+                                 actionListener="#{comercioBean.todosComercio}"
+                                 process="pgInm"
+                                 update="listaInm"/>
+            </p:panelGrid>
+            <p:dataTable value="#{comercioBean.resultFiltroComercioList}"
+                         var="fila"
+                         paginator="true"
+                         paginatorPosition="top"
+                         rows="10"
+                         rowKey="#{fila.idComercio}"
+                         id="listaInm"
+                         selectionMode="single"
+                         selection="#{comercioBean.comercioSelect}">
+                <p:column headerText="R.M.C">
+                    <h:outputText value="#{fila.idContribuyente.idContribuyente}"/>
+                </p:column>
+                <p:column headerText="Nro. C.I.">
+                    <h:outputText value="#{fila.idContribuyente.cedula}"/>
+                </p:column>
+                <p:column headerText="Nombres">
+                    <h:outputText value="#{fila.idContribuyente.nombres}"/>
+                </p:column>
+                <p:column headerText="Apellidos">
+                    <h:outputText value="#{fila.idContribuyente.apellidos}"/>
+                </p:column>
+                <p:column headerText="RUC">
+                    <h:outputText value="#{fila.idContribuyente.ruc}"/>
+                </p:column>
+                <p:column headerText="Empresa">
+                    <h:outputText value="#{fila.nombreFantasia}"/>
+                </p:column>
+                <p:column headerText="Direccion">
+                    <h:outputText value="#{fila.direccion}"/>
+                </p:column>
+            </p:dataTable>
+                <p:commandButton value="Aceptar"
+                    process="@(#dialBusInm)"
+                    update="pnl tbar"
+                    actionListener="#{comercioBean.aceptarSelect}"
+                    oncomplete="PF('dgBuscar').hide()"/>          
+        </p:dialog>    
+        </h:form>
+    </ui:define>                
+</ui:composition>
+

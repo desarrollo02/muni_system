@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dcb67b85-91bc-49a5-aaa4-1b60e32d1449">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="FECHA_CIERRE" class="java.util.Date"/>
+	<parameter name="USUARIO" class="java.lang.String"/>
+	<parameter name="FECHA_DESDE" class="java.util.Date"/>
+	<parameter name="FECHA_HASTA" class="java.util.Date"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\MuniSystem\\reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM COMPROBANTE_CABECERA WHERE USUARIO_PAGO = $P{USUARIO} AND FECHA_PAGO >= $P{FECHA_DESDE} AND FECHA_PAGO <= $P{FECHA_HASTA}]]>
+	</queryString>
+	<field name="id_comprobante_cabecera" class="java.lang.Integer"/>
+	<field name="fecha_alta" class="java.sql.Date"/>
+	<field name="usuario_alta" class="java.lang.String"/>
+	<field name="anulado" class="java.lang.Boolean"/>
+	<field name="id_contribuyente" class="java.lang.Integer"/>
+	<field name="id_impuesto" class="java.lang.Integer"/>
+	<field name="anio" class="java.lang.Integer"/>
+	<field name="vencimiento" class="java.sql.Date"/>
+	<field name="pagado" class="java.lang.Boolean"/>
+	<field name="id_referencia" class="java.lang.Integer"/>
+	<field name="total_pagar" class="java.lang.Double"/>
+	<field name="fecha_pago" class="java.sql.Date"/>
+	<field name="tipo_pago" class="java.lang.String"/>
+	<field name="nro_cheque" class="java.lang.String"/>
+	<field name="usuario_pago" class="java.lang.String"/>
+	<variable name="total_pagar_1" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_pagar}]]></variableExpression>
+	</variable>
+	<variable name="total_pagar_2" class="java.lang.Double" resetType="Group" resetGroup="tipo_pago" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_pagar}]]></variableExpression>
+	</variable>
+	<group name="tipo_pago">
+		<groupExpression><![CDATA[$F{tipo_pago}]]></groupExpression>
+		<groupFooter>
+			<band height="20">
+				<textField pattern="#,##0">
+					<reportElement x="454" y="0" width="100" height="20" uuid="c85d9da4-3ae0-4522-93de-36183195cafa"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{total_pagar_2}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="338" y="0" width="116" height="20" uuid="d6e4e3b0-353d-4ca2-822a-4d776c5dcbb5"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[TOTAL TIPO PAGADO]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<rectangle>
+				<reportElement x="19" y="10" width="519" height="53" uuid="d86eb5be-0a50-496c-b8b9-f0062a24d33f"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="123" y="23" width="306" height="27" uuid="e3712c07-95b1-4ba1-9ea7-70c817012c1d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[MUNICIPALIDAD DE ISLA PUCU-CORDILLERA]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="116" y="10" width="320" height="53" uuid="1027dba5-edae-4a14-afa3-3bde0fc4431f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="437" y="29" width="38" height="13" uuid="bd41fcdc-695e-4a0f-8436-0f4bd82edc9a"/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="474" y="29" width="64" height="13" uuid="265a8b63-23ec-473d-b51a-6c3e9284795b"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{FECHA_CIERRE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="3" y="0" width="186" height="20" uuid="09dad9f1-4158-4ec8-ba74-7725815fc81a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Facturas Cobradas por el usuario ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="189" y="0" width="100" height="20" uuid="09dea9d6-3e4f-4ce2-9b1a-c25359a55e18"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{USUARIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="289" y="0" width="38" height="20" uuid="a4f5f660-f3d1-4d67-920e-d78ffe3dbc09"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Desde]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="327" y="0" width="80" height="20" uuid="2f3ca08a-f218-4949-a810-1fc7c0dd867a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FECHA_DESDE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="407" y="0" width="38" height="20" uuid="a5c77e50-02b6-4a75-bda2-92bc46e76b58"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Hasta]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="445" y="0" width="80" height="20" uuid="99fa6edb-5d8f-4d65-a101-63a16a3f8537"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{FECHA_HASTA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="59" height="20" uuid="f17d7f8b-2066-4424-856b-b96d9fd9712c"/>
+				<box topPadding="0" leftPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Fact. Nro.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="0" width="150" height="20" uuid="b4715e7c-d05f-4411-b40f-19815129979d"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Tipo Pago]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="209" y="0" width="150" height="20" uuid="958d46bf-13b4-4e61-9be8-0c00f4137a89"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Nro. Cheque]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="454" y="0" width="100" height="20" uuid="ccb46bfe-8521-40b7-8d41-e5e49cb8b177"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="359" y="0" width="95" height="20" uuid="03564b8a-0413-4afa-8507-dc955441baea"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Fec. Pago]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Immediate">
+			<textField>
+				<reportElement x="0" y="0" width="59" height="20" uuid="cc201257-ad74-4a17-8cc8-960e3d0763fd"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{id_comprobante_cabecera}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="59" y="0" width="150" height="20" uuid="6730e1c7-507d-4602-aadc-5e3c9b317e38"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{tipo_pago}.equals("E") ?"Efectivo":"Cheque"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="209" y="0" width="150" height="20" uuid="951662b1-ad71-418a-b292-6a112c5f2176"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{nro_cheque} == null?"":$F{nro_cheque}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="454" y="0" width="100" height="20" uuid="7ef821f7-2eec-4ddf-8907-09c52c39be7a"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{total_pagar}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="359" y="0" width="95" height="20" uuid="5a8c3e26-d75c-43b5-ae26-2bfe0be94649"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{fecha_pago}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="35" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement x="455" y="12" width="100" height="20" uuid="b7a2b638-7a17-4148-bc83-450aca5cc404"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_pagar_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="359" y="12" width="95" height="20" uuid="d2083ea2-ecc2-4b10-afc1-da31cb754f6b"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[TOTAL GENERAL]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,66 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui">
+    <ui:define name="container">
+        <h:form id="form" prependId="false">
+            <p:growl id="ms"/>
+            <b:panel title="Anular Factura" id="pnl"
+                collapsible="false">
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="Nro. Factura"/>
+                    <p:inputNumber value="#{anularFacturaBean.filtroNroFactura}"/>
+                </p:panelGrid>          
+            </b:panel>
+            <p:toolbar id="tbar">
+                <f:facet name="left">
+                    <p:commandButton value="Filtrar" 
+                                    id="nuevo"
+                                    actionListener="#{anularFacturaBean.filtrar}"
+                                    update="@form"/>
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton title="Salir" 
+                                     action="inicio" 
+                                     icon="ui-icon-extlink" 
+                                     ajax="false" 
+                                     immediate="true"/>
+                </f:facet>
+            </p:toolbar>
+            <p:dataTable value="#{anularFacturaBean.comprobantes}"
+                    var="fila"
+                    rowKey="#{fila.idComprobanteCabecera}"
+                    selectionMode="single">
+                    <p:column headerText="Nro. Factura">
+                        <h:outputText value="#{fila.idComprobanteCabecera}"/>
+                    </p:column>
+                    <p:column headerText="Impuesto Nombre">
+                        <h:outputText value="#{fila.idImpuesto.nombre}"/>
+                    </p:column>
+                    <p:column headerText="Año">
+                        <h:outputText value="#{fila.anio}"/>
+                    </p:column>
+                    <p:column headerText="Vencimiento">
+                        <h:outputText value="#{fila.vencimiento}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Monto a Pagar">
+                        <h:outputText value="#{fila.totalPagar}">
+                            <f:convertNumber pattern="#,##0"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Estado">
+                        <h:outputText value="#{fila.anulado == true?'Anulada':'Activa'}"/>
+                    </p:column>
+                </p:dataTable>
+            <p:commandButton value="Anular" 
+                                    id="anu"
+                                    actionListener="#{anularFacturaBean.anular}"
+                                    update="@form"/>
+        </h:form>
+    </ui:define>
+</ui:composition>    

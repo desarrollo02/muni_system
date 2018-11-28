@@ -1,0 +1,227 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui">
+    <ui:define name="container">
+        <h:form id="form" prependId="false">
+            <p:growl id="ms"/>
+            <b:panel title="Registro de Conducir" id="pnl">
+                <p:panelGrid columns="2" style="margin-left: auto; margin-right: auto;">
+                    <p:outputLabel value="R.M.C."/>
+                    <h:panelGroup>
+                        <p:inputText value="#{registroConducirBean.registroConducir.idContribuyente.idContribuyente}" 
+                        id="rmc"         
+                        disabled="#{!registroConducirBean.formEnable.rmc}"/>
+                    <p:commandButton type="button" 
+                                    icon="ui-icon-search" 
+                                    onclick="PF('dgBuscarCont').show()"
+                                    disabled="#{!registroConducirBean.formEnable.botonBuscarContribuyente}"/>
+                    </h:panelGroup>
+                    <p:outputLabel value="Categoria"/>
+                    <p:selectOneMenu value="#{registroConducirBean.registroConducir.idCategoria}"
+                        id="categoria" 
+                        converter="RegistroConducirCategoriaConverter"   
+                        disabled="#{!registroConducirBean.formEnable.categoria}">
+                        <f:selectItems value="#{registroConducirBean.categorias}" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Nro. Licencia"/>
+                    <p:inputText value="#{registroConducirBean.registroConducir.licenciaNro}"
+                                 disabled="#{!registroConducirBean.formEnable.registroNro}"/>
+                    
+                    <p:outputLabel value="Grupo de Sangre"/>
+                    <p:inputText value="#{registroConducirBean.registroConducir.grupoSangre}"
+                                 disabled="#{!registroConducirBean.formEnable.grupoSangre}"/>
+                    <p:outputLabel value="Vencimiento"/>
+                    <p:calendar value="#{registroConducirBean.registroConducir.vencicimiento}"
+                                pattern="dd/MM/yyyy"/>        
+                </p:panelGrid>
+            </b:panel>
+            <p:toolbar id="tbar">
+                <f:facet name="left">
+                    <p:commandButton value="Nuevo" 
+                                    icon="ui-icon-document"
+                                    id="nuevo"
+                                    actionListener="#{registroConducirBean.nuevo}"
+                                    update=":form"
+                                    disabled="#{!registroConducirBean.formEnable.botonNuevo}"/>
+                    <p:commandButton type="button" 
+                                    value="Buscar" 
+                                    icon="ui-icon-search" 
+                                    disabled="#{!registroConducirBean.formEnable.botonBuscar}"
+                                    onclick="PF('dgBuscar').show()"/>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                    </span>
+                    <p:commandButton value="Editar" 
+                                    icon="ui-icon-pencil"
+                                    disabled="#{!registroConducirBean.formEnable.botonEditar}"
+                                    actionListener="#{registroConducirBean.editar}"
+                                    update=":form"/>
+                    <p:commandButton actionListener="#{registroConducirBean.cancelar}" 
+                                    value="Cancelar" 
+                                    update=":form" 
+                                    icon="ui-icon-close" 
+                                    disabled="#{!registroConducirBean.formEnable.botonCancelar}"/>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                    </span>
+                    <p:commandButton 
+                                    value="Eliminar" 
+                                    update=":form" 
+                                    icon="ui-icon-trash" 
+                                    disabled="#{!registroConducirBean.formEnable.botonEliminar}"
+                                    actionListener="#{registroConducirBean.eliminar}"/>    
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton title="Guardar" 
+                                     icon="ui-icon-disk" 
+                                     disabled="#{!registroConducirBean.formEnable.botonGuardar}" 
+                                     actionListener="#{registroConducirBean.guardar}" 
+                                     update=":form"/>
+                    <p:commandButton title="Salir" 
+                                     action="inicio" 
+                                     icon="ui-icon-extlink" 
+                                     ajax="false" 
+                                     immediate="true"/>
+                </f:facet>
+            </p:toolbar>
+            <p:dialog widgetVar="dgBuscarCont"
+                modal="true" 
+                id="dial"
+                resizable="false"
+                position="top"
+                width="950"
+                header="Buscar Contribuyente">
+            <p:panelGrid columns="7" style="margin-left: auto; margin-right: auto;" id="pg">
+                <p:outputLabel value="R.M.C."/>
+                <p:inputNumber value="#{registroConducirBean.filtroRMC}"
+                               decimalPlaces="0"/>
+                <p:outputLabel value="Nro. C.I."/>
+                <p:inputText value="#{registroConducirBean.filtroCedula}"/>
+                <p:outputLabel value="Nombres"/>
+                <p:inputText value="#{registroConducirBean.filtroNombre}"/>
+                <p:commandButton value="Filtrar"
+                                 actionListener="#{registroConducirBean.filtrarContribuyente}"
+                                 process="pg"
+                                 update="lista"/>
+                <p:outputLabel value="Apellidos"/>
+                <p:inputText value="#{registroConducirBean.filtroApellido}"/>
+                <p:outputLabel value="RUC"/>
+                <p:inputText value="#{registroConducirBean.filtroRuc}"/>
+                <p:outputLabel value="Empresa"/>
+                <p:inputText value="#{registroConducirBean.filtroEmpresa}"/>
+                <p:commandButton value="Todos" 
+                                 actionListener="#{registroConducirBean.todosContribuyente}"
+                                 process="pg"
+                                 update="lista"/>
+            </p:panelGrid>
+            <p:dataTable value="#{registroConducirBean.resultFiltroContribuyenteList}"
+                         var="fila"
+                         paginator="true"
+                         paginatorPosition="top"
+                         rows="10"
+                         rowKey="#{fila.idContribuyente}"
+                         id="lista"
+                         selectionMode="single"
+                         selection="#{registroConducirBean.contribuyente}">
+                <p:column headerText="R.M.C">
+                    <h:outputText value="#{fila.idContribuyente}"/>
+                </p:column>
+                <p:column headerText="Nro. C.I.">
+                    <h:outputText value="#{fila.cedula}"/>
+                </p:column>
+                <p:column headerText="Nombres">
+                    <h:outputText value="#{fila.nombres}"/>
+                </p:column>
+                <p:column headerText="Apellidos">
+                    <h:outputText value="#{fila.apellidos}"/>
+                </p:column>
+                <p:column headerText="RUC">
+                    <h:outputText value="#{fila.ruc}"/>
+                </p:column>
+                <p:column headerText="Empresa">
+                    <h:outputText value="#{fila.razonSocial}"/>
+                </p:column>
+            </p:dataTable>
+                <p:commandButton value="Aceptar"
+                    process="@(#dial)"
+                    update="rmc"
+                    actionListener="#{registroConducirBean.aceptarSelectContribuyente}" 
+                    oncomplete="PF('dgBuscarCont').hide()"/>
+        </p:dialog>
+        <p:dialog widgetVar="dgBuscar"
+            modal="true" 
+            id="dialBusInm"
+            resizable="false"
+            position="top"
+            width="950"
+            header="Buscar Registro de Contribuyente">
+            <p:panelGrid columns="5" 
+                         style="margin-left: auto; margin-right: auto;" id="pgInm">
+                <p:outputLabel value="R.M.C."/>
+                <p:inputNumber value="#{registroConducirBean.filtroRegistroConducirRmc}"
+                               decimalPlaces="0"/>
+                <p:outputLabel value="Nro. C.I."/>
+                <p:inputText value="#{registroConducirBean.filtroRegistroConducirCedula}"/>
+                <p:commandButton value="Filtrar"
+                                 actionListener="#{registroConducirBean.filtrarVehiculo}"
+                                 process="pgInm"
+                                 update="listaInm"/>
+                <p:outputLabel value="Categoria"/>
+                <p:inputText value="#{registroConducirBean.filtroRegistroConducirCategoria}"/>
+                <p:outputLabel value="Nro. Licencia"/>
+                <p:inputText value="#{registroConducirBean.filtroRegistroConducirNro}"/>
+                <p:commandButton value="Todos" 
+                                 actionListener="#{registroConducirBean.todosRegistroConducir}"
+                                 process="pgInm"
+                                 update="listaInm"/>
+            </p:panelGrid>
+            <p:dataTable value="#{registroConducirBean.resultFiltroRegistroConducirList}"
+                         var="fila"
+                         paginator="true"
+                         paginatorPosition="top"
+                         rows="10"
+                         rowKey="#{fila.idRegistroConducir}"
+                         id="listaInm"
+                         selectionMode="single"
+                         selection="#{registroConducirBean.registroConducirSelect}">
+                <p:column headerText="R.M.C">
+                    <h:outputText value="#{fila.idContribuyente.idContribuyente}"/>
+                </p:column>
+                <p:column headerText="Nro. C.I.">
+                    <h:outputText value="#{fila.idContribuyente.cedula}"/>
+                </p:column>
+                <p:column headerText="Nombres">
+                    <h:outputText value="#{fila.idContribuyente.nombres}"/>
+                </p:column>
+                <p:column headerText="Apellidos">
+                    <h:outputText value="#{fila.idContribuyente.apellidos}"/>
+                </p:column>
+                <p:column headerText="RUC">
+                    <h:outputText value="#{fila.idContribuyente.ruc}"/>
+                </p:column>
+                <p:column headerText="Nro. Licencia">
+                    <h:outputText value="#{fila.licenciaNro}"/>
+                </p:column>
+                <p:column headerText="Categoria">
+                    <h:outputText value="#{fila.idCategoria.descripcion}"/>
+                </p:column>
+                <p:column headerText="Vencimiento">
+                    <h:outputText value="#{fila.vencicimiento}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+            </p:dataTable>
+                <p:commandButton value="Aceptar"
+                    process="@(#dialBusInm)"
+                    update="pnl tbar"
+                    actionListener="#{registroConducirBean.aceptarSelect}"
+                    oncomplete="PF('dgBuscar').hide()"/>          
+        </p:dialog>    
+        </h:form>
+    </ui:define>                
+</ui:composition>
+

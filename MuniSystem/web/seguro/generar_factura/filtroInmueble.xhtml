@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:panelGrid columns="6" rendered="#{facturaIndividualBean.tipoImpuesto == 'I'}">
+            <p:outputLabel value="R.M.C."/>
+            <p:inputNumber value="#{filtroInmuebleBean.filtroRMC}"/>
+            <p:outputLabel value="Cedula"/>
+            <p:inputNumber value="#{filtroInmuebleBean.filtroCedula}"/>
+            <p:outputLabel value="Cta Cte"/>
+            <p:inputText value="#{filtroInmuebleBean.filtroCtaCte}"/>
+            <p:outputLabel value="Nro. Finca"/>
+            <p:inputNumber value="#{filtroInmuebleBean.filtroNroFinca}"/>
+            <p:outputLabel value="Nro. Padron"/>
+            <p:inputNumber value="#{filtroInmuebleBean.filtroPadron}"/>
+            <p:outputLabel value="RUC"/>
+            <p:inputText value="#{filtroInmuebleBean.filtroRuc}"/>    
+        </p:panelGrid>
+        <p:commandButton value="Filtar"
+            rendered="#{facturaIndividualBean.tipoImpuesto == 'I'}"             
+            actionListener="#{filtroInmuebleBean.filtrar}"
+            update="@form"/>
+        <p:commandButton value="Limpiar Filtro"
+            rendered="#{facturaIndividualBean.tipoImpuesto == 'I'}"             
+            actionListener="#{filtroInmuebleBean.limpiarFiltro}"
+            update="@form"/>
+        <p:dataTable value="#{filtroInmuebleBean.inmuebles}"
+            rendered="#{facturaIndividualBean.tipoImpuesto == 'I'}"
+            var="fila"
+            paginator="true"
+            paginatorPosition="top"
+            rows="10"
+            rowKey="#{fila.idInmueble}"
+            id="lista"
+            selectionMode="single"
+            selection="#{filtroInmuebleBean.inmuebleSelect}">
+            <p:column headerText="R.M.C">
+                <h:outputText value="#{fila.idContribuyente.idContribuyente}"/>
+            </p:column>
+            <p:column headerText="Nro. C.I.">
+                <h:outputText value="#{fila.idContribuyente.cedula}"/>
+            </p:column>
+            <p:column headerText="Cta. Cte.">
+                <h:outputText value="#{fila.ctaCte}"/>
+            </p:column>
+            <p:column headerText="Nro. Finca">
+                <h:outputText value="#{fila.nroFinca}"/>
+            </p:column>
+            <p:column headerText="Nro. Padron">
+                <h:outputText value="#{fila.padron}"/>
+            </p:column>
+            <p:column headerText="RUC">
+                <h:outputText value="#{fila.idContribuyente.ruc}"/>
+            </p:column>
+        </p:dataTable>
+    </ui:component>
+</html>
+

@@ -1,0 +1,258 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui">
+    <ui:define name="container">
+        <h:form id="form" prependId="false">
+            <p:growl id="ms"/>
+            <b:panel title="Inmueble" id="pnl">
+                <p:panelGrid columns="2" style="margin-left: auto; margin-right: auto;">
+                    <p:outputLabel value="R.M.C."/>
+                    <h:panelGroup>
+                    <p:inputText value="#{inmuebleBean.inmueble.idContribuyente.idContribuyente}" 
+                        id="rmc"         
+                        disabled="#{!inmuebleBean.formEnable.rmc}"/>
+                    <p:commandButton type="button" 
+                                    icon="ui-icon-search" 
+                                    onclick="PF('dgBuscarCont').show()"
+                                    disabled="#{!inmuebleBean.formEnable.botonBuscarContribuyente}"/>
+                    </h:panelGroup>
+                    <p:outputLabel value="Tipo"/>
+                    <p:selectOneRadio value="#{inmuebleBean.inmueble.tipo}"
+                        id="tipo"    
+                        columns="2"
+                        disabled="#{!inmuebleBean.formEnable.tipo}">
+                        <f:selectItem itemLabel="Urbana" itemValue="U" />
+                        <f:selectItem itemLabel="Rural" itemValue="R" />
+                        <f:selectItem itemLabel="Municipal" itemValue="M" />
+                    </p:selectOneRadio>
+                    <p:outputLabel value="Cta. Cte."/>
+                    <p:inputNumber value="#{inmuebleBean.inmueble.ctaCte}"
+                        disabled="#{!inmuebleBean.formEnable.ctacte}"
+                        decimalPlaces="0"/>
+                    <p:outputLabel value="Nro. Padron"/>
+                    <p:inputNumber value="#{inmuebleBean.inmueble.padron}"
+                        disabled="#{!inmuebleBean.formEnable.padron}"
+                        decimalPlaces="0"/>
+                    <p:outputLabel value="Nro. Finca"/>
+                    <p:inputNumber value="#{inmuebleBean.inmueble.nroFinca}"
+                        disabled="#{!inmuebleBean.formEnable.finca}"
+                        decimalPlaces="0"/>
+                    <p:outputLabel value="Superficie"/>
+                    <p:inputNumber value="#{inmuebleBean.inmueble.superficie}"
+                        disabled="#{!inmuebleBean.formEnable.superficie}"
+                        decimalPlaces="0"/>
+                    <p:outputLabel value="Unidad Medida Sup."/>
+                    <p:selectOneRadio value="#{inmuebleBean.inmueble.unidadMedida}"    
+                        columns="2"
+                        disabled="#{!inmuebleBean.formEnable.unidadMedSup}">
+                        <f:selectItem itemLabel="Hectareas" itemValue="H" />
+                        <f:selectItem itemLabel="Metro Cuadrado" itemValue="M" />    
+                    </p:selectOneRadio>
+                    <p:outputLabel value="Sup. Edificada"/>
+                    <p:inputNumber value="#{inmuebleBean.inmueble.supEdificadaM2}"
+                        disabled="#{!inmuebleBean.formEnable.supEdificada}"
+                        decimalPlaces="0"/>
+                    <p:outputLabel value="Valuacion"/>
+                    <p:inputNumber value="#{inmuebleBean.inmueble.valuacionFiscal}"
+                        disabled="#{!inmuebleBean.formEnable.valuacion}"
+                        decimalPlaces="0"/>
+                    <p:outputLabel value="Recoleccion Basura"/>
+                    <p:selectBooleanCheckbox value="#{inmuebleBean.inmueble.recoleccionBasura}"
+                        disabled="#{!inmuebleBean.formEnable.recoleccionBasura}"/>
+                </p:panelGrid>
+            </b:panel>
+            <p:toolbar id="tbar">
+                <f:facet name="left">
+                    <p:commandButton value="Nuevo" 
+                                    icon="ui-icon-document"
+                                    id="nuevo"
+                                    actionListener="#{inmuebleBean.nuevo}"
+                                    update=":form"
+                                    disabled="#{!inmuebleBean.formEnable.botonNuevo}"/>
+                    <p:commandButton type="button" 
+                                    value="Buscar" 
+                                    icon="ui-icon-search" 
+                                    disabled="#{!inmuebleBean.formEnable.botonBuscar}"
+                                    onclick="PF('dgBuscar').show()"/>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                    </span>
+                    <p:commandButton value="Editar" 
+                                    icon="ui-icon-pencil"
+                                    disabled="#{!inmuebleBean.formEnable.botonEditar}"
+                                    actionListener="#{inmuebleBean.editar}"
+                                    update=":form"/>
+                    <p:commandButton actionListener="#{inmuebleBean.cancelar}" 
+                                    value="Cancelar" 
+                                    update=":form" 
+                                    icon="ui-icon-close" 
+                                    disabled="#{!inmuebleBean.formEnable.botonCacelar}"/>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                    </span>
+                    <p:commandButton 
+                                    value="Eliminar" 
+                                    update=":form" 
+                                    icon="ui-icon-trash" 
+                                    disabled="#{!inmuebleBean.formEnable.botonEliminar}"
+                                    actionListener="#{inmuebleBean.eliminar}"/>    
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton title="Guardar" 
+                                     icon="ui-icon-disk" 
+                                     disabled="#{!inmuebleBean.formEnable.botonGuardar}" 
+                                     actionListener="#{inmuebleBean.guardar}" 
+                                     update=":form"/>
+                    <p:commandButton title="Salir" 
+                                     action="inicio" 
+                                     icon="ui-icon-extlink" 
+                                     ajax="false" 
+                                     immediate="true"/>
+                </f:facet>
+            </p:toolbar>
+            <p:dialog widgetVar="dgBuscarCont"
+                modal="true" 
+                id="dial"
+                resizable="false"
+                position="top"
+                width="950"
+                header="Buscar Contribuyente">
+            <p:panelGrid columns="7" style="margin-left: auto; margin-right: auto;" id="pg">
+                <p:outputLabel value="R.M.C."/>
+                <p:inputNumber value="#{inmuebleBean.filtroRMC}"
+                               decimalPlaces="0"/>
+                <p:outputLabel value="Nro. C.I."/>
+                <p:inputText value="#{inmuebleBean.filtroCedula}"/>
+                <p:outputLabel value="Nombres"/>
+                <p:inputText value="#{inmuebleBean.filtroNombre}"/>
+                <p:commandButton value="Filtrar"
+                                 actionListener="#{inmuebleBean.filtrarContribuyente}"
+                                 process="pg"
+                                 update="lista"/>
+                <p:outputLabel value="Apellidos"/>
+                <p:inputText value="#{inmuebleBean.filtroApellido}"/>
+                <p:outputLabel value="RUC"/>
+                <p:inputText value="#{inmuebleBean.filtroRuc}"/>
+                <p:outputLabel value="Empresa"/>
+                <p:inputText value="#{inmuebleBean.filtroEmpresa}"/>
+                <p:commandButton value="Todos" 
+                                 actionListener="#{inmuebleBean.todosContribuyente}"
+                                 process="pg"
+                                 update="lista"/>
+            </p:panelGrid>
+            <p:dataTable value="#{inmuebleBean.resultFiltroList}"
+                         var="fila"
+                         paginator="true"
+                         paginatorPosition="top"
+                         rows="10"
+                         rowKey="#{fila.idContribuyente}"
+                         id="lista"
+                         selectionMode="single"
+                         selection="#{inmuebleBean.contribuyente}">
+                <p:column headerText="R.M.C">
+                    <h:outputText value="#{fila.idContribuyente}"/>
+                </p:column>
+                <p:column headerText="Nro. C.I.">
+                    <h:outputText value="#{fila.cedula}"/>
+                </p:column>
+                <p:column headerText="Nombres">
+                    <h:outputText value="#{fila.nombres}"/>
+                </p:column>
+                <p:column headerText="Apellidos">
+                    <h:outputText value="#{fila.apellidos}"/>
+                </p:column>
+                <p:column headerText="RUC">
+                    <h:outputText value="#{fila.ruc}"/>
+                </p:column>
+                <p:column headerText="Empresa">
+                    <h:outputText value="#{fila.razonSocial}"/>
+                </p:column>
+            </p:dataTable>
+                <p:commandButton value="Aceptar"
+                    process="@(#dial)"
+                    update="rmc"
+                    actionListener="#{inmuebleBean.aceptarSelectContribuyente}" 
+                    oncomplete="PF('dgBuscarCont').hide()"/>
+        </p:dialog>
+        <p:dialog widgetVar="dgBuscar"
+            modal="true" 
+            id="dialBusInm"
+            resizable="false"
+            position="top"
+            width="950"
+            header="Buscar Inmueble">
+            <p:panelGrid columns="7" 
+                         style="margin-left: auto; margin-right: auto;" id="pgInm">
+                <p:outputLabel value="R.M.C."/>
+                <p:inputNumber value="#{inmuebleBean.filtroInmRmc}"
+                               decimalPlaces="0"/>
+                <p:outputLabel value="Nro. C.I."/>
+                <p:inputText value="#{inmuebleBean.filtroInmCedula}"/>
+                <p:outputLabel value="RUC"/>
+                <p:inputText value="#{inmuebleBean.filtroInmRuc}"/>
+                <p:commandButton value="Filtrar"
+                                 actionListener="#{inmuebleBean.filtrarInmueble}"
+                                 process="pgInm"
+                                 update="listaInm"/>
+                <p:outputLabel value="Cta. Cte."/>
+                <p:inputText value="#{inmuebleBean.filtroInmCtaCte}"/>
+                <p:outputLabel value="Nro. Padron"/>
+                <p:inputText value="#{inmuebleBean.filtroInmPadron}"/>
+                <p:outputLabel value="Nro. Finca"/>
+                <p:inputText value="#{inmuebleBean.filtroInmNroFinca}"/>
+                <p:commandButton value="Todos" 
+                                 actionListener="#{inmuebleBean.todosInmueble}"
+                                 process="pgInm"
+                                 update="listaInm"/>
+            </p:panelGrid>
+            <p:dataTable value="#{inmuebleBean.resultFiltroInmuebleList}"
+                         var="fila"
+                         paginator="true"
+                         paginatorPosition="top"
+                         rows="10"
+                         rowKey="#{fila.idInmueble}"
+                         id="listaInm"
+                         selectionMode="single"
+                         selection="#{inmuebleBean.inmuebleSelect}">
+                <p:column headerText="R.M.C">
+                    <h:outputText value="#{fila.idContribuyente.idContribuyente}"/>
+                </p:column>
+                <p:column headerText="Nro. C.I.">
+                    <h:outputText value="#{fila.idContribuyente.cedula}"/>
+                </p:column>
+                <p:column headerText="Nombres">
+                    <h:outputText value="#{fila.idContribuyente.nombres}"/>
+                </p:column>
+                <p:column headerText="Apellidos">
+                    <h:outputText value="#{fila.idContribuyente.apellidos}"/>
+                </p:column>
+                <p:column headerText="RUC">
+                    <h:outputText value="#{fila.idContribuyente.ruc}"/>
+                </p:column>
+                <p:column headerText="Empresa">
+                    <h:outputText value="#{fila.idContribuyente.razonSocial}"/>
+                </p:column>
+                <p:column headerText="Cta. Cte.">
+                    <h:outputText value="#{fila.ctaCte}"/>
+                </p:column>
+                <p:column headerText="Nro. Padron">
+                    <h:outputText value="#{fila.padron}"/>
+                </p:column>
+                <p:column headerText="Nro. Finca">
+                    <h:outputText value="#{fila.nroFinca}"/>
+                </p:column>
+            </p:dataTable>
+                <p:commandButton value="Aceptar"
+                    process="@(#dialBusInm)"
+                    update="pnl tbar"
+                    actionListener="#{inmuebleBean.aceptarSelect}"
+                    oncomplete="PF('dgBuscar').hide()"/>          
+        </p:dialog>    
+        </h:form>
+    </ui:define>                
+</ui:composition>
+

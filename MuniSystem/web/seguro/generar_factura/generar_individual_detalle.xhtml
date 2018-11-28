@@ -1,0 +1,63 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui">
+    <ui:define name="container">
+        <h:form id="form" prependId="false">
+            <p:growl id="ms"/>
+            <b:panel title="Factura Nro. #{generarFacturaContribuyebteBean.comprobanteSelect.idComprobanteCabecera} #{generarFacturaContribuyebteBean.comprobanteSelect.idImpuesto.nombre}, Año #{generarFacturaContribuyebteBean.comprobanteSelect.anio}" 
+                     id="pnl"
+                collapsible="false">
+                <b:panel 
+                    id="pnl2">
+                    <ui:include src="/seguro/generar_factura/datosInmueble.xhtml"/>
+                    <ui:include src="/seguro/generar_factura/datosComercial.xhtml"/>
+                    <ui:include src="/seguro/generar_factura/datosCementerio.xhtml"/>
+                    <ui:include src="/seguro/generar_factura/datosHabilitacion.xhtml"/>
+                    <ui:include src="/seguro/generar_factura/datosRegistro.xhtml"/>
+                </b:panel>
+                <p:dataTable value="#{generarFacturaContribuyebteBean.comprobanteDetallesSelect}"
+                    var="fila"
+                    rowKey="#{fila.idComprobanteDetalle}"
+                    id="lista">
+                    <p:column headerText="Concepto">
+                        <h:outputText value="#{fila.descripcion}"/>
+                    </p:column>
+                    <p:column headerText="Monto">
+                        <h:outputText value="#{fila.monto}">
+                            <f:convertNumber pattern="#,##0"/>
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+                <br/>
+                <p:panelGrid columns="2" style="float: right;">
+                    <p:outputLabel value="Total" />
+                    <h:outputText value="#{generarFacturaContribuyebteBean.total}">
+                        <f:convertNumber pattern="#,##0"/>
+                    </h:outputText>
+                </p:panelGrid>
+            </b:panel>
+            <p:toolbar id="tbar">
+                <f:facet name="left">
+                    <p:commandButton value="Imprimir" 
+                                    icon="ui-icon-print"
+                                    id="nuevo"
+                                    type="button">
+                        <p:printer target="pnl" />
+                    </p:commandButton>
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton title="Salir" 
+                                     action="generar_individual" 
+                                     icon="ui-icon-extlink" 
+                                     ajax="false" 
+                                     immediate="true"/>
+                </f:facet>
+            </p:toolbar>
+        </h:form>
+    </ui:define>                
+</ui:composition>
+

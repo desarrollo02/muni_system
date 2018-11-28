@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cementerio" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="e5070eff-c0a3-456b-ad95-dce8fd13af22">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="RMC" class="java.lang.Integer"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\MuniSystem\\web\\seguro\\reporte\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT * FROM CEMENTERIO WHERE ID_CONTRIBUYENTE = $P{RMC}]]>
+	</queryString>
+	<field name="id_cementerio" class="java.lang.Integer"/>
+	<field name="id_contribuyente" class="java.lang.Integer"/>
+	<field name="fec_alta" class="java.sql.Date"/>
+	<field name="id_usu_alta" class="java.lang.Integer"/>
+	<field name="fec_modif" class="java.sql.Date"/>
+	<field name="id_usu_modif" class="java.lang.Integer"/>
+	<field name="nro_lote" class="java.lang.Integer"/>
+	<field name="valuacion" class="java.lang.Double"/>
+	<field name="id_ubicacion_cementerio" class="java.lang.Integer"/>
+	<detail>
+		<band height="80" splitType="Stretch">
+			<line>
+				<reportElement x="8" y="6" width="580" height="1" uuid="5f0cadd0-5a60-4e6f-90f6-bdbd2a97450e"/>
+			</line>
+			<staticText>
+				<reportElement x="10" y="13" width="100" height="20" uuid="baedd69d-07d1-4777-a4b5-83d414e921a3"/>
+				<text><![CDATA[LOTE CEMENTERIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="22" width="58" height="20" uuid="0eb07219-be90-4532-8b44-38402c0f9887"/>
+				<text><![CDATA[Nro. Lote]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="167" y="22" width="100" height="20" uuid="2e03ac3c-eaf5-4562-81f3-a148e0621fa1"/>
+				<textFieldExpression><![CDATA[$F{nro_lote}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="328" y="23" width="54" height="20" uuid="e62ee8a6-a6b9-402d-b3eb-88d772b821e4"/>
+				<text><![CDATA[Valuacion]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="381" y="23" width="100" height="20" uuid="7631807b-ef38-43eb-844f-464e8bddb5d5"/>
+				<textFieldExpression><![CDATA[$F{valuacion}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="8" y="42" width="580" height="38" uuid="6e8bf37b-4bc3-487e-893c-073de14c9cfc"/>
+				<subreportParameter name="ID_INMUEBLE">
+					<subreportParameterExpression><![CDATA[$F{id_cementerio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "inmueble_comprobantes.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

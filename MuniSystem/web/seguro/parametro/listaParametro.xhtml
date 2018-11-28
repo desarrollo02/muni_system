@@ -1,0 +1,81 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="container">
+        <h1>Parametros</h1>
+        <table width="100%" class="table_1">
+            <h:panelGroup>
+                <form jsfc="h:form" id="listaCrud">
+                    <!--Inicio del diseño del filtro-->
+                    <tr>
+                        <th width="14%">Nombre </th>
+                        <td width="25%">
+                            <input id="inp1" type="text" size="30" maxlength="20" jsfc="h:inputText" value="#{parametroBean.filtroNombre}"/>
+                        </td>
+                        <th width="14%">Valor </th>
+                        <td width="25%">
+                            <input id="inp2" type="text" size="30" maxlength="20" jsfc="h:inputText" value="#{parametroBean.filtroValor}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <div align="left">
+                                <br />
+                                <input id="btnBuscar" type="submit" class="boton" jsfc="h:commandButton"  value="Buscar" action="#{parametroBean.filtrar()}"/>
+                                &#160;
+                                <input id="btnTodos" type="submit" class="boton" jsfc="h:commandButton"  value="Todos" action="#{parametroBean.todos()}"/>
+                                <br />
+                            </div>
+                        </td>
+                    </tr>
+                    <!--fin del diseño del filtro-->
+                    <tr>
+                        <td colspan="4" bgcolor="#FFFFFF">
+                            <div class="dataTableBox">
+                                <div class="head">Paramtros existentes</div>
+                                <div class="body">
+                                    <p:dataTable value="#{parametroBean.resultFiltroList}" 
+                                                 var="fila" rows="10" paginator="true"
+                                                 selection="#{parametroBean.itemSeleccionado}"
+                                                 rowKey="#{fila.idParametro}"
+                                                 paginatorPosition="bottom">
+                                        <p:column selectionMode="single" style="width: 5%"/>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                Nombre
+                                            </f:facet>
+                                            <h:outputText value="#{fila.nombre}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <f:facet name="header">
+                                                Valor
+                                            </f:facet>
+                                            <h:outputText value="#{fila.valor}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="4">
+                            <div align="left">
+                                <h:panelGroup>
+                                    <input class="boton" id="btnEditar" type="submit" align="left" jsfc="h:commandButton" value="Editar" action="editarParametro"/>
+                                    &#160;
+                                </h:panelGroup>
+                            </div>
+                        </td>
+                    </tr>
+                </form>
+            </h:panelGroup>
+        </table>
+    </ui:define>
+</ui:composition>
+
+

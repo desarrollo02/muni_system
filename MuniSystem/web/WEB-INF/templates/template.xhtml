@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title><ui:insert name="title">Muni System</ui:insert></title>
+        <link href="#{facesContext.externalContext.requestContextPath}/resources/css/FF_style.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body style="background-color:white; padding-top: 0;">
+        <!-- ################################### TOP ################################ -->
+        <ui:include src="/resources/inc/header.xhtml">
+            <ui:param name="menuHabilitado" value="S" />
+        </ui:include>
+        <!-- ################################### FIN TOP ################################ -->
+        <!-- ################################### CONTENEDOR ################################ -->
+        <div id="container_container">
+            <div id="container" class="clearfix">
+                
+                    <ui:insert name="container">Default Container</ui:insert>   
+                
+            </div>
+        </div>
+        
+        <!-- ################################### FIN CONTENEDOR ################################ -->
+        <!-- ################################### BOTTOM ################################ -->
+        <ui:include src="/resources/inc/footer.xhtml"/>
+        <!-- ################################### FIN BOTTOM ################################ -->
+    </h:body>
+</html>

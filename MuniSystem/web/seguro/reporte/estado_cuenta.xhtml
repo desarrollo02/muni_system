@@ -1,0 +1,117 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui">
+    <ui:define name="container">
+        <h:form id="form" prependId="false">
+            <b:panel title="Estado de Cuenta" id="pnl"
+                     collapsible="false">
+                <b:panel title="Contribuyente" 
+                    id="pnl2">
+                    <p:panelGrid columns="6">
+                        <p:outputLabel value="R.M.C."/>
+                        <h:panelGroup>
+                            <p:inputText value="#{estadoCuentaBean.contribuyente.idContribuyente}" 
+                                         id="rmc" size="10"/>
+                            <p:commandButton type="button" 
+                                icon="ui-icon-search" 
+                                onclick="PF('dgBuscarCont').show()"/>
+                        </h:panelGroup>
+                        <p:outputLabel value="Nombres"/>
+                        <p:inputText value="#{estadoCuentaBean.contribuyente.nombres}"/>
+                        <p:outputLabel value="Apellidos"/>
+                        <p:inputText value="#{estadoCuentaBean.contribuyente.apellidos}"/>
+                    </p:panelGrid>
+                    <p:toolbar id="tbar">
+                    <f:facet name="left">
+                        <p:commandButton value="Imprimir" 
+                                    icon="ui-icon-print"
+                                    id="imp"
+                                    ajax="false"
+                                    action="#{estadoCuentaBean.descargar}">
+                        </p:commandButton>
+                    </f:facet>
+                    <f:facet name="right">
+                        <p:commandButton title="Salir" 
+                            action="inicio" 
+                            icon="ui-icon-extlink" 
+                            ajax="false" 
+                            immediate="true"/>
+                    </f:facet>
+                </p:toolbar>
+                </b:panel>    
+            </b:panel>
+            <p:growl id="ms"/>
+        </h:form>
+        <p:dialog widgetVar="dgBuscarCont"
+            modal="true" 
+            id="dial"
+            resizable="false"
+            position="top"
+            width="950"
+            header="Buscar Contribuyente">
+            <h:form id="form1" prependId="false">
+            <p:panelGrid columns="7" style="margin-left: auto; margin-right: auto;" id="pg">
+                <p:outputLabel value="R.M.C."/>
+                <p:inputNumber value="#{estadoCuentaBean.filtroRMC}"
+                               decimalPlaces="0"/>
+                <p:outputLabel value="Nro. C.I."/>
+                <p:inputText value="#{estadoCuentaBean.filtroCedula}"/>
+                <p:outputLabel value="Nombres"/>
+                <p:inputText value="#{estadoCuentaBean.filtroNombre}"/>
+                <p:commandButton value="Filtrar"
+                                 actionListener="#{estadoCuentaBean.filtrarContribuyente}"
+                                 process="pg"
+                                 update="lista"/>
+                <p:outputLabel value="Apellidos"/>
+                <p:inputText value="#{estadoCuentaBean.filtroApellido}"/>
+                <p:outputLabel value="RUC"/>
+                <p:inputText value="#{estadoCuentaBean.filtroRuc}"/>
+                <p:outputLabel value="Empresa"/>
+                <p:inputText value="#{estadoCuentaBean.filtroEmpresa}"/>
+                <p:commandButton value="Todos" 
+                                 actionListener="#{estadoCuentaBean.todosContribuyente}"
+                                 process="pg"
+                                 update="lista"/>
+            </p:panelGrid>
+            <p:dataTable value="#{estadoCuentaBean.resultFiltroContribuyenteList}"
+                         var="fila"
+                         paginator="true"
+                         paginatorPosition="top"
+                         rows="10"
+                         rowKey="#{fila.idContribuyente}"
+                         id="lista"
+                         selectionMode="single"
+                         selection="#{estadoCuentaBean.contribuyente}">
+                <p:column headerText="R.M.C">
+                    <h:outputText value="#{fila.idContribuyente}"/>
+                </p:column>
+                <p:column headerText="Nro. C.I.">
+                    <h:outputText value="#{fila.cedula}"/>
+                </p:column>
+                <p:column headerText="Nombres">
+                    <h:outputText value="#{fila.nombres}"/>
+                </p:column>
+                <p:column headerText="Apellidos">
+                    <h:outputText value="#{fila.apellidos}"/>
+                </p:column>
+                <p:column headerText="RUC">
+                    <h:outputText value="#{fila.ruc}"/>
+                </p:column>
+                <p:column headerText="Empresa">
+                    <h:outputText value="#{fila.razonSocial}"/>
+                </p:column>
+            </p:dataTable>
+                <p:commandButton value="Aceptar"
+                    process="@(#dial)"
+                    update="pnl"
+                    actionListener="#{estadoCuentaBean.aceptarSelectContribuyente}" 
+                    oncomplete="PF('dgBuscarCont').hide()"/>
+            </h:form>    
+        </p:dialog>
+    </ui:define>
+</ui:composition> 
+

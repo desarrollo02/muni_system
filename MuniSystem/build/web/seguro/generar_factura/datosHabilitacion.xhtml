@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui">
+    <ui:component>
+        <b:panel title="Datos del Habilitacion" rendered="#{facturaIndividualBean.tipoImpuesto == 'H'}">
+        <p:panelGrid columns="6" rendered="#{facturaIndividualBean.tipoImpuesto == 'H'}"
+            style="margin-left: auto;margin-right: auto;"
+            styleClass="ui-panelgrid-blank">
+            <p:outputLabel value="Chapa"/>
+            <h:outputText value="#{filtroHabilitacionBean.vehiculoSelect.chapa}"/>
+            <p:outputLabel value="Tipo"/>
+            <h:outputText value="#{filtroHabilitacionBean.vehiculoSelect.idTipo.descripcion}"/>
+            <p:outputLabel value="Marca"/>
+            <h:outputText value="#{filtroHabilitacionBean.vehiculoSelect.idMarca.descripcion}"/>
+            <p:outputLabel value="Modelo"/>
+            <h:outputText value="#{filtroHabilitacionBean.vehiculoSelect.idModelo.descripcion}"/>
+            <p:outputLabel value="Año"/>
+            <h:outputText value="#{filtroHabilitacionBean.vehiculoSelect.anio}"/>
+            <p:outputLabel value="Valuacion"/>
+            <h:outputText value="#{filtroHabilitacionBean.valuacion}">
+                <f:convertNumber pattern="#,##0"/>
+            </h:outputText>
+        </p:panelGrid>
+        </b:panel>
+        <b:panel title="Datos del Contribuyente" rendered="#{facturaIndividualBean.tipoImpuesto == 'H'}">
+        <p:panelGrid columns="10"
+            rendered="#{facturaIndividualBean.tipoImpuesto == 'H'}"         
+            style="margin-left: auto;margin-right: auto;"
+            styleClass="ui-panelgrid-blank">
+            <p:outputLabel value="Cedula" 
+                rendered="#{filtroHabilitacionBean.vehiculoSelect.idContribuyente.cedula != null}"/>
+            <h:outputText value="#{filtroHabilitacionBean.vehiculoSelect.idContribuyente.cedula}" 
+                rendered="#{filtroHabilitacionBean.vehiculoSelect.idContribuyente.cedula != null}"/>
+            <p:outputLabel value="Nombre" 
+                rendered="#{filtroHabilitacionBean.vehiculoSelect.idContribuyente.nombres != null}"/>
+            <h:outputText value="#{filtroHabilitacionBean.vehiculoSelect.idContribuyente.nombres}" 
+                rendered="#{filtroHabilitacionBean.vehiculoSelect.idContribuyente.nombres != null}"/>
+            <p:outputLabel value="Apellido" 
+                rendered="#{filtroHabilitacionBean.vehiculoSelect.idContribuyente.apellidos != null}"/>
+            <h:outputText value="#{filtroHabilitacionBean.vehiculoSelect.idContribuyente.apellidos}" 
+                rendered="#{filtroHabilitacionBean.vehiculoSelect.idContribuyente.apellidos != null}"/>
+            <p:outputLabel value="R.U.C." 
+                rendered="#{filtroHabilitacionBean.vehiculoSelect.idContribuyente.ruc != null}"/>
+            <h:outputText value="#{filtroHabilitacionBean.vehiculoSelect.idContribuyente.ruc}" 
+                rendered="#{filtroHabilitacionBean.vehiculoSelect.idContribuyente.ruc != null}"/>
+            <p:outputLabel value="Empresa" 
+                rendered="#{filtroHabilitacionBean.vehiculoSelect.idContribuyente.razonSocial != null}"/>
+            <h:outputText value="#{filtroHabilitacionBean.vehiculoSelect.idContribuyente.razonSocial}" 
+                rendered="#{filtroHabilitacionBean.vehiculoSelect.idContribuyente.razonSocial != null}"/>
+        </p:panelGrid>
+        </b:panel>    
+    </ui:component>
+</html>    
+

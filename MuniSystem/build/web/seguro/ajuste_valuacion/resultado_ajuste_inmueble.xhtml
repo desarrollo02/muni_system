@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    <ui:component>
+        <p:dataTable value="#{ajusteBean.ajustesImuebles}"
+                var="fila"
+                id="talba"
+                rowKey="#{fila.idInmuebleValuacion}">
+                <p:column headerText="Cta. Cte.">
+                    <h:outputText value="#{fila.idInmueble.ctaCte}"/>
+                </p:column>
+                <p:column headerText="Nro. Finca">
+                    <h:outputText value="#{fila.idInmueble.nroFinca}"/>
+                </p:column>
+                <p:column headerText="Padron">
+                    <h:outputText value="#{fila.idInmueble.padron}"/>
+                </p:column>
+                <p:column headerText="Año">
+                    <h:outputText value="#{fila.anio}"/>
+                </p:column>
+                <p:column headerText="% Ajuste">
+                    <h:outputText value="#{fila.porcentajeAjuste}"/>
+                </p:column>
+                <p:column headerText="Valor Anterior">
+                    <h:outputText value="#{fila.valorViejoMonto}">
+                        <f:convertNumber pattern="#,##0"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Valor Actual">
+                    <h:outputText value="#{fila.valorNuevoMonto}">
+                        <f:convertNumber pattern="#,##0"/>
+                    </h:outputText>
+                </p:column>
+            </p:dataTable>
+    </ui:component>
+</html>    
+

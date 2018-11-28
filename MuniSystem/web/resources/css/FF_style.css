@@ -1,0 +1,340 @@
+/* 
+Proyecto: UNICARD
+disenho y construccion: Gustavo Antunez
+E-mail: gustavoantunez@gmail.com
+fecha: 02/10/2008
+Mod 1: 08/01/2009
+Mod 2: -
+*/ 
+
+/* ////////////// R E S E T //////////////// */
+* { padding: 0; margin: 0; }
+
+table { border-spacing: 0px;	border-collapse: collapse; }
+/*
+* html img,* html .png {
+	behavior: expression(( this . runtimeStyle . behavior = "none") &&( this
+		. pngSet ? this . pngSet = true :( this . nodeName ==   "IMG" &&  
+		this . src . toLowerCase() . indexOf('.png') > -1 ?( this .
+		runtimeStyle . backgroundImage =   "none", this . runtimeStyle .
+		filter =   "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='"
+		+   this . src +   "', sizingMethod='image')", this . src =  
+		"transparent.gif" ) :( this . origBg =   this . origBg ?   this .
+		origBg : this . currentStyle . backgroundImage . toString() .
+		replace('url("', '') . replace('")', ''), this . runtimeStyle . filter
+		=   "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='" +  
+		this . origBg +   "', sizingMethod='crop')", this . runtimeStyle .
+		backgroundImage =   "none" ) ), this . pngSet = true ) );
+}
+*/
+/* CLEAR FIX */
+.clearfix:after {
+	content:".";
+	display:block;	height:0;
+	clear:both;	visibility:hidden;
+}
+.clearfix {	display:inline-block; }
+.clearfix {	display:block; }
+* html .clearfix { height:1px; }
+
+
+/* FORMULARIOS */
+input,textarea,select,option {
+	color: #000;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 13px;
+}
+input {
+	font-size: 90%;
+	padding: 3px;
+}
+textarea {
+	font-size: 100%;
+	padding: 3px;
+}
+input.check {}
+select {
+	font-size: 90%;
+	padding: 1px;
+	font-weight: normal;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+}
+option {	padding-right: 12px; }
+
+.alert{ 
+	color: #FF4500; 
+}
+fieldset{
+	padding: 12px;
+	border: 1px dotted #EBEBEB;
+}
+legend{
+	display: none;
+}
+/* FIN FORMULARIOS */
+
+/* ############################################################*/
+/* #################### ESTILOS GENERALES ##################### */
+/* ############################################################*/
+
+body{ 
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px; color: #000;
+	background: #002B59 url(../img/bg_body.jpg) repeat-x;
+}
+p { margin-bottom: 13px; }
+
+a:link, a:visited{
+	color: #8AC63E; 
+}
+a:hover, a:active{
+	color: #6D9C30; 
+}
+
+hr {
+	background-color: #EDEDED;
+	height: 1px;
+	border: 0;
+	color: #EDEDED;
+	margin: 6px 0;
+}
+h1,h2,h3,h4,h5,h6{
+	color: #4E4E4E; 
+	font-family: Arial, Helvetica, sans-serif;
+}
+h1{ font-size: 23px; }
+h2{ font-size: 21px; }
+h3{ font-size: 19px; }
+h4{ font-size: 17px; }
+h5{ font-size: 15px; }
+h6{ font-size: 13px; }
+
+h1 a:link, h1 a:visited, h2 a:link, h2 a:visited, h3 a:link, h3 a:visited, 
+h4 a:link, h4 a:visited, h5 a:link, h5 a:visited, h6 a:link, h6 a:visited{
+	color: #000 !important;
+}
+h1 a:hover, h1 a:active, h2 a:hover, h2 a:active, h3 a:hover, h3 a:active, 
+h4 a:hover, h4 a:active, h5 a:hover, h5 a:active, h6 a:hover, h6 a:active{
+	color: #8AC63E !important;
+}
+
+ul, ol{ list-style: inside; }
+
+/* ############################################################*/
+/* ################### FIN ESTILOS GENERALES ################## */
+/* ############################################################*/
+
+/* ############################################################*/
+/* ########################## TOP  ############################ */
+/* ############################################################*/
+
+a:link, a:visited { color: #000; }
+a:hover, a:active { color: #C00; }
+
+.boton{
+	font-weight: bold;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px; text-align: center;
+        padding: 3px 12px;
+        width: 80px;
+}
+
+.boton:hover{ color: #FFF;
+            background-color: #759A2C;
+}
+#container_top{ 
+	background: #898989;
+	height: 50px; text-align: center;
+}
+#top{
+	width: 920px; text-align: left; color: #FFF;
+	margin: auto;
+}
+
+#logo{ 
+	padding: 10px 0 0 0; font-size: 42px; color: #fff;
+	float: left;
+}
+
+#barra_menu{
+	margin: 0px 0 0 0;
+}
+
+
+
+
+
+/* FIN COLORES DEL MENU HORIZONTAL */
+/* ############################################################*/
+/*  ########################## FIN TOP  ####################### */
+/* ############################################################*/
+
+/* ############################################################*/
+/*  ########################## CUERPO  ######################## */
+/* ############################################################*/
+
+#container_container{ 
+	margin-top: 1px; text-align: center;
+	background: #FAFAFA url(../img/bg_body.jpg) repeat-x; 
+}
+#container{
+	width: 920px; margin: auto;
+	text-align: left;
+	padding: 10px 0;
+}
+#col_ppal, #col_izq{
+	float: left; display: block;
+}
+#col_izq {
+	padding: 10px;
+	background: #FAFAFA;
+}
+#col_ppal{
+	width: 704px; 
+}
+#col_ppal ul{
+	padding: 12px;
+}
+#col_ppal li{ list-style: inside; }
+#col_izq{ width: 180px; }
+
+#col_izq ul{
+	border-top: 1px dashed #EBEBEB;
+	margin-bottom: 6px;
+}
+#col_izq li{ 
+	list-style: none;
+	border-bottom: 1px dashed #EBEBEB;
+}
+
+/* COLUMNA MENU */
+#col_izq h4{
+	font-size: 14px; color: #8AC63E;
+	padding: 6px 0 12px 0;
+}
+#col_izq a:link,#col_izq a:visited{
+	text-decoration: none; display: block;
+	padding: 6px 0;
+} 
+#col_izq a:hover,#col_izq a:active{
+	color: #FFF;
+	background: #8AC63E; padding: 6px;
+} 
+/* FIN COLUMNA MENU */
+
+/* LOGIN */
+#login {
+	padding: 50px 200px;
+	background: #FAFAFA;
+}
+/* FIN LOGIN */
+
+/* TABLAS */
+
+
+.dataTableBox {
+	margin: 10px auto;
+	padding: 0px;
+	border: 1px solid #D3D3D3;	
+}
+
+.dataTableBox .head {       
+    background: #D3D3D3;
+    color: Gray;
+    font-weight: bold;
+    font-size: 13px;
+    text-align: left;
+    padding: 3px 6px;
+}
+
+.dataTableBox .body {
+   overflow: auto;
+}
+
+.dataTableBox table {
+	border: 1px solid #D3D3D3;
+	width: 100%;
+	font-size: 11px;
+}
+
+.dataTableBox table td {
+    border: 1px solid #D3D3D3;
+    padding: 3px 6px;
+}
+
+
+
+.dataTableBox .foot {
+        color: #999;
+        background: #F5FAFC;
+        text-align: left;
+        padding: 1px 6px;
+        font-size: 11px;
+}
+.dataTableBox .foot a:link, .dataTableBox .foot a:visited{color: #999; }
+.dataTableBox .foot a:hover, .dataTableBox .foot a:active{color: #333; }
+
+.table_1 {
+	border-top: 1px solid #EAF0FB; 
+	border-left: 1px solid #EAF0FB; 
+	width: 100%; margin: 10px auto;
+	font-size: 11px;
+	background: #FFF;
+}
+.table_1 td, .table_1 th {
+	border-right: 1px solid #EAF0FB; 
+	border-bottom: 1px solid #EAF0FB; 
+	padding: 4px 6px;
+}
+.table_1 th {
+	background: #EAF0FB; color: #005985; font-weight: bold; font-size: 13px; text-align: left;
+}
+.table_1 tfoot{color: #999; background: #F5FAFC; }
+.table_1 tfoot a:link, .table_1 tfoot a:visited{color: #999; }
+.table_1 tfoot a:hover, .table_1 tfoot a:active{color: #333; }
+.tr_table_1{
+	color: #005985; font-size: 10px;
+	background: #F8FCFD;
+}
+
+.table_1 th  a:link, .table_1 th a:visited{
+	float: right; font-weight: normal; color: #0066CC; font-size: 11px;
+}
+.table_1 th  a:hover, .table_1 th a:active{
+	color: #D40C1E;
+}
+/* TABLAS */
+
+/* ############################################################*/
+/*  ########################## FIN CUERPO  #################### */
+/* ############################################################*/
+
+/* ############################################################*/
+/*  ########################## BOTTOM  ######################## */
+/* ############################################################*/
+#container_bottom{ 
+	text-align: center;
+	border-top: 3px solid #CCC;
+	height: 175px;
+	background: #DDD;
+}
+#bottom{
+	width: 920px; margin: auto;
+	text-align: left; color: #999;
+	padding: 24px 0; font-size: 12px;
+}
+#bottom #bl, #bottom #br{
+	float: left; display: block;
+}
+#bottom #bl{
+	width: 60%;
+}
+#bottom #br{
+	width: 40%; text-align: right;
+}
+#bottom a{
+	color: #999;
+}
+/* ############################################################*/
+/*  ########################## FIN BOTTOM  #################### */
+/* ############################################################*/

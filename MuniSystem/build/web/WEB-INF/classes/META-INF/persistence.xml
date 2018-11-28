@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="MuniSystemPU" transaction-type="RESOURCE_LOCAL">
+    <non-jta-data-source>java:/PostgresDS</non-jta-data-source>
+    <class>jpa.Barrio</class>
+    <class>jpa.Cementerio</class>
+    <class>jpa.Comercio</class>
+    <class>jpa.ComercioRubro</class>
+    <class>jpa.ComprobanteCabecera</class>
+    <class>jpa.ComprobanteDetalle</class>
+    <class>jpa.Contribuyente</class>
+    <class>jpa.Inmueble</class>
+    <class>jpa.InmuebleCategoria</class>
+    <class>jpa.Marcas</class>
+    <class>jpa.Modelos</class>
+    <class>jpa.Pantalla</class>
+    <class>jpa.Parametros</class>
+    <class>jpa.Rol</class>
+    <class>jpa.RolPantalla</class>
+    <class>jpa.TipoComprobante</class>
+    <class>jpa.Usuario</class>
+    <class>jpa.VehiculoTipo</class>
+    <class>jpa.VehiculoValuacion</class>
+    <class>jpa.Vehiculo</class>
+    <class>jpa.RegistroCategoria</class>
+    <class>jpa.RegistroConducir</class>
+    <class>jpa.Concepto</class>
+    <class>jpa.Impuesto</class>
+    <class>jpa.ImpuestoDetalle</class>
+    <class>jpa.PeriodoCobro</class>
+    <class>jpa.UbicacionCementerio</class>
+    <class>jpa.UnidadMedida</class>
+    <class>jpa.InmuebleValuacionAjuste</class>
+    <class>jpa.VehiculoValuacionAjuste</class>
+    <class>jpa.CementerioAjuste</class>
+    <class>jpa.Tributo</class>
+    <class>jpa.TributoDetalle</class>
+    <class>jpa.TributoMulta</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties/>
+  </persistence-unit>
+</persistence>

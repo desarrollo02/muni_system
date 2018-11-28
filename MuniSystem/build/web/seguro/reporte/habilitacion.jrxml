@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="habilitacion" pageWidth="595" pageHeight="842" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="00b96e14-0742-495b-acbf-0dc06283d6bf">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="RMC" class="java.lang.Integer"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\MuniSystem\\web\\seguro\\reporte\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT V.ID_VEHICULO,V.CHAPA, V.CHASIS, T.DESCRIPCION TIPO, M.DESCRIPCION MARCA, N.DESCRIPCION MODELO, V.ANIO, W.MONTO
+FROM VEHICULO V, VEHICULO_TIPO T, MARCAS M, MODELOS N, VEHICULO_VALUACION W
+WHERE
+V.ID_TIPO = T.ID_CATEGORIA
+AND
+V.ID_MARCA = M.ID_MARCA
+AND
+V.ID_MODELO = N.ID_MODELO
+AND
+V.ANIO = W.ANIO
+AND
+V.ID_MARCA = W.ID_MARCA
+AND
+V.ID_MODELO = W.ID_MODELO
+AND
+V.ID_CONTRIBUYENTE = $P{RMC}]]>
+	</queryString>
+	<field name="id_vehiculo" class="java.lang.Integer"/>
+	<field name="chapa" class="java.lang.String"/>
+	<field name="chasis" class="java.lang.String"/>
+	<field name="tipo" class="java.lang.String"/>
+	<field name="marca" class="java.lang.String"/>
+	<field name="modelo" class="java.lang.String"/>
+	<field name="anio" class="java.lang.Integer"/>
+	<field name="monto" class="java.lang.Double"/>
+	<detail>
+		<band height="150" splitType="Stretch">
+			<line>
+				<reportElement x="8" y="6" width="580" height="1" uuid="7e35b9c2-9356-4557-a339-57ba227802ef"/>
+			</line>
+			<staticText>
+				<reportElement x="9" y="11" width="131" height="20" uuid="fbd506a7-0efd-402c-b791-fa3ab6dddf61"/>
+				<text><![CDATA[HABILITACION VEHICULO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="88" y="32" width="70" height="20" uuid="8a8f5799-a012-48ca-bd0d-b38d2e6f6495"/>
+				<text><![CDATA[Chapa]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="157" y="32" width="100" height="20" uuid="b901229e-4337-49eb-9dda-dc4fa25da990"/>
+				<textFieldExpression><![CDATA[$F{chapa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="88" y="51" width="70" height="20" uuid="1acd795a-22a5-4e4c-9c72-20b877fd7cc5"/>
+				<text><![CDATA[Nro. Chasis]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="157" y="51" width="100" height="20" uuid="20517904-7767-4e46-ab07-f6e509e7ee2b"/>
+				<textFieldExpression><![CDATA[$F{chasis}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="88" y="70" width="70" height="20" uuid="cda07e36-141b-4dfb-8188-6bf252eb9c8f"/>
+				<text><![CDATA[tipo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="157" y="70" width="100" height="20" uuid="e729f4fb-0eea-49d5-adad-01285d22e36a"/>
+				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="88" y="89" width="70" height="20" uuid="a3f9d854-e1c0-4937-8bec-fe001d3e2a74"/>
+				<text><![CDATA[Marca]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="157" y="89" width="153" height="20" uuid="fbe93b53-f3c5-436c-9496-4d91874f6e92"/>
+				<textFieldExpression><![CDATA[$F{marca}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="352" y="32" width="70" height="20" uuid="8822d89b-4f43-4a42-baea-38e306249b0f"/>
+				<text><![CDATA[Modelo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="421" y="32" width="100" height="20" uuid="925f45b7-f3cf-4356-b67b-4b74df4783a7"/>
+				<textFieldExpression><![CDATA[$F{modelo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="352" y="51" width="70" height="20" uuid="6dbfaa5e-7af5-4075-97af-61f3e1affe72"/>
+				<text><![CDATA[Año]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="421" y="51" width="100" height="20" uuid="4576ff53-d323-4785-86fd-a14c360c838d"/>
+				<textFieldExpression><![CDATA[$F{anio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="352" y="70" width="70" height="20" uuid="608e8a93-346c-4d52-8ffa-357d176b7912"/>
+				<text><![CDATA[Valuacion]]></text>
+			</staticText>
+			<textField pattern="#,##0">
+				<reportElement x="421" y="70" width="100" height="20" uuid="dacf820a-4294-406b-99de-403a909d7aa6"/>
+				<textFieldExpression><![CDATA[$F{monto}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="8" y="109" width="580" height="41" uuid="062b6fc2-d7f3-4ece-85fc-6a4dd900db5c"/>
+				<subreportParameter name="ID_INMUEBLE">
+					<subreportParameterExpression><![CDATA[$F{id_vehiculo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "inmueble_comprobantes.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

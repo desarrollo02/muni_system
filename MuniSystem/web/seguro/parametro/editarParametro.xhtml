@@ -1,0 +1,48 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <ui:define name="container">
+        <h1>Editar Parametro</h1>
+        <table width="100%" class="table_1">
+            <h:panelGroup>
+                <form jsfc="h:form" id="detalleCrud">
+                            <tr>
+                                <td colspan="4" bgcolor="#FFFFFF">
+                                    <div class="dataTableBox">
+                                        <div class="head">Datos Parametro</div>
+                                        <div class="body">
+                                            <table>
+                                                <tr>
+                                                    <th>Nombre</th>
+                                                    <td><input type="text" id="nombre" value="#{parametroBean.itemSeleccionado.nombre}" required="true" size="40" maxlength="32" jsfc="h:inputText" disabled="true"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Valor</th>
+                                                    <td><input type="text" id="valor" value="#{parametroBean.itemSeleccionado.valor}" required="true" size="40" maxlength="50" jsfc="h:inputText" /></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4"></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4"></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" align="right">
+                                    <input jsfc="h:commandButton" type="submit" class="boton" value="Guardar" action="#{parametroBean.guardar()}" />&#160;
+                                    <input jsfc="h:commandButton" type="submit" class="boton" value="Cancelar" action="#{parametroBean.irVistaLista()}" immediate="true"/>
+                                </td>
+                            </tr>
+                        </form>
+            </h:panelGroup>
+        </table>
+    </ui:define>
+</ui:composition>
+
+

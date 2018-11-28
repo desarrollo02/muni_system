@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui">
+    <ui:component>
+        <b:panel title="Datos del Cementerio" rendered="#{facturaIndividualBean.tipoImpuesto == 'C'}">
+        <p:panelGrid columns="6" rendered="#{facturaIndividualBean.tipoImpuesto == 'C'}"
+            style="margin-left: auto;margin-right: auto;"
+            styleClass="ui-panelgrid-blank">
+            <p:outputLabel value="Cementerio"/>
+            <h:outputText value="#{filtroLoteCementerioBean.cementerioSelect.idUbicacionCementerio.nombre}"/>    
+            <p:outputLabel value="Nro. de Lote"/>
+            <h:outputText value="#{filtroLoteCementerioBean.cementerioSelect.nroLote}"/>
+            <p:outputLabel value="Valuacion"/>
+            <h:outputText value="#{filtroLoteCementerioBean.cementerioSelect.valuacion}"/>    
+        </p:panelGrid>
+        </b:panel>
+        <b:panel title="Datos del Contribuyente" rendered="#{facturaIndividualBean.tipoImpuesto == 'C'}">
+        <p:panelGrid columns="10"
+            rendered="#{facturaIndividualBean.tipoImpuesto == 'C'}"         
+            style="margin-left: auto;margin-right: auto;"
+            styleClass="ui-panelgrid-blank">
+            <p:outputLabel value="Cedula" 
+                rendered="#{filtroLoteCementerioBean.cementerioSelect.idContribuyente.cedula != null}"/>
+            <h:outputText value="#{filtroLoteCementerioBean.cementerioSelect.idContribuyente.cedula}" 
+                rendered="#{filtroLoteCementerioBean.cementerioSelect.idContribuyente.cedula != null}"/>
+            <p:outputLabel value="Nombre" 
+                rendered="#{filtroLoteCementerioBean.cementerioSelect.idContribuyente.nombres != null}"/>
+            <h:outputText value="#{filtroLoteCementerioBean.cementerioSelect.idContribuyente.nombres}" 
+                rendered="#{filtroLoteCementerioBean.cementerioSelect.idContribuyente.nombres != null}"/>
+            <p:outputLabel value="Apellido" 
+                rendered="#{filtroLoteCementerioBean.cementerioSelect.idContribuyente.apellidos != null}"/>
+            <h:outputText value="#{filtroLoteCementerioBean.cementerioSelect.idContribuyente.apellidos}" 
+                rendered="#{filtroLoteCementerioBean.cementerioSelect.idContribuyente.apellidos != null}"/>
+            <p:outputLabel value="R.U.C." 
+                rendered="#{filtroLoteCementerioBean.cementerioSelect.idContribuyente.ruc != null}"/>
+            <h:outputText value="#{filtroLoteCementerioBean.cementerioSelect.idContribuyente.ruc}" 
+                rendered="#{filtroLoteCementerioBean.cementerioSelect.idContribuyente.ruc != null}"/>
+            <p:outputLabel value="Empresa" 
+                rendered="#{filtroLoteCementerioBean.cementerioSelect.idContribuyente.razonSocial != null}"/>
+            <h:outputText value="#{filtroLoteCementerioBean.cementerioSelect.idContribuyente.razonSocial}" 
+                rendered="#{filtroLoteCementerioBean.cementerioSelect.idContribuyente.razonSocial != null}"/>
+        </p:panelGrid>
+        </b:panel>    
+    </ui:component>
+</html>    
+

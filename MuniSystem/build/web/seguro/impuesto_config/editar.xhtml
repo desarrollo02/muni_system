@@ -1,0 +1,100 @@
+<ui:composition template="/WEB-INF/templates/template.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:b="http://bootsfaces.net/ui">
+    <ui:define name="container">
+        <h:form id="form" prependId="false">
+            <p:growl id="ms"/>
+            <b:panel title="Editar Tributo" id="pnl">
+                <p:panelGrid columns="4" style="margin-left: auto; margin-right: auto;">
+                    <p:outputLabel value="Nombre del Tributo"/>
+                    <h:outputText value="#{impuestoConfigBean.impuesto.nombre}" 
+                        id="nombre" />
+                    <p:outputLabel value="Tipo"/>
+                    <p:selectOneMenu value="#{impuestoConfigBean.impuesto.tipo}"
+                        id="tipo">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}" />
+                        <f:selectItem itemLabel="Impuesto" itemValue="Impuesto" />
+                        <f:selectItem itemLabel="Tasa" itemValue="Tasa" />
+                        <f:selectItem itemLabel="Contribucion por mejoras" itemValue="Contribucion por mejoras" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Periodo Cobro"/>
+                    <p:selectOneMenu value="#{impuestoConfigBean.impuesto.idPeriodoCobro}"
+                        id="perCobro" 
+                        converter="PeriodoCobroConverter"   >
+                        <f:selectItems value="#{impuestoConfigBean.pedriodosCobro}" />
+                    </p:selectOneMenu>
+                </p:panelGrid>
+                <br/>
+                <p:commandButton value="Agregar" onclick="PF('dgAgregar').show()"/>
+                <p:dataTable value="#{impuestoConfigBean.impuestoDetalles}"
+                             var="fila"
+                             id="tabCon"
+                             selectionMode="single"
+                             rowKey="#{fila.idFormaPago}">
+                    <p:column headerText="Concepto">
+                        <h:outputText value="#{fila.idConcepto.descripcion}"/>
+                    </p:column>
+                    <p:column headerText="Unidad de Medida">
+                        <h:outputText value="#{fila.idUnidadMedida.nombre}"/>
+                    </p:column>
+                    <p:column headerText="Valor">
+                        <h:outputText value="#{fila.monto}"/>
+                    </p:column>
+                    <p:column style="width:52px;text-align: center">
+                        <p:commandButton  icon="ui-icon-trash" title="Eliminar" action="#{impuestoConfigBean.eliminar(fila)}" ajax="false">
+                            
+                        </p:commandButton>
+                    </p:column>
+                </p:dataTable>
+             <p:toolbar id="tbar">
+                <f:facet name="right">
+                    <p:commandButton title="Guardar" 
+                                     icon="ui-icon-disk"  
+                                     actionListener="#{impuestoConfigBean.actualizar}" 
+                                     update=":form"/>
+                    <p:commandButton title="Salir" 
+                                     action="#{impuestoConfigBean.irVista()}" 
+                                     icon="ui-icon-extlink" 
+                                     ajax="false" 
+                                     immediate="true"/>
+                </f:facet>
+            </p:toolbar>   
+            </b:panel>
+        </h:form>
+        <p:dialog widgetVar="dgAgregar"
+                modal="true" 
+                id="dial"
+                resizable="false"
+                position="top"
+                width="950"
+                header="Agregar Concepto">
+            <h:form prependId="false">
+                <p:panelGrid columns="2" style="margin-left: auto; margin-right: auto;" id="pg">
+                    <p:outputLabel value="Concepto"/>
+                    <p:selectOneMenu value="#{impuestoConfigBean.impuestoDetalle.idConcepto}"
+                        id="concepto" 
+                        converter="ConceptoConverter"   >
+                        <f:selectItems value="#{impuestoConfigBean.conceptos}" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Unidad Medida"/>
+                    <p:selectOneMenu value="#{impuestoConfigBean.impuestoDetalle.idUnidadMedida}"
+                        id="um" 
+                        converter="UnidadMedidaConverter"   >
+                        <f:selectItems value="#{impuestoConfigBean.unidadesMedidas}" />
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Valor"/>
+                    <p:inputNumber value="#{impuestoConfigBean.impuestoDetalle.monto}" decimalPlaces="0"/>
+                </p:panelGrid>
+            
+                <p:commandButton value="Guardar"
+                                 process="@form" update="@form ms tabCon"
+                    actionListener="#{impuestoConfigBean.guardar}"/>
+            </h:form>
+        </p:dialog>        
+    </ui:define>                
+</ui:composition>
+
