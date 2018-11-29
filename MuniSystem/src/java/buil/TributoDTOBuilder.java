@@ -26,6 +26,10 @@ public class TributoDTOBuilder {
         tributoDTO.setPeriodo(tributo.getIdPeriodoCobro().getDescripcion());
         tributoDTO.setPrimerVencimiento(tributo.getPrimerVencimiento());
         tributoDTO.setRegistrar(tributo.isRegistrar());
+        if(tributo.getIdUnidadMedida() != null){
+            tributoDTO.setUnidadMedida(tributo.getIdUnidadMedida().getNombre());
+        }    
+        tributoDTO.setValor(tributo.getValor());
         return this;
     }
     

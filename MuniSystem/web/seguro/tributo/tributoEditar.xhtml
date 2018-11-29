@@ -47,6 +47,13 @@
                         <f:selectItem itemLabel="Comercios" itemValue="PATENTE"/>
                         <f:selectItem itemLabel="Sin Registro" itemValue="NINGUNO"/>
                     </p:selectOneMenu>
+                    <p:outputLabel value="Unidad de Medida"/>
+                    <p:selectOneMenu value="#{tributoBean.tributoDTOSelect.unidadMedida}">
+                        <f:selectItem itemLabel="Seleccionar" itemValue="#{null}"/>
+                        <f:selectItems value="#{tributoBean.unidades}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Valor"/>
+                    <p:inputText value="#{tributoBean.tributoDTOSelect.valor}"/>
                 </p:panelGrid>
             </b:panel>
             <p:toolbar id="tbarm">

@@ -81,6 +81,8 @@ public class TributoController {
             tributo.setIdPeriodoCobro(periodoCobroDAO.getPeriodoCobro(tributoDTO.getPeriodo()));
             tributo.setTipo(tributoDTO.getTipo());
             tributo.setPrimerVencimiento(tributoDTO.getPrimerVencimiento());
+            tributo.setIdUnidadMedida(unidadMedidaDAO.getUnidadMedida(tributoDTO.getUnidadMedida()));
+            tributo.setValor(tributoDTO.getValor());
             tributoDAO.guardar(tributo);
             TributoMulta tributoMulta;
             for(MultaDTO multa : tributoDTO.getMultas()){
@@ -124,6 +126,8 @@ public class TributoController {
             tributo.setTipo(tributoDTO.getTipo());
             tributo.setPrimerVencimiento(tributoDTO.getPrimerVencimiento());
             tributo.setRegistrar(tributoDTO.getRegistrar());
+            tributo.setIdUnidadMedida(unidadMedidaDAO.getUnidadMedida(tributoDTO.getUnidadMedida()));
+            tributo.setValor(tributoDTO.getValor());
             tributoDAO.actualizar(tributo);
             TributoMulta tributoMulta;
             multaDAO.eliminarMultas(tributo);

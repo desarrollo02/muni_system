@@ -42,38 +42,47 @@ public class GenerarFacturaController {
     public List<FacturaDTO> generarComprobantes(TributoConRegistro registro, Integer anio, String usuario){
         List<BaseCalculo> listaBase=null;
         Tributo tributo = tributoDAO.getTributoPorLugarDeRegistro(registro);
-        if(registro == TributoConRegistro.INMOBILIARIO){
-            listaBase = baseCalculoDAO.getBaseCalculoInmueble();       
-        }
-        List<FacturaDTO> facturasDTOs = new ArrayList<>();
-        for(BaseCalculo baseCalculo : listaBase){
-            for(int i = 1; i < tributo.getIdPeriodoCobro().getValor();i++){
-                ComprobanteCabecera cabecera = new ComprobanteCabecera();
-                cabecera.setAnio(anio);
-                cabecera.setAnulado(Boolean.FALSE);
-                cabecera.setFechaAlta(new Date());
-                cabecera.setUsuarioAlta(usuario);
-                cabecera.setPeriodo(i);
-                Calendar fecha = Calendar.getInstance();
-                fecha.set(Calendar.DAY_OF_MONTH, 1);
-                if(i==1){
-                    fecha.set(anio, tributo.getPrimerVencimiento() -1, 1);
-                }else{
-                    Integer mes = 12/tributo.getIdPeriodoCobro().getValor() + tributo.getPrimerVencimiento();
-                    fecha.set(anio, mes -1, 1);
-                }    
-                cabecera.setVencimiento(fecha.getTime());
-                cabecera.setIdTributo(tributo);
-                cabecera.setId_ref(baseCalculo.getIdRef());
-                comprobanteDAO.guardar(cabecera);
-                //Primero guardar el comprobante detalle del impuesto principal y luego los anexos en un for
-                //Se debe calcular multa si hace falta
-                ComprobanteDetalle detalle = new ComprobanteDetalle();
-                detalle.setIdTributo(tributo);
-                detalle.setIdComprobanteCab(cabecera);
-                //detalle.setMonto(baseCalculo.getValorBase() * tributo.);//se calcula solo el monto la multa en otro detalle
+        em.getTransaction().begin();
+            if(registro == TributoConRegistro.INMOBILIARIO){
+                listaBase = baseCalculoDAO.getBaseCalculoInmueble();       
             }
-        }
+            List<FacturaDTO> facturasDTOs = new ArrayList<>();
+            for(BaseCalculo baseCalculo : listaBase){
+                for(int i = 1; i <= tributo.getIdPeriodoCobro().getValor();i++){
+                    ComprobanteCabecera cabecera = new ComprobanteCabecera();
+                    cabecera.setAnio(anio);
+                    cabecera.setAnulado(Boolean.FALSE);
+                    cabecera.setFechaAlta(new Date());
+                    cabecera.setUsuarioAlta(usuario);
+                    cabecera.setPeriodo(i);
+                    Calendar fecha = Calendar.getInstance();
+                    fecha.set(Calendar.DAY_OF_MONTH, 1);
+                    if(i==1){
+                        fecha.set(anio, tributo.getPrimerVencimiento() -1, 1);
+                    }else{
+                        Integer mes = 12/tributo.getIdPeriodoCobro().getValor() + tributo.getPrimerVencimiento();
+                        fecha.set(anio, mes -1, 1);
+                    }    
+                    cabecera.setVencimiento(fecha.getTime());
+                    cabecera.setIdTributo(tributo);
+                    cabecera.setId_ref(baseCalculo.getIdRef());
+                    cabecera.setIdContribuyente(baseCalculo.getTitular());
+                    comprobanteDAO.guardar(cabecera);
+                    //Primero guardar el comprobante detalle del impuesto principal y luego los anexos en un for
+                    //Se debe calcular multa si hace falta
+                    ComprobanteDetalle detalle = new ComprobanteDetalle();
+                    detalle.setIdTributo(tributo);
+                    detalle.setIdComprobanteCab(cabecera);
+                    if(tributo.getIdUnidadMedida().getNombre().equals("Porcentaje del Valor")){
+                        detalle.setMonto(baseCalculo.getValorBase() * tributo.getValor()/100);
+                    }else{
+                        detalle.setMonto(Double.parseDouble(tributo.getValor().toString()));
+                    }
+                    comprobanteDAO.guardar(detalle);
+                    //se calcula solo el monto de la multa en otro detalle
+                }
+            }
+        em.getTransaction().commit();
         return facturasDTOs;
     }    
 }

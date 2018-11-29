@@ -2,6 +2,7 @@ package dao;
 
 import javax.persistence.EntityManager;
 import jpa.ComprobanteCabecera;
+import jpa.ComprobanteDetalle;
 
 public class ComprobanteDAO {
     
@@ -13,5 +14,9 @@ public class ComprobanteDAO {
     
     public void guardar(ComprobanteCabecera cabecera){
         em.persist(cabecera);
+    }
+    
+    public void guardar(ComprobanteDetalle detalle){
+        em.persist(detalle);
     }
 }
