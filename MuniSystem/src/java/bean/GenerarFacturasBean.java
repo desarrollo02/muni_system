@@ -32,6 +32,10 @@ public class GenerarFacturasBean implements Serializable {
             facturas = controller.generarComprobantes(TributoConRegistro.INMOBILIARIO, anio, "admin");
         }
     }
+    
+    public String mostrarDetalle(FacturaDTO factura){
+        return null;
+    }
 
     public String getNombreTributoSelect() {
         return nombreTributoSelect;

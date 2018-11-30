@@ -45,15 +45,15 @@
             </p:toolbar>
             <b:panel title="Facturas Generadas" id="pnl2"
                 collapsible="false">
-                <p:dataTable value="#{generarFacturaBean.comprobantes}"
+                <p:dataTable value="#{generarFacturasBean.facturas}"
                     var="fila"
-                    rowKey="#{fila.idComprobanteCabecera}"
+                    rowKey="#{fila.concepto}"
                     selectionMode="single">
                     <p:column headerText="Nro. Factura">
-                        <h:outputText value="#{fila.idComprobanteCabecera}"/>
+                        <h:outputText value="#{fila.nroFactura}"/>
                     </p:column>
-                    <p:column headerText="Impuesto Nombre">
-                        <h:outputText value="#{fila.idImpuesto.nombre}"/>
+                    <p:column headerText="Tributo">
+                        <h:outputText value="#{fila.nombreTributo}"/>
                     </p:column>
                     <p:column headerText="Año">
                         <h:outputText value="#{fila.anio}"/>
@@ -64,13 +64,13 @@
                         </h:outputText>
                     </p:column>
                     <p:column headerText="Monto a Pagar">
-                        <h:outputText value="#{fila.totalPagar}">
+                        <h:outputText value="#{fila.total}">
                             <f:convertNumber pattern="#,##0"/>
                         </h:outputText>
                     </p:column>
                     <p:column style="width:100px;text-align: center">
                         <p:commandButton  value="Detalle" 
-                            action="#{generarFacturaBean.mostrarDetalle(fila)}"
+                            action="#{generarFacturasBean.mostrarDetalle(fila)}"
                             ajax="false"/>                     
                     </p:column>
                 </p:dataTable>

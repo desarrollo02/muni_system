@@ -1,5 +1,6 @@
 package dao;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -36,5 +37,20 @@ public class MultaDAO {
         Query query = em.createQuery("delete from TributoMulta o where o.idTributo = :tributo");
         query.setParameter("tributo", tributo);
         query.executeUpdate();
+    }
+    
+    public TributoMulta getTributoMulta(Tributo tributo, Integer diasAtraso){
+        Query query = em.createQuery("select o from TributoMulta o where "
+                + "o.idTributo = :tributo and o.diasMin <= :diasAtrasoMin and "
+                + "o.diasMax >= :diasAtrasoMax");
+        query.setParameter("tributo", tributo);
+        query.setParameter("diasAtrasoMin", diasAtraso);
+        query.setParameter("diasAtrasoMax", diasAtraso);
+        return (TributoMulta) query.getSingleResult();
+    }
+    
+    public Integer getDiasAtraso(Date fecha1, Date fecha2){
+        int dias=(int) ((fecha2.getTime()-fecha1.getTime())/86400000);
+        return dias;
     }
 }

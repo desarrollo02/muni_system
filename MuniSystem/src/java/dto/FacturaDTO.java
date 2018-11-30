@@ -1,10 +1,21 @@
 
 package dto;
 
+import java.util.Date;
+import java.util.List;
+
 public class FacturaDTO {
+   private Integer nroFactura; 
    private String concepto;
    private Integer referencia;
    private Integer anio;
+   private String nombreTributo;
+   private Date vencimiento;
+   private Double total;
+   //muestra los valores segun el tributo, para que el contribuyente pueda verificar los
+   //calculos de la factura
+   private String variablesParaCalculo;
+   private List<FacturaDetalleDTO> detalles;
 
    public String getConcepto() {
        return concepto;
@@ -29,4 +40,52 @@ public class FacturaDTO {
    public void setAnio(Integer anio) {
         this.anio = anio;
    } 
+
+    public String getNombreTributo() {
+        return nombreTributo;
+    }
+
+    public void setNombreTributo(String nombreTributo) {
+        this.nombreTributo = nombreTributo;
+    }
+
+    public String getVariablesParaCalculo() {
+        return variablesParaCalculo;
+    }
+
+    public void setVariablesParaCalculo(String variablesParaCalculo) {
+        this.variablesParaCalculo = variablesParaCalculo;
+    }
+
+    public List<FacturaDetalleDTO> getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(List<FacturaDetalleDTO> detalles) {
+        this.detalles = detalles;
+    }
+
+    public Integer getNroFactura() {
+        return nroFactura;
+    }
+
+    public void setNroFactura(Integer nroFactura) {
+        this.nroFactura = nroFactura;
+    }
+
+    public Date getVencimiento() {
+        return vencimiento;
+    }
+
+    public void setVencimiento(Date vencimiento) {
+        this.vencimiento = vencimiento;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
 }

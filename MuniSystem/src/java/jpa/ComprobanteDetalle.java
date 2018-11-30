@@ -43,6 +43,8 @@ public class ComprobanteDetalle implements Serializable {
     @JoinColumn(name = "id_tributo", referencedColumnName = "id_tributo")
     @ManyToOne
     private Tributo idTributo;
+    @Column(name = "es_multa")
+    private Boolean esMulta;
 
     public ComprobanteDetalle() {
     }
@@ -106,6 +108,14 @@ public class ComprobanteDetalle implements Serializable {
     @Override
     public String toString() {
         return "jpa.ComprobanteDetalle[ idComprobanteDetalle=" + idComprobanteDetalle + " ]";
+    }
+
+    public Boolean getEsMulta() {
+        return esMulta;
+    }
+
+    public void setEsMulta(Boolean esMulta) {
+        this.esMulta = esMulta;
     }
     
 }
