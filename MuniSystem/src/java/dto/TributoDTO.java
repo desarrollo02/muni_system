@@ -10,6 +10,8 @@ public class TributoDTO {
     private String periodo;
     private String registrar;
     private Integer primerVencimiento;
+    private String unidadMedida;
+    private Integer valor;
     private List<MultaDTO> multas;
     private List<String> tributosAnexos;
 
@@ -67,6 +69,22 @@ public class TributoDTO {
 
     public void setRegistrar(String registrar) {
         this.registrar = registrar;
+    }
+
+    public String getUnidadMedida() {
+        return unidadMedida;
+    }
+
+    public void setUnidadMedida(String unidadMedida) {
+        this.unidadMedida = unidadMedida;
+    }
+
+    public Integer getValor() {
+        return valor;
+    }
+
+    public void setValor(Integer valor) {
+        this.valor = valor;
     }
     
 }
