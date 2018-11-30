@@ -17,6 +17,7 @@ public class GenerarFacturasBean implements Serializable {
     private Integer anio;
     private GenerarFacturaController controller = new GenerarFacturaController();
     private List<FacturaDTO> facturas;
+    private FacturaDTO facturaSelect;
 
     public GenerarFacturasBean() {
     } 
@@ -34,7 +35,8 @@ public class GenerarFacturasBean implements Serializable {
     }
     
     public String mostrarDetalle(FacturaDTO factura){
-        return null;
+        facturaSelect = factura;
+        return "verfacturaDetalle";
     }
 
     public String getNombreTributoSelect() {
@@ -59,5 +61,13 @@ public class GenerarFacturasBean implements Serializable {
 
     public void setFacturas(List<FacturaDTO> facturas) {
         this.facturas = facturas;
+    }
+
+    public FacturaDTO getFacturaSelect() {
+        return facturaSelect;
+    }
+
+    public void setFacturaSelect(FacturaDTO facturaSelect) {
+        this.facturaSelect = facturaSelect;
     }
 }
