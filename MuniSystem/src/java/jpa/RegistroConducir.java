@@ -5,6 +5,7 @@
  */
 package jpa;
 
+import factura.BaseCalculo;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -30,7 +31,7 @@ import javax.validation.constraints.Size;
 @Table(name = "registro_conducir")
 @NamedQueries({
     @NamedQuery(name = "RegistroConducir.findAll", query = "SELECT r FROM RegistroConducir r")})
-public class RegistroConducir implements Serializable {
+public class RegistroConducir implements Serializable, BaseCalculo {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -142,6 +143,21 @@ public class RegistroConducir implements Serializable {
 
     public void setFechaAlta(Date fechaAlta) {
         this.fechaAlta = fechaAlta;
+    }
+
+    @Override
+    public Double getValorBase() {
+        return this.getIdCategoria().getMonto();
+    }
+
+    @Override
+    public Integer getIdRef() {
+        return this.getIdRegistroConducir();
+    }
+
+    @Override
+    public Contribuyente getTitular() {
+        return this.getIdContribuyente();
     }
     
 }

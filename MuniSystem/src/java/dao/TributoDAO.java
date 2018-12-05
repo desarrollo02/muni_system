@@ -90,6 +90,12 @@ public class TributoDAO {
             case CEMENTERIO:
                 query.setParameter("registro", "CEMENTERIO");
                 break;
+            case VEHICULO:
+                query.setParameter("registro", "VEHICULO");
+                break;
+            case REGISTRO:
+                query.setParameter("registro", "REGISTRO");
+                break;    
             default:
                 break;
         }

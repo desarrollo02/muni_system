@@ -37,6 +37,8 @@ public class GenerarFacturasBean implements Serializable {
             facturas = controller.generarComprobantes(TributoConRegistro.CEMENTERIO, anio, "admin");
         }else if(nombreTributoSelect.equals("VEHICULO")){
             facturas = controller.generarComprobantes(TributoConRegistro.VEHICULO, anio, "admin");
+        }else if(nombreTributoSelect.equals("REGISTRO")){
+            facturas = controller.generarComprobantes(TributoConRegistro.REGISTRO, anio, "admin");
         }
     }
     

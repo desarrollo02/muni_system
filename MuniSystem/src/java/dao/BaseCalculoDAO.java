@@ -32,4 +32,9 @@ public class BaseCalculoDAO {
         Query query = em.createQuery("select o from Vehiculo o");
         return query.getResultList();
     }
+    
+    public List<BaseCalculo> getBaseCalculoRegistroConducir(){
+        Query query = em.createQuery("select o from RegistroConducir o");
+        return query.getResultList();
+    }
 }

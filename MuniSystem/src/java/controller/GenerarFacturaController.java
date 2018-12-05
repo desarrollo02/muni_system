@@ -58,6 +58,8 @@ public class GenerarFacturaController {
                 listaBase = baseCalculoDAO.getBaseCalculoLoteCementerio();
             }else if(registro == TributoConRegistro.VEHICULO){
                 listaBase = baseCalculoDAO.getBaseCalculoHabilitacionVehiculo();
+            }else if(registro == TributoConRegistro.REGISTRO){
+                listaBase = baseCalculoDAO.getBaseCalculoRegistroConducir();
             }
             List<FacturaDTO> facturasDTOs = new ArrayList<>();
             FacturaDTOBuilder factuaDTOBuilder;
@@ -117,6 +119,7 @@ public class GenerarFacturaController {
                         }
                         comprobanteDAO.guardar(detalle);
                         factuaDTOBuilder.addDetalle(detalle);
+                        //falta el calculo de los tributos anexos
                     }
                 facturasDTOs.add(factuaDTOBuilder.build());
                 }
