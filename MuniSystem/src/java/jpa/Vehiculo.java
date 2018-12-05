@@ -5,6 +5,7 @@
  */
 package jpa;
 
+import factura.BaseCalculo;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -30,7 +31,7 @@ import javax.validation.constraints.Size;
 @Table(name = "vehiculo")
 @NamedQueries({
     @NamedQuery(name = "Vehiculo.findAll", query = "SELECT v FROM Vehiculo v")})
-public class Vehiculo implements Serializable {
+public class Vehiculo implements Serializable, BaseCalculo {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -67,6 +68,9 @@ public class Vehiculo implements Serializable {
     @Column(name = "fecha_alta")
     @Temporal(TemporalType.DATE)
     private Date fechaAlta;
+    @JoinColumn(name = "id_valuacion", referencedColumnName = "id_automotor_valuacion")
+    @ManyToOne
+    private VehiculoValuacion idValuacion;
 
     public Vehiculo() {
     }
@@ -186,6 +190,29 @@ public class Vehiculo implements Serializable {
 
     public void setFechaAlta(Date fechaAlta) {
         this.fechaAlta = fechaAlta;
+    }
+
+    public VehiculoValuacion getIdValuacion() {
+        return idValuacion;
+    }
+
+    public void setIdValuacion(VehiculoValuacion idValuacion) {
+        this.idValuacion = idValuacion;
+    }
+
+    @Override
+    public Double getValorBase() {
+        return this.idValuacion.getMonto();
+    }
+
+    @Override
+    public Integer getIdRef() {
+        return this.idVehiculo;
+    }
+
+    @Override
+    public Contribuyente getTitular() {
+        return this.getIdContribuyente();
     }
     
 }

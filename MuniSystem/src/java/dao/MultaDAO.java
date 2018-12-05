@@ -53,4 +53,14 @@ public class MultaDAO {
         int dias=(int) ((fecha2.getTime()-fecha1.getTime())/86400000);
         return dias;
     }
+    
+    public boolean estaEnMora(Tributo tributo, Integer diasAtraso){
+        Query query = em.createQuery("select o from TributoMulta o where "
+                + "o.idTributo = :tributo and o.diasMin <= :diasAtrasoMin and "
+                + "o.diasMax >= :diasAtrasoMax");
+        query.setParameter("tributo", tributo);
+        query.setParameter("diasAtrasoMin", diasAtraso);
+        query.setParameter("diasAtrasoMax", diasAtraso);
+        return !query.getResultList().isEmpty();
+    }
 }

@@ -119,7 +119,7 @@ public class VehiculoBean extends MensajeBean implements Serializable {
         if(isValidoCampos()){    
             if(getManager().existeChapa(vehiculo)){
                 super.mensajeError("La chapa ya existe");
-            }else{    
+            }else{ 
                 getManager().actualizar(vehiculo);
                 inicio();
                 super.mensajeExito("Datos Guardados");

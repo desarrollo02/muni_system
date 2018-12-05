@@ -52,6 +52,12 @@ public class GenerarFacturaController {
         em.getTransaction().begin();
             if(registro == TributoConRegistro.INMOBILIARIO){
                 listaBase = baseCalculoDAO.getBaseCalculoInmueble();       
+            }else if(registro == TributoConRegistro.PATENTE){
+                listaBase = baseCalculoDAO.getBaseCalculoPatenteComercial();
+            }else if(registro == TributoConRegistro.CEMENTERIO){
+                listaBase = baseCalculoDAO.getBaseCalculoLoteCementerio();
+            }else if(registro == TributoConRegistro.VEHICULO){
+                listaBase = baseCalculoDAO.getBaseCalculoHabilitacionVehiculo();
             }
             List<FacturaDTO> facturasDTOs = new ArrayList<>();
             FacturaDTOBuilder factuaDTOBuilder;
@@ -97,7 +103,8 @@ public class GenerarFacturaController {
                     if(hoy.getTime() >  cabecera.getVencimiento().getTime()){
                         diasAtraso = multaDAO.getDiasAtraso(cabecera.getVencimiento(), hoy);
                     }
-                    if(diasAtraso > 0){//se calcula solo el monto de la multa en otro detalle
+                    //se calcula solo el monto de la multa en otro detalle
+                    if(diasAtraso > 0 && multaDAO.estaEnMora(tributo, diasAtraso)){
                         detalle = new ComprobanteDetalle();
                         detalle.setIdTributo(tributo);
                         detalle.setIdComprobanteCab(cabecera);

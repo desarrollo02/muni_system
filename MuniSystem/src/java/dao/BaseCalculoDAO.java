@@ -17,4 +17,19 @@ public class BaseCalculoDAO {
         Query query = em.createQuery("select o from Inmueble o");
         return query.getResultList();
     }
+    
+    public List<BaseCalculo> getBaseCalculoPatenteComercial(){
+        Query query = em.createQuery("select o from Comercio o");
+        return query.getResultList();
+    }
+    
+    public List<BaseCalculo> getBaseCalculoLoteCementerio(){
+        Query query = em.createQuery("select o from Cementerio o");
+        return query.getResultList();
+    }
+    
+    public List<BaseCalculo> getBaseCalculoHabilitacionVehiculo(){
+        Query query = em.createQuery("select o from Vehiculo o");
+        return query.getResultList();
+    }
 }

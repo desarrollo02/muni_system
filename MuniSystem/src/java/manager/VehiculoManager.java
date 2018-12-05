@@ -111,4 +111,29 @@ public class VehiculoManager extends BaseManager{
     public List<String> getDescripcionModeloList(){
         return super.getEm().createQuery("select o.descripcion from Modelos o").getResultList();
     }
+    
+    public void actualizar(Vehiculo entidad){
+        super.getEm().getTransaction().begin();
+        entidad.setIdValuacion(getValuacionVehiculo(entidad));
+        super.getEm().merge(entidad);
+        super.getEm().getTransaction().commit();
+    }
+    
+    public VehiculoValuacion getValuacionVehiculo(Vehiculo vehiculo){
+        Query query = getEm().createQuery("select o from VehiculoValuacion o "
+                + "where o.anio = :anio and o.idMarca = :marca and "
+                + "o.idModelo = :modelo and o.idTipo = :tipo");
+        query.setParameter("anio", vehiculo.getAnio());
+        query.setParameter("marca", vehiculo.getIdMarca());
+        query.setParameter("modelo", vehiculo.getIdModelo());
+        query.setParameter("tipo", vehiculo.getIdTipo());
+        return (VehiculoValuacion) query.getSingleResult();
+    }
+    
+    public void guardar(Vehiculo entidad){
+        super.getEm().getTransaction().begin();
+        entidad.setIdValuacion(getValuacionVehiculo(entidad));
+        super.getEm().persist(entidad);
+        super.getEm().getTransaction().commit();
+     } 
 }

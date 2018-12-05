@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jpa;
 
+import factura.BaseCalculo;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -22,15 +18,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
-/**
- *
- * @author diaz
- */
 @Entity
 @Table(name = "comercio")
 @NamedQueries({
     @NamedQuery(name = "Comercio.findAll", query = "SELECT c FROM Comercio c")})
-public class Comercio implements Serializable {
+public class Comercio implements Serializable, BaseCalculo {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -278,6 +270,21 @@ public class Comercio implements Serializable {
     @Override
     public String toString() {
         return "jpa.Comercio[ idComercio=" + idComercio + " ]";
+    }
+
+    @Override
+    public Double getValorBase() {
+        return this.valorActivo;
+    }
+
+    @Override
+    public Integer getIdRef() {
+        return this.idComercio;
+    }
+
+    @Override
+    public Contribuyente getTitular() {
+        return this.getIdContribuyente();
     }
     
 }
