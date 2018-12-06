@@ -223,4 +223,19 @@ public class Inmueble implements Serializable, BaseCalculo {
     public Contribuyente getTitular() {
         return this.idContribuyente;
     }
+
+    @Override
+    public String getDescripcionCalculo() {
+        String texto = "";
+        if(this.ctaCte != null){
+            texto ="Cta. Cte: " + ctaCte;
+        }else if(this.padron != null){
+            texto ="Nro. de Padron: " + padron;
+        }else if(this.nroFinca != null){
+            texto ="Nro. de Finca: "+ nroFinca.toString();
+        }
+        texto = texto + ", Valuacion:" + this.valuacionFiscal;
+                
+        return texto;
+    }
 }

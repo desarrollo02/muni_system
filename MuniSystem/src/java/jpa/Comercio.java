@@ -286,5 +286,10 @@ public class Comercio implements Serializable, BaseCalculo {
     public Contribuyente getTitular() {
         return this.getIdContribuyente();
     }
+
+    @Override
+    public String getDescripcionCalculo() {
+        return nombreFantasia + ", Nro. Patente: " + nroPatente + ", Valor Activo: " + valorActivo;
+    }
     
 }

@@ -214,5 +214,11 @@ public class Vehiculo implements Serializable, BaseCalculo {
     public Contribuyente getTitular() {
         return this.getIdContribuyente();
     }
+
+    @Override
+    public String getDescripcionCalculo() {
+        return "Marca: " + idMarca.getDescripcion() + ", Modelo: " + idModelo.getDescripcion() +
+                ", Año: " + anio + ", Valuacion: " + idValuacion.getMonto();
+    }
     
 }

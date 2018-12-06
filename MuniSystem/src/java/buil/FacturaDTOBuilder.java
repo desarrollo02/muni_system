@@ -44,4 +44,9 @@ public class FacturaDTOBuilder {
     public FacturaDTO build(){
         return facturaDTO;
     }
+    
+    public FacturaDTOBuilder descripcionCalculo(String descripcionCalculo){
+        facturaDTO.setVariablesParaCalculo(descripcionCalculo);
+        return this;
+    }
 }

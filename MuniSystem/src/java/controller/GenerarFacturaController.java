@@ -50,17 +50,25 @@ public class GenerarFacturaController {
         List<BaseCalculo> listaBase=null;
         Tributo tributo = tributoDAO.getTributoPorLugarDeRegistro(registro);
         em.getTransaction().begin();
-            if(registro == TributoConRegistro.INMOBILIARIO){
-                listaBase = baseCalculoDAO.getBaseCalculoInmueble();       
-            }else if(registro == TributoConRegistro.PATENTE){
+            if(null != registro)switch (registro) {
+            case INMOBILIARIO:
+                listaBase = baseCalculoDAO.getBaseCalculoInmueble();
+                break;
+            case PATENTE:
                 listaBase = baseCalculoDAO.getBaseCalculoPatenteComercial();
-            }else if(registro == TributoConRegistro.CEMENTERIO){
+                break;
+            case CEMENTERIO:
                 listaBase = baseCalculoDAO.getBaseCalculoLoteCementerio();
-            }else if(registro == TributoConRegistro.VEHICULO){
+                break;
+            case VEHICULO:
                 listaBase = baseCalculoDAO.getBaseCalculoHabilitacionVehiculo();
-            }else if(registro == TributoConRegistro.REGISTRO){
+                break;
+            case REGISTRO:
                 listaBase = baseCalculoDAO.getBaseCalculoRegistroConducir();
-            }
+                break;
+            default:
+                break;
+        }
             List<FacturaDTO> facturasDTOs = new ArrayList<>();
             FacturaDTOBuilder factuaDTOBuilder;
             for(BaseCalculo baseCalculo : listaBase){
@@ -86,6 +94,7 @@ public class GenerarFacturaController {
                     cabecera.setIdContribuyente(baseCalculo.getTitular());
                     comprobanteDAO.guardar(cabecera);
                     factuaDTOBuilder.caberera(cabecera);
+                    factuaDTOBuilder.descripcionCalculo(baseCalculo.getDescripcionCalculo());
                     //Primero guardar el comprobante detalle del impuesto principal, con la multa
                     //y luego los anexos en un for
                     //Se debe calcular multa si hace falta
@@ -119,7 +128,21 @@ public class GenerarFacturaController {
                         }
                         comprobanteDAO.guardar(detalle);
                         factuaDTOBuilder.addDetalle(detalle);
-                        //falta el calculo de los tributos anexos
+                    }
+                    //calculo de los tributos anexos
+                    List<Tributo> tributosAnexos = tributoAnexoDAO.getAnexos(tributo);
+                    for(Tributo tributoAnexo:tributosAnexos){
+                        detalle = new ComprobanteDetalle();
+                        detalle.setIdTributo(tributoAnexo);
+                        detalle.setIdComprobanteCab(cabecera);
+                        detalle.setEsMulta(Boolean.FALSE);
+                        if(tributoAnexo.getIdUnidadMedida().getNombre().equals("Porcentaje del Valor")){
+                            detalle.setMonto(baseCalculo.getValorBase() * tributoAnexo.getValor()/100 * tributoAnexo.getValor()/100);
+                        }else{
+                            detalle.setMonto(Double.parseDouble(tributoAnexo.getValor().toString()));
+                        }
+                        comprobanteDAO.guardar(detalle);
+                        factuaDTOBuilder.addDetalle(detalle);
                     }
                 facturasDTOs.add(factuaDTOBuilder.build());
                 }

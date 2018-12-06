@@ -29,16 +29,24 @@ public class GenerarFacturasBean implements Serializable {
     }
     
     public void generar(ActionEvent evento){
-        if(nombreTributoSelect.equals("INMOBILIARIO")){
-            facturas = controller.generarComprobantes(TributoConRegistro.INMOBILIARIO, anio, "admin");
-        }else if(nombreTributoSelect.equals("PATENTE")){
-            facturas = controller.generarComprobantes(TributoConRegistro.PATENTE, anio, "admin");
-        }else if(nombreTributoSelect.equals("CEMENTERIO")){
-            facturas = controller.generarComprobantes(TributoConRegistro.CEMENTERIO, anio, "admin");
-        }else if(nombreTributoSelect.equals("VEHICULO")){
-            facturas = controller.generarComprobantes(TributoConRegistro.VEHICULO, anio, "admin");
-        }else if(nombreTributoSelect.equals("REGISTRO")){
-            facturas = controller.generarComprobantes(TributoConRegistro.REGISTRO, anio, "admin");
+        switch (nombreTributoSelect) {
+            case "INMOBILIARIO":
+                facturas = controller.generarComprobantes(TributoConRegistro.INMOBILIARIO, anio, "admin");
+                break;
+            case "PATENTE":
+                facturas = controller.generarComprobantes(TributoConRegistro.PATENTE, anio, "admin");
+                break;
+            case "CEMENTERIO":
+                facturas = controller.generarComprobantes(TributoConRegistro.CEMENTERIO, anio, "admin");
+                break;
+            case "VEHICULO":
+                facturas = controller.generarComprobantes(TributoConRegistro.VEHICULO, anio, "admin");
+                break;
+            case "REGISTRO":
+                facturas = controller.generarComprobantes(TributoConRegistro.REGISTRO, anio, "admin");
+                break;
+            default:
+                break;
         }
     }
     

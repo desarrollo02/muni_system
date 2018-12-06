@@ -7,4 +7,5 @@ public interface BaseCalculo {
     public Double getValorBase();
     public Integer getIdRef();
     public Contribuyente getTitular();
+    public String getDescripcionCalculo();
 }

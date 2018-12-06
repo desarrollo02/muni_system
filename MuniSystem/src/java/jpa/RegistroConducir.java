@@ -159,5 +159,10 @@ public class RegistroConducir implements Serializable, BaseCalculo {
     public Contribuyente getTitular() {
         return this.getIdContribuyente();
     }
+
+    @Override
+    public String getDescripcionCalculo() {
+        return "Nro. Lincencia: " + licenciaNro + ", Categoria: " + idCategoria.getDescripcion();
+    }
     
 }

@@ -171,5 +171,10 @@ public class Cementerio implements Serializable, BaseCalculo {
     public Contribuyente getTitular() {
         return this.getIdContribuyente();
     }
+
+    @Override
+    public String getDescripcionCalculo() {
+        return "Cementerio: " + idUbicacionCementerio.getNombre() + ", Nro. Lote: " + nroLote; 
+    }
     
 }
