@@ -31,9 +31,6 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "Contribuyente.findAll", query = "SELECT c FROM Contribuyente c")})
 public class Contribuyente implements Serializable {
 
-    @OneToMany(mappedBy = "idContribuyente")
-    private List<ComprobanteCabecera> comprobanteCabeceraList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -85,6 +82,9 @@ public class Contribuyente implements Serializable {
     private List<Cementerio> cementerioList;
     @OneToMany(mappedBy = "idContribuyente")
     private List<Comercio> comercioList;
+    @OneToMany(mappedBy = "idContribuyente")
+    private List<ComprobanteCabecera> comprobanteCabeceraList;
+
 
     public Contribuyente() {
     }

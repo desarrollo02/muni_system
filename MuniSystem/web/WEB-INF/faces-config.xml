@@ -182,7 +182,7 @@
     <navigation-rule>
         <navigation-case>
             <redirect/>
-            <from-outcome>generar_individual</from-outcome>
+            <from-outcome>generarIndividual</from-outcome>
             <to-view-id>/seguro/generar_factura/generar_individual.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>

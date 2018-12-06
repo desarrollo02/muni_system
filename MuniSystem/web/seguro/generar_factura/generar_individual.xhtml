@@ -4,52 +4,52 @@
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:p="http://primefaces.org/ui"
-    xmlns:b="http://bootsfaces.net/ui"> 
+    xmlns:b="http://bootsfaces.net/ui">
     <ui:define name="container"> 
         <h:form id="form" prependId="false">
-            <p:growl id="ms"/>
-            <b:panel title="Generar Facturas De Impuestos" id="pnl"
-                collapsible="false">
-                <b:panel title="Filtrar Por los Siguientes Criterios" 
-                    id="pnl2">
-                    <p:panelGrid columns="2">
-                        <p:outputLabel value="Tipo de Impuesto"/>
-                        <p:selectOneMenu value="#{facturaIndividualBean.tipoImpuesto}"
+            <p:growl id="ms"/> 
+            <b:panel title="Generar Factura Individual" id="pnl">
+                <p:panelGrid columns="6" style="margin-left: auto; margin-right: auto;">        
+                    <p:outputLabel value="R.M.C."/> 
+                    <p:inputNumber decimalPlaces="0" value="#{generarFactIndividualBean.idCondribuyente}"/>
+                    <p:outputLabel value="C.I.Nº"/> 
+                    <p:inputText value="#{generarFactIndividualBean.cedula}"/>
+                    <p:outputLabel value="Tipo"/>
+                    <p:selectOneMenu value="#{generarFactIndividualBean.nombreTributoSelect}"
                         id="tipo"
                         required="true"
                         requiredMessage="Debe seleccionar el tipo">
-                        <p:ajax event="valueChange" 
-                            update="@form"
-                            id="valueaChange"/>    
                         <f:selectItem itemLabel="Seleccionar"
-                            itemValue="SELECCIONAR"/>
+                            itemValue="#{null}"/>
                         <f:selectItem itemLabel="Impuesto Inmobiliario"
-                            itemValue="I"/>
+                            itemValue="INMOBILIARIO"/>
                         <f:selectItem itemLabel="Patente Comercial"
-                            itemValue="P"/>
+                            itemValue="PATENTE"/>
                         <f:selectItem itemLabel="Lote Cementerio"
-                            itemValue="C"/>
-                        <f:selectItem itemLabel="habilitacion de Vehiculo"
-                            itemValue="H"/>
+                            itemValue="CEMENTERIO"/>
+                        <f:selectItem itemLabel="Habilitacion de Vehiculo"
+                            itemValue="VEHICULO"/>
                         <f:selectItem itemLabel="Registro de Conducir"
-                            itemValue="R"/>
+                            itemValue="REGISTRO"/>
                     </p:selectOneMenu>
-                    </p:panelGrid>
-                    <ui:include src="/seguro/generar_factura/filtroInmueble.xhtml"/>
-                    <ui:include src="/seguro/generar_factura/filtroComercio.xhtml"/>
-                    <ui:include src="/seguro/generar_factura/filtroCementerio.xhtml"/>
-                    <ui:include src="/seguro/generar_factura/filtroHabilitacion.xhtml"/>
-                    <ui:include src="/seguro/generar_factura/filtroRegistro.xhtml"/>
+                    <p:outputLabel value="R.U.C."/> 
+                    <p:inputText value="#{generarFactIndividualBean.ruc}"/>
+                    <p:outputLabel value="Nombres"/> 
+                    <p:inputText value="#{generarFactIndividualBean.nombres}"/>
+                    <p:outputLabel value="Apellidos"/> 
+                    <p:inputText value="#{generarFactIndividualBean.apellidos}"/>
+                </p:panelGrid>
             </b:panel>
             <p:toolbar id="tbar">
                 <f:facet name="left">
-                    <p:commandButton value="Generar" 
-                                    icon="ui-icon-document"
-                                    id="nuevo"
-                                    actionListener="#{facturaIndividualBean.generarFactura}"
-                                    update="@form"/>
+                    
                 </f:facet>
                 <f:facet name="right">
+                    <p:commandButton value="Buscar" 
+                                    icon="ui-icon-document"
+                                    id="buscar"
+                                    actionListener="#{generarFactIndividualBean.buscar}"
+                                    update="@form"/>
                     <p:commandButton title="Salir" 
                                      action="inicio" 
                                      icon="ui-icon-extlink" 
@@ -57,37 +57,17 @@
                                      immediate="true"/>
                 </f:facet>
             </p:toolbar>
-            
-                <p:dataTable value="#{facturaIndividualBean.comprobantes}"
+            <b:panel title="Tributos Facturables" id="pnl2"
+                collapsible="false">
+                <p:dataTable value="#{generarFactIndividualBean.tributosFacturables}"
                     var="fila"
-                    rowKey="#{fila.idComprobanteCabecera}"
+                    rowKey="#{fila.idRef}"
                     selectionMode="single">
-                    <p:column headerText="Nro. Factura">
-                        <h:outputText value="#{fila.idComprobanteCabecera}"/>
-                    </p:column>
-                    <p:column headerText="Impuesto Nombre">
-                        <h:outputText value="#{fila.idImpuesto.nombre}"/>
-                    </p:column>
-                    <p:column headerText="Año">
-                        <h:outputText value="#{fila.anio}"/>
-                    </p:column>
-                    <p:column headerText="Vencimiento">
-                        <h:outputText value="#{fila.vencimiento}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column>
-                    <p:column headerText="Monto a Pagar">
-                        <h:outputText value="#{fila.totalPagar}">
-                            <f:convertNumber pattern="#,##0"/>
-                        </h:outputText>
-                    </p:column>
-                    <p:column style="width:100px;text-align: center">
-                        <p:commandButton  value="Detalle" 
-                            action="#{generarFacturaContribuyebteBean.mostrarDetalle(fila)}"
-                            ajax="false"/>                     
+                    <p:column headerText="Descripcion del Tributo">
+                        <h:outputText value="#{fila.descripcion}"/>
                     </p:column>
                 </p:dataTable>
-            </b:panel>    
+            </b:panel>
         </h:form>
     </ui:define>                
 </ui:composition>
