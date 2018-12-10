@@ -110,6 +110,7 @@ public class GenerarFactInvController {
                     ComprobanteCabecera cabecera = new ComprobanteCabecera();
                     cabecera.setAnio(anio);
                     cabecera.setAnulado(Boolean.FALSE);
+                    cabecera.setPagado(Boolean.FALSE);
                     cabecera.setFechaAlta(new Date());
                     cabecera.setUsuarioAlta(usuario);
                     cabecera.setPeriodo(i);
@@ -125,6 +126,7 @@ public class GenerarFactInvController {
                     cabecera.setIdTributo(tributo);
                     cabecera.setId_ref(baseCalculo.getIdRef());
                     cabecera.setIdContribuyente(baseCalculo.getTitular());
+                    cabecera.setTotalPagar(0.0);
                     comprobanteDAO.guardar(cabecera);
                     factuaDTOBuilder.caberera(cabecera);
                     factuaDTOBuilder.descripcionCalculo(baseCalculo.getDescripcionCalculo());
@@ -141,6 +143,7 @@ public class GenerarFactInvController {
                     }
                     detalle.setEsMulta(Boolean.FALSE);
                     comprobanteDAO.guardar(detalle);
+                    cabecera.setTotalPagar(cabecera.getTotalPagar() + detalle.getMonto());
                     factuaDTOBuilder.addDetalle(detalle);
                     Date hoy = new Date();
                     Integer diasAtraso = 0;
@@ -160,10 +163,10 @@ public class GenerarFactInvController {
                             detalle.setMonto(Double.parseDouble(tributoMulta.getValor().toString()));
                         }
                         comprobanteDAO.guardar(detalle);
+                        cabecera.setTotalPagar(cabecera.getTotalPagar() + detalle.getMonto());
                         factuaDTOBuilder.addDetalle(detalle);
                     }
-                    cabecera.setVencimiento(hoy);
-                    comprobanteDAO.actualizar(cabecera);
+                    
                     //calculo de los tributos anexos
                     List<Tributo> tributosAnexos = tributoAnexoDAO.getAnexos(tributo);
                     for(Tributo tributoAnexo:tributosAnexos){
@@ -177,10 +180,12 @@ public class GenerarFactInvController {
                             detalle.setMonto(Double.parseDouble(tributoAnexo.getValor().toString()));
                         }
                         comprobanteDAO.guardar(detalle);
+                        cabecera.setTotalPagar(cabecera.getTotalPagar() + detalle.getMonto());
                         factuaDTOBuilder.addDetalle(detalle);
                     }
-                    
-                facturasDTOs.add(factuaDTOBuilder.caberera(cabecera).build());
+                    cabecera.setVencimiento(hoy);
+                    comprobanteDAO.actualizar(cabecera);
+                    facturasDTOs.add(factuaDTOBuilder.caberera(cabecera).build());
                 }
             }
         em.getTransaction().commit();
