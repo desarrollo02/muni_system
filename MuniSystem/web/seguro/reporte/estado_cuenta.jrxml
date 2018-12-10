@@ -6,7 +6,7 @@
 	<parameter name="FACHA_ACTUAL" class="java.util.Date"/>
 	<parameter name="RMC" class="java.lang.Integer"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\MuniSystem\\web\\seguro\\reporte\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\USUARIO\\Documents\\GitHub\\muni_system\\MuniSystem\\web\\seguro\\reporte\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT * FROM CONTRIBUYENTE WHERE ID_CONTRIBUYENTE = $P{RMC}]]>
