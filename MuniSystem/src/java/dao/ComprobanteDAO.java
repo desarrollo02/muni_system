@@ -64,4 +64,12 @@ public class ComprobanteDAO {
         compCab.setAnulado(Boolean.TRUE);
         em.merge(compCab);
     }
+    
+    public void pagar(Integer idComprobanteCab, String formaPago, String nroCheque){
+        ComprobanteCabecera compCab = em.find(ComprobanteCabecera.class, idComprobanteCab);
+        compCab.setPagado(Boolean.TRUE);
+        compCab.setTipoPago(formaPago);
+        compCab.setNroCheque(nroCheque);
+        em.merge(compCab);
+    }
 }

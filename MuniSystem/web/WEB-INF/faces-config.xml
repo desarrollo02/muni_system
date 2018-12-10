@@ -69,6 +69,20 @@
     <navigation-rule>
         <navigation-case>
             <redirect/>
+            <from-outcome>pagarDetalle</from-outcome>
+            <to-view-id>/seguro/generar_factura/pagar_factura_detalle.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <redirect/>
+            <from-outcome>pagoVuelto</from-outcome>
+            <to-view-id>/seguro/generar_factura/pagar_factura_detalle_vuelto.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <redirect/>
             <from-outcome>anular</from-outcome>
             <to-view-id>/seguro/generar_factura/anular_factura.xhtml</to-view-id>
         </navigation-case>
