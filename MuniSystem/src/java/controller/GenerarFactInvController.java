@@ -1,5 +1,6 @@
 package controller;
 
+import buil.FacturaDTOBuilder;
 import buil.TributoFacturableDTOBuilder;
 import dao.BaseCalculoDAO;
 import dao.ComprobanteDAO;
@@ -7,13 +8,21 @@ import dao.ContribuyenteDAO;
 import dao.MultaDAO;
 import dao.TributoAnexoDAO;
 import dao.TributoDAO;
+import dto.FacturaDTO;
 import dto.TributoFacturableDTO;
 import enumerados.TributoConRegistro;
 import factura.BaseCalculo;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
+import jpa.ComprobanteCabecera;
+import jpa.ComprobanteDetalle;
 import jpa.Contribuyente;
+import jpa.Tributo;
+import jpa.TributoMulta;
 import util.fabrica.Util;
 
 public class GenerarFactInvController {
@@ -66,9 +75,118 @@ public class GenerarFactInvController {
                 tributosFacurables.add(new TributoFacturableDTOBuilder()
                                     .baseCalculo(baseCalculo)
                                     .registro(registro)
+                                    .contribuyente(baseCalculo.getTitular())
                                     .build());
             }
         }
         return tributosFacurables;
+    }
+    
+    public List<FacturaDTO> generarComprobantes(
+            TributoFacturableDTO tributoFacturaable,
+            Integer anio, 
+            String usuario)throws SQLException{
+        List<BaseCalculo> listaBase=null;
+        Contribuyente contribuyente = contribuyenteDAO.getContribuyente(tributoFacturaable.getIdContribuyente(), null, null, null, null);
+        Tributo tributo = tributoDAO.getTributoPorLugarDeRegistro(tributoFacturaable.getLugarRegistro());
+        em.getTransaction().begin();
+            if(tributoFacturaable.getLugarRegistro().equals("INMOBILIARIO")){
+                listaBase = baseCalculoDAO.getBaseCalculoInmueble(contribuyente);
+            }else if(tributoFacturaable.getLugarRegistro().equals("PATENTE")){
+                listaBase = baseCalculoDAO.getBaseCalculoPatenteComercial(contribuyente);
+            }else if(tributoFacturaable.getLugarRegistro().equals("CEMENTERIO")){
+                listaBase = baseCalculoDAO.getBaseCalculoLoteCementerio(contribuyente);
+            }else if(tributoFacturaable.getLugarRegistro().equals("VEHICULO")){
+                listaBase = baseCalculoDAO.getBaseCalculoHabilitacionVehiculo(contribuyente);
+            }else if(tributoFacturaable.getLugarRegistro().equals("REGISTRO")){
+                 listaBase = baseCalculoDAO.getBaseCalculoRegistroConducir(contribuyente);
+            }
+        
+            List<FacturaDTO> facturasDTOs = new ArrayList<>();
+            FacturaDTOBuilder factuaDTOBuilder;
+            for(BaseCalculo baseCalculo : listaBase){
+                for(int i = 1; i <= tributo.getIdPeriodoCobro().getValor();i++){
+                    factuaDTOBuilder = new FacturaDTOBuilder();
+                    ComprobanteCabecera cabecera = new ComprobanteCabecera();
+                    cabecera.setAnio(anio);
+                    cabecera.setAnulado(Boolean.FALSE);
+                    cabecera.setFechaAlta(new Date());
+                    cabecera.setUsuarioAlta(usuario);
+                    cabecera.setPeriodo(i);
+                    Calendar fecha = Calendar.getInstance();
+                    fecha.set(Calendar.DAY_OF_MONTH, 1);
+                    if(i==1){
+                        fecha.set(anio, tributo.getPrimerVencimiento() -1, 1);
+                    }else{
+                        Integer mes = 12/tributo.getIdPeriodoCobro().getValor() + tributo.getPrimerVencimiento();
+                        fecha.set(anio, mes -1, 1);
+                    }    
+                    cabecera.setVencimiento(fecha.getTime());
+                    cabecera.setIdTributo(tributo);
+                    cabecera.setId_ref(baseCalculo.getIdRef());
+                    cabecera.setIdContribuyente(baseCalculo.getTitular());
+                    comprobanteDAO.guardar(cabecera);
+                    factuaDTOBuilder.caberera(cabecera);
+                    factuaDTOBuilder.descripcionCalculo(baseCalculo.getDescripcionCalculo());
+                    //Primero guardar el comprobante detalle del impuesto principal, con la multa
+                    //y luego los anexos en un for
+                    //Se debe calcular multa si hace falta
+                    ComprobanteDetalle detalle = new ComprobanteDetalle();
+                    detalle.setIdTributo(tributo);
+                    detalle.setIdComprobanteCab(cabecera);
+                    if(tributo.getIdUnidadMedida().getNombre().equals("Porcentaje del Valor")){
+                        detalle.setMonto(baseCalculo.getValorBase() * tributo.getValor()/100);
+                    }else{
+                        detalle.setMonto(Double.parseDouble(tributo.getValor().toString()));
+                    }
+                    detalle.setEsMulta(Boolean.FALSE);
+                    comprobanteDAO.guardar(detalle);
+                    factuaDTOBuilder.addDetalle(detalle);
+                    Date hoy = new Date();
+                    Integer diasAtraso = 0;
+                    if(hoy.getTime() >  cabecera.getVencimiento().getTime()){
+                        diasAtraso = multaDAO.getDiasAtraso(cabecera.getVencimiento(), hoy);
+                    }
+                    //se calcula solo el monto de la multa en otro detalle
+                    if(diasAtraso > 0 && multaDAO.estaEnMora(tributo, diasAtraso)){
+                        detalle = new ComprobanteDetalle();
+                        detalle.setIdTributo(tributo);
+                        detalle.setIdComprobanteCab(cabecera);
+                        detalle.setEsMulta(Boolean.TRUE);
+                        TributoMulta tributoMulta = multaDAO.getTributoMulta(tributo, diasAtraso);
+                        if(tributoMulta.getIdUnidadMedida().getNombre().equals("Porcentaje del Valor")){
+                            detalle.setMonto(baseCalculo.getValorBase() * tributo.getValor()/100 * tributoMulta.getValor()/100);
+                        }else{
+                            detalle.setMonto(Double.parseDouble(tributoMulta.getValor().toString()));
+                        }
+                        comprobanteDAO.guardar(detalle);
+                        factuaDTOBuilder.addDetalle(detalle);
+                    }
+                    //calculo de los tributos anexos
+                    List<Tributo> tributosAnexos = tributoAnexoDAO.getAnexos(tributo);
+                    for(Tributo tributoAnexo:tributosAnexos){
+                        detalle = new ComprobanteDetalle();
+                        detalle.setIdTributo(tributoAnexo);
+                        detalle.setIdComprobanteCab(cabecera);
+                        detalle.setEsMulta(Boolean.FALSE);
+                        if(tributoAnexo.getIdUnidadMedida().getNombre().equals("Porcentaje del Valor")){
+                            detalle.setMonto(baseCalculo.getValorBase() * tributoAnexo.getValor()/100 * tributoAnexo.getValor()/100);
+                        }else{
+                            detalle.setMonto(Double.parseDouble(tributoAnexo.getValor().toString()));
+                        }
+                        comprobanteDAO.guardar(detalle);
+                        factuaDTOBuilder.addDetalle(detalle);
+                    }
+                facturasDTOs.add(factuaDTOBuilder.build());
+                }
+            }
+        em.getTransaction().commit();
+        return facturasDTOs;
+    }
+    
+    public void rollbackTransaccion(){
+        if(em.getTransaction().isActive()){
+            em.getTransaction().rollback();
+        }    
     }
 }

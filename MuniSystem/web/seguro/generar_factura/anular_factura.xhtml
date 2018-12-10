@@ -10,35 +10,37 @@
             <p:growl id="ms"/>
             <b:panel title="Anular Factura" id="pnl"
                 collapsible="false">
-                <p:panelGrid columns="2">
+                <p:panelGrid columns="4">
                     <p:outputLabel value="Nro. Factura"/>
-                    <p:inputNumber value="#{anularFacturaBean.filtroNroFactura}"/>
+                    <p:inputNumber value="#{anularBean.nroFactura}"/>
+                    <p:outputLabel value="R.M.C"/>
+                    <p:inputText value="#{anularBean.rmc}"/>
+                    <p:outputLabel value="Año"/>
+                    <p:inputNumber value="#{anularBean.anio}"/>
+                    <p:outputLabel value="Tributo"/>
+                    <p:inputText value="#{anularBean.nombreTributo}"/>
                 </p:panelGrid>          
             </b:panel>
             <p:toolbar id="tbar">
                 <f:facet name="left">
                     <p:commandButton value="Filtrar" 
                                     id="nuevo"
-                                    actionListener="#{anularFacturaBean.filtrar}"
+                                    actionListener="#{anularBean.buscar}"
                                     update="@form"/>
                 </f:facet>
-                <f:facet name="right">
-                    <p:commandButton title="Salir" 
-                                     action="inicio" 
-                                     icon="ui-icon-extlink" 
-                                     ajax="false" 
-                                     immediate="true"/>
-                </f:facet>
             </p:toolbar>
-            <p:dataTable value="#{anularFacturaBean.comprobantes}"
+            <b:panel title="Facturas Generadas" id="pnl3"
+                collapsible="false">
+                <p:dataTable value="#{anularBean.facturas}"
                     var="fila"
-                    rowKey="#{fila.idComprobanteCabecera}"
+                    rowKey="#{fila.concepto}"
+                    selection="#{anularBean.facturaSelect}"
                     selectionMode="single">
                     <p:column headerText="Nro. Factura">
-                        <h:outputText value="#{fila.idComprobanteCabecera}"/>
+                        <h:outputText value="#{fila.nroFactura}"/>
                     </p:column>
-                    <p:column headerText="Impuesto Nombre">
-                        <h:outputText value="#{fila.idImpuesto.nombre}"/>
+                    <p:column headerText="Tributo">
+                        <h:outputText value="#{fila.nombreTributo}"/>
                     </p:column>
                     <p:column headerText="Año">
                         <h:outputText value="#{fila.anio}"/>
@@ -49,18 +51,32 @@
                         </h:outputText>
                     </p:column>
                     <p:column headerText="Monto a Pagar">
-                        <h:outputText value="#{fila.totalPagar}">
+                        <h:outputText value="#{fila.total}">
                             <f:convertNumber pattern="#,##0"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Estado">
-                        <h:outputText value="#{fila.anulado == true?'Anulada':'Activa'}"/>
+                    <p:column style="width:100px;text-align: center">
+                        <p:commandButton  value="Detalle" 
+                            action="#{anularBean.mostrarDetalle(fila)}"
+                            ajax="false"/>                     
                     </p:column>
                 </p:dataTable>
-            <p:commandButton value="Anular" 
-                                    id="anu"
-                                    actionListener="#{anularFacturaBean.anular}"
+            </b:panel>
+            <p:toolbar id="tbar3">
+                <f:facet name="left">
+                    <p:commandButton value="Anular" 
+                                    id="nuevo1"
+                                    actionListener="#{anularBean.anular}"
                                     update="@form"/>
+                </f:facet>
+                <f:facet name="right">    
+                    <p:commandButton title="Salir" 
+                                     action="inicio" 
+                                     icon="ui-icon-extlink" 
+                                     ajax="false" 
+                                     immediate="true"/>
+                </f:facet>
+            </p:toolbar>
         </h:form>
     </ui:define>
 </ui:composition>    

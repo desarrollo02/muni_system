@@ -3,6 +3,7 @@ package buil;
 import dto.TributoFacturableDTO;
 import enumerados.TributoConRegistro;
 import factura.BaseCalculo;
+import jpa.Contribuyente;
 
 public class TributoFacturableDTOBuilder {
     
@@ -20,6 +21,11 @@ public class TributoFacturableDTOBuilder {
     
     public TributoFacturableDTOBuilder registro(TributoConRegistro tributo){
         tributoFacturableDTO.setLugarRegistro(tributo.name());
+        return this;
+    }
+    
+    public TributoFacturableDTOBuilder contribuyente(Contribuyente contribuyente){
+        tributoFacturableDTO.setIdContribuyente(contribuyente.getIdContribuyente());
         return this;
     }
     

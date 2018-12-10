@@ -50,11 +50,6 @@
                                     id="buscar"
                                     actionListener="#{generarFactIndividualBean.buscar}"
                                     update="@form"/>
-                    <p:commandButton title="Salir" 
-                                     action="inicio" 
-                                     icon="ui-icon-extlink" 
-                                     ajax="false" 
-                                     immediate="true"/>
                 </f:facet>
             </p:toolbar>
             <b:panel title="Tributos Facturables" id="pnl2"
@@ -62,12 +57,69 @@
                 <p:dataTable value="#{generarFactIndividualBean.tributosFacturables}"
                     var="fila"
                     rowKey="#{fila.idRef}"
+                    selection="#{generarFactIndividualBean.tributoFacturableSelect}"
                     selectionMode="single">
                     <p:column headerText="Descripcion del Tributo">
                         <h:outputText value="#{fila.descripcion}"/>
                     </p:column>
                 </p:dataTable>
             </b:panel>
+            <p:toolbar id="tbar2">
+                <f:facet name="left">
+                    <p:outputLabel value="Año:"/> 
+                    <p:spacer width="6"/>
+                    <p:inputText value="#{generarFactIndividualBean.anio}"/>
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                    </span>
+                    <p:commandButton value="Generar" 
+                                    icon="ui-icon-document"
+                                    id="generar2"
+                                    actionListener="#{generarFactIndividualBean.generar}"
+                                    update="@form"/>    
+                </f:facet>    
+            </p:toolbar>
+            <b:panel title="Facturas Generadas" id="pnl3"
+                collapsible="false">
+                <p:dataTable value="#{generarFactIndividualBean.facturas}"
+                    var="fila"
+                    rowKey="#{fila.concepto}"
+                    selectionMode="single">
+                    <p:column headerText="Nro. Factura">
+                        <h:outputText value="#{fila.nroFactura}"/>
+                    </p:column>
+                    <p:column headerText="Tributo">
+                        <h:outputText value="#{fila.nombreTributo}"/>
+                    </p:column>
+                    <p:column headerText="Año">
+                        <h:outputText value="#{fila.anio}"/>
+                    </p:column>
+                    <p:column headerText="Vencimiento">
+                        <h:outputText value="#{fila.vencimiento}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Monto a Pagar">
+                        <h:outputText value="#{fila.total}">
+                            <f:convertNumber pattern="#,##0"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column style="width:100px;text-align: center">
+                        <p:commandButton  value="Detalle" 
+                            action="#{generarFactIndividualBean.mostrarDetalle(fila)}"
+                            ajax="false"/>                     
+                    </p:column>
+                </p:dataTable>
+            </b:panel>
+            <p:toolbar id="tbar3">
+                <f:facet name="right">    
+                    <p:commandButton title="Salir" 
+                                     action="inicio" 
+                                     icon="ui-icon-extlink" 
+                                     ajax="false" 
+                                     immediate="true"/>
+                </f:facet>
+            </p:toolbar>
         </h:form>
     </ui:define>                
 </ui:composition>

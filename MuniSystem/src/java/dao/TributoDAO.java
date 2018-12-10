@@ -101,4 +101,20 @@ public class TributoDAO {
         }
         return (Tributo) query.getSingleResult();
     }
+    
+    public Tributo getTributoPorLugarDeRegistro(String lugarRegistro){
+        Query query = em.createQuery("select o from Tributo o where o.registrar = :registro");
+        if(lugarRegistro.equals("INMOBILIARIO")){
+            query.setParameter("registro", "INMUEBLE");
+        }else if(lugarRegistro.equals("PATENTE")){
+            query.setParameter("registro", "PATENTE");
+        }else if(lugarRegistro.equals("CEMENTERIO")){
+            query.setParameter("registro", "CEMENTERIO");
+        }else if(lugarRegistro.equals("VEHICULO")){
+            query.setParameter("registro", "VEHICULO");
+        }else if(lugarRegistro.equals("REGISTRO")){
+            query.setParameter("registro", "REGISTRO");
+        }
+        return (Tributo) query.getSingleResult();
+    }    
 }

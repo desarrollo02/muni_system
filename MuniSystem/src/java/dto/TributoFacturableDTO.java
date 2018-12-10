@@ -5,6 +5,7 @@ public class TributoFacturableDTO {
     private Integer idRef;
     private String descripcion;
     private String lugarRegistro;
+    private Integer idContribuyente;
 
     public Integer getIdRef() {
         return idRef;
@@ -28,5 +29,13 @@ public class TributoFacturableDTO {
 
     public void setLugarRegistro(String lugarRegistro) {
         this.lugarRegistro = lugarRegistro;
+    }
+
+    public Integer getIdContribuyente() {
+        return idContribuyente;
+    }
+
+    public void setIdContribuyente(Integer idContribuyente) {
+        this.idContribuyente = idContribuyente;
     }
 }
