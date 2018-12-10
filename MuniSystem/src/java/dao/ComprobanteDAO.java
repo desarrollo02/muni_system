@@ -14,6 +14,10 @@ public class ComprobanteDAO {
         this.em = em;
     }
     
+    public void actualizar(ComprobanteCabecera cabecera){
+        em.merge(cabecera);
+    }
+    
     public void guardar(ComprobanteCabecera cabecera){
         em.persist(cabecera);
     }
@@ -71,5 +75,9 @@ public class ComprobanteDAO {
         compCab.setTipoPago(formaPago);
         compCab.setNroCheque(nroCheque);
         em.merge(compCab);
+    }
+    
+    public ComprobanteCabecera getCompCabecera(Integer id){
+        return em.find(ComprobanteCabecera.class, id);
     }
 }

@@ -29,7 +29,7 @@
                                      update="@form"/>
                 </f:facet>
             </p:toolbar>
-            <b:panel title="Facturas Pendientes de Pago" id="pnl3"
+            <b:panel title="Facturas" id="pnl3"
                 collapsible="false">
                 <p:dataTable value="#{pagarBean.facturas}"
                     var="fila"
@@ -49,6 +49,9 @@
                         <h:outputText value="#{fila.vencimiento}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
+                    </p:column>
+                    <p:column headerText="Pagada">
+                        <h:outputText value="#{fila.pagado}"/>
                     </p:column>
                     <p:column headerText="Monto a Pagar">
                         <h:outputText value="#{fila.total}">

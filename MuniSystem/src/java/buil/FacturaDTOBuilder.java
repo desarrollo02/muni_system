@@ -23,6 +23,12 @@ public class FacturaDTOBuilder {
         facturaDTO.setReferencia(cabecera.getId_ref());
         facturaDTO.setConcepto(cabecera.getIdTributo().getNombre() + " " + cabecera.getAnio());
         facturaDTO.setVencimiento(cabecera.getVencimiento());
+        if(cabecera.getPagado() != null && cabecera.getPagado()){
+            facturaDTO.setPagado("Si");
+        }else{
+            facturaDTO.setPagado("No");
+        }
+        
         return this;
     }
     

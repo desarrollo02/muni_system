@@ -89,7 +89,7 @@ public class BaseCalculoDAO {
     
     public BaseCalculo getBaseCalculoHabilitacionVehiculo(Integer id){
         Query query = em.createQuery("select o from Vehiculo o where o.idVehiculo = :id");
-        query.setParameter("contribuyente", id);
+        query.setParameter("id", id);
         return (BaseCalculo) query.getSingleResult();
     }
     

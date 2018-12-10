@@ -6,6 +6,7 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import javax.faces.event.ActionEvent;
 import javax.persistence.PersistenceException;
@@ -65,6 +66,15 @@ public class PagarBean extends BaseBean implements Serializable {
         try{
             if(montoRecibido < facturaSelect.getTotal()){
                 super.setMensajeError("Monto Recibido no cubre el monto de la factura");
+                return null;
+            }
+            if(facturaSelect.getPagado().equals("Si")){
+                super.setMensajeError("La factura ya esta pagada");
+                return null;
+            }
+            Integer diasAtraso = controller.getDiasAtraso(facturaSelect);
+            if(diasAtraso > 1){
+                super.setMensajeError("La factura esta vencida");
                 return null;
             }
             controller.pagar(facturaSelect, tipoPago, nroCheque);

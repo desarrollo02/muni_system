@@ -12,6 +12,7 @@ public class FacturaDTO {
    private String nombreTributo;
    private Date vencimiento;
    private Double total;
+   private String pagado;
    //muestra los valores segun el tributo, para que el contribuyente pueda verificar los
    //calculos de la factura
    private String variablesParaCalculo;
@@ -87,5 +88,13 @@ public class FacturaDTO {
 
     public void setTotal(Double total) {
         this.total = total;
+    }
+
+    public String getPagado() {
+        return pagado;
+    }
+
+    public void setPagado(String pagado) {
+        this.pagado = pagado;
     }
 }

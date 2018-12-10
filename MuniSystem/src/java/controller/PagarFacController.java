@@ -3,10 +3,12 @@ package controller;
 import buil.FacturaDTOBuilder;
 import dao.BaseCalculoDAO;
 import dao.ComprobanteDAO;
+import dao.MultaDAO;
 import dto.FacturaDTO;
 import factura.BaseCalculo;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import jpa.ComprobanteCabecera;
@@ -22,11 +24,13 @@ public class PagarFacController {
     private EntityManager em;
     private ComprobanteDAO comprobanteDAO;
     private BaseCalculoDAO baseCalculoDAO;
+    private MultaDAO multaDAO;
 
     public PagarFacController() {
         em = Util.getEm();
         comprobanteDAO = new ComprobanteDAO(em);
         baseCalculoDAO = new BaseCalculoDAO(em);
+        multaDAO = new MultaDAO(em);
     }
     
     public List<FacturaDTO> getFacturas(Integer nroFactura, Integer rmc, Integer anio, String nombreTributo){
@@ -69,5 +73,13 @@ public class PagarFacController {
         if(em.getTransaction().isActive()){
             em.getTransaction().rollback();
         }    
+    }
+    
+    public Integer getDiasAtraso(FacturaDTO facturaDTO){
+        Date hoy = new Date();
+        Integer diasAtraso = 0;
+        ComprobanteCabecera cabecera = comprobanteDAO.getCompCabecera(facturaDTO.getNroFactura());
+        diasAtraso = multaDAO.getDiasAtraso(cabecera.getVencimiento(), hoy);
+        return diasAtraso;            
     }
 }
