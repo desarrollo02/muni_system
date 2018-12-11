@@ -62,6 +62,13 @@
     <navigation-rule>
         <navigation-case>
             <redirect/>
+            <from-outcome>generarAvisos</from-outcome>
+            <to-view-id>/seguro/reporte/generar_avisos.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <redirect/>
             <from-outcome>pagar</from-outcome>
             <to-view-id>/seguro/generar_factura/pagar_factura.xhtml</to-view-id>
         </navigation-case>
