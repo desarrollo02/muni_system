@@ -8,29 +8,61 @@
     <ui:define name="container"> 
         <h:form id="form" prependId="false">
             <p:growl id="ms"/> 
-            <b:panel title="Cobranzas Por Fecha" id="pnl"
+            <b:panel title="Cierre de Caja" id="pnl"
                 collapsible="false">
-                <p:panelGrid columns="6">
+                <p:panelGrid columns="4">
                     <p:outputLabel value="Usuario"/>
-                    <p:inputText value="#{cobranzasDelDiaBean.filtroUsuario}"/>
+                    <p:inputText value="#{cierreCajaBean.usuario}"/>
+                    <p:outputLabel value="Cedula"/>
+                    <p:inputText value="#{cierreCajaBean.cedula}"/>
+                    <p:outputLabel value="Nombres"/>
+                    <p:inputText value="#{cierreCajaBean.nombres}"/>
+                    <p:outputLabel value="Apellidos"/>
+                    <p:inputText value="#{cierreCajaBean.apellidos}"/>
+                </p:panelGrid>
+                <p:toolbar id="tbar1">
+                    <f:facet name="left">
+                        <p:commandButton value="Filtrar" 
+                            id="fil1"
+                            actionListener="#{cierreCajaBean.buscar}"
+                            update="@form"/>
+                </f:facet>
+            </p:toolbar>
+            <b:panel title="Usuarios" id="pnl3"
+                collapsible="false">
+                <p:dataTable value="#{cierreCajaBean.usuarios}"
+                    var="fila"
+                    rowKey="#{fila.id}"
+                    selection="#{cierreCajaBean.usuarioSelect}"
+                    selectionMode="single">
+                    <p:column headerText="Usuario">
+                        <h:outputText value="#{fila.desc}"/>
+                    </p:column>
+                    <p:column headerText="Cedula">
+                        <h:outputText value="#{fila.cedula}"/>
+                    </p:column>
+                    <p:column headerText="Nombres">
+                        <h:outputText value="#{fila.nombre}"/>
+                    </p:column>
+                    <p:column headerText="Apellidos">
+                        <h:outputText value="#{fila.apellido}"/>
+                    </p:column>
+                </p:dataTable>
+            </b:panel>    
+                <p:panelGrid columns="6">                  
                     <p:outputLabel value="Fecha Desde"/>
-                    <p:calendar value="#{cobranzasDelDiaBean.fechaDesde}"
+                    <p:calendar value="#{cierreCajaBean.fechaDesde}"
                                 pattern="dd/MM/yyyy"/>
                     <p:outputLabel value="Fecha Hasta"/>
-                    <p:calendar value="#{cobranzasDelDiaBean.fechaHasta}"
+                    <p:calendar value="#{cierreCajaBean.fechaHasta}"
                                 pattern="dd/MM/yyyy"/>
+                    <p:commandButton value="Imprimir" 
+                        icon="ui-icon-print"
+                        ajax="false"
+                        action="#{cierreCajaBean.descargarReporte}"
+                        id="imp"/>
                 </p:panelGrid>         
             </b:panel>
-            <p:toolbar id="tbar">
-            <f:facet name="left">
-                <p:commandButton value="Imprimir" 
-                    icon="ui-icon-print"
-                    ajax="false"
-                    action="#{cobranzasDelDiaBean.descargarReporte}"
-                    id="imp">
-                </p:commandButton>
-            </f:facet>
-            </p:toolbar>    
         </h:form>
     </ui:define>
 </ui:composition> 

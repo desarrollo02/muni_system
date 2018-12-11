@@ -18,6 +18,8 @@ public class CobranzasDelDiaBean extends MensajeBean implements Serializable {
     private String filtroUsuario;
     private Date fechaDesde;
     private Date fechaHasta;
+    private String filtroNombres;
+    private String filtroApellidos;
     private CobranzasDelDiaManager manager = new CobranzasDelDiaManager();
     
     
@@ -44,7 +46,7 @@ public class CobranzasDelDiaBean extends MensajeBean implements Serializable {
     }
     
     public String irVista(){
-        return "cobranzas_del_dia";
+        return "cierreCaja";
     }
     
     public CobranzasDelDiaBean() {
