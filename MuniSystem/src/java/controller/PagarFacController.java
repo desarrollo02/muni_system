@@ -63,9 +63,9 @@ public class PagarFacController {
         return facturas;
     }
     
-    public void pagar(FacturaDTO facturaDTO, String formaPago, String nroCheque)throws SQLException{
+    public void pagar(FacturaDTO facturaDTO, String formaPago, String nroCheque, String usuario)throws SQLException{
         em.getTransaction().begin();
-            comprobanteDAO.pagar(facturaDTO.getNroFactura(), formaPago, nroCheque);
+            comprobanteDAO.pagar(facturaDTO.getNroFactura(), formaPago, nroCheque, usuario);
         em.getTransaction().commit();
     }
     

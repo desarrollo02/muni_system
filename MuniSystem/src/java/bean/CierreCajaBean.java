@@ -53,10 +53,10 @@ public class CierreCajaBean extends BaseBean implements Serializable {
             parametros.put("FECHA_ACTUAL",new Date());
             parametros.put("USUARIO", usuarioSelect.getDesc());
             parametros.put("NOMBRE_COMPLETO", usuarioSelect.getNombre() +" "+ usuarioSelect.getApellido());
-            parametros.put("TOTAL_EFECTIVO", controller.getTotalEfectivo(fechaDesde, fechaHasta, usuario));
-            parametros.put("TOTAL_CHEQUE", controller.getTotalCheque(fechaDesde, fechaHasta, usuario));
-            parametros.put("TOTAL_TARJETA_DEBITO", controller.getTotalTarjetaDebito(fechaDesde, fechaHasta, usuario));
-            parametros.put("TOTAL_TARJETA_CREDITO", controller.getTotalTarjetaCredito(fechaDesde, fechaHasta, usuario));
+            parametros.put("TOTAL_EFECTIVO", controller.getTotalEfectivo(fechaDesde, fechaHasta, usuarioSelect.getDesc()));
+            parametros.put("TOTAL_CHEQUE", controller.getTotalCheque(fechaDesde, fechaHasta, usuarioSelect.getDesc()));
+            parametros.put("TOTAL_TARJETA_DEBITO", controller.getTotalTarjetaDebito(fechaDesde, fechaHasta, usuarioSelect.getDesc()));
+            parametros.put("TOTAL_TARJETA_CREDITO", controller.getTotalTarjetaCredito(fechaDesde, fechaHasta, usuarioSelect.getDesc()));
             parametros.put("FECHA_DESDE", fechaDesde);
             parametros.put("FECHA_HASTA", fechaHasta);
             JasperReportUtils.runReportB("cierre_caja","/seguro/reporte/cierre_caja.jasper",parametros);

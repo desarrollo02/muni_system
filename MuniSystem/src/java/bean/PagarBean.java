@@ -77,7 +77,7 @@ public class PagarBean extends BaseBean implements Serializable {
                 super.setMensajeError("La factura esta vencida");
                 return null;
             }
-            controller.pagar(facturaSelect, tipoPago, nroCheque);
+            controller.pagar(facturaSelect, tipoPago, nroCheque, "admin");
             vuelto = montoRecibido - facturaSelect.getTotal();
             if(tipoPago.equals("E")){
                 decsTipoPago="Efectivo";
