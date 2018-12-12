@@ -1,11 +1,13 @@
 package dao;
 
+import enumerados.TributoConRegistro;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import jpa.ComprobanteCabecera;
 import jpa.ComprobanteDetalle;
+import jpa.Tributo;
 
 public class ComprobanteDAO {
     
@@ -98,6 +100,46 @@ public class ComprobanteDAO {
         query.setParameter("fechaIncio", fechaInicio);
         query.setParameter("fechaFin", fechaFin);
         query.setParameter("usuario", usuario);
+        List result = query.getResultList();
+        if(result.isEmpty()){
+            return 0.0;
+        }else if(result.get(0) == null){
+            return 0.0;
+        }else{
+            return (Double) result.get(0);
+        }
+    }
+    
+    public Double getMontoEstimado(Tributo tributo, Integer anio){
+        Query query = em.createQuery("select sum(o.totalPagar) from ComprobanteCabecera o "
+                + "where o.anulado = :anulado "
+                + "and o.idTributo = :tributo " 
+                + "and o.anio = :anio");
+        query.setParameter("anulado", false);
+        query.setParameter("tributo", tributo);
+        query.setParameter("anio", anio);
+        
+        List result = query.getResultList();
+        if(result.isEmpty()){
+            return 0.0;
+        }else if(result.get(0) == null){
+            return 0.0;
+        }else{
+            return (Double) result.get(0);
+        }
+    }
+    
+    public Double getMontoIngreso(Tributo tributo, Integer anio){
+        Query query = em.createQuery("select sum(o.totalPagar) from ComprobanteCabecera o "
+                + "where o.anulado = :anulado "
+                + "and o.idTributo = :tributo "
+                + "and o.pagado = :pagado "
+                + "and o.anio = :anio");
+        query.setParameter("anulado", false);
+        query.setParameter("tributo", tributo);
+        query.setParameter("pagado", true);
+        query.setParameter("anio", anio);
+        
         List result = query.getResultList();
         if(result.isEmpty()){
             return 0.0;

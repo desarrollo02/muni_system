@@ -5,10 +5,96 @@
     xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:p="http://primefaces.org/ui"
     xmlns:b="http://bootsfaces.net/ui">
-    <ui:define name="container">
+    <ui:define name="container"> 
         <h:form id="form" prependId="false">
-            <p:growl id="ms"/>
+            <p:growl id="ms"/> 
+            <b:panel title="Ingresos Por impuestos" id="pnl">
+                <p:panelGrid columns="4" style="margin-left: auto; margin-right: auto;">        
+                    <p:outputLabel value="Tipo"/>
+                    <p:selectOneMenu value="#{ingresosBean.nombreTributo}"
+                        id="tipo">
+                        <f:selectItem itemLabel="Todos"
+                            itemValue="#{null}"/>
+                        <f:selectItem itemLabel="Impuesto Inmobiliario"
+                            itemValue="INMOBILIARIO"/>
+                        <f:selectItem itemLabel="Patente Comercial"
+                            itemValue="PATENTE"/>
+                        <f:selectItem itemLabel="Lote Cementerio"
+                            itemValue="CEMENTERIO"/>
+                        <f:selectItem itemLabel="Habilitacion de Vehiculo"
+                            itemValue="VEHICULO"/>
+                        <f:selectItem itemLabel="Registro de Conducir"
+                            itemValue="REGISTRO"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Año:"/> 
+                    <p:inputText value="#{ingresosBean.anio}"
+                        required="true"
+                        requiredMessage="Debe ingresar el año"/>
+                </p:panelGrid>
+            </b:panel>
+            <p:toolbar id="tbar">
+                <f:facet name="left">
+                    
+                    <p:spacer width="6"/>
+                    
+                    <span class="ui-separator">
+                        <span class="ui-icon ui-icon-grip-dotted-vertical" />
+                    </span>
+                </f:facet>
+                <f:facet name="right">
+                    <p:commandButton value="Buscar" 
+                                    icon="ui-icon-document"
+                                    id="buscar"
+                                    actionListener="#{ingresosBean.buscar}"
+                                    update="@form"/>
+                </f:facet>
+            </p:toolbar>
+            <b:panel title="Ingresos" id="pnl2"
+                collapsible="false">
+                <p:dataTable value="#{ingresosBean.ingresos}"
+                    var="fila">
+                    <p:column headerText="Tributo">
+                        <h:outputText value="#{fila.tributo}"/>
+                    </p:column>
+                    <p:column headerText="Año">
+                        <h:outputText value="#{fila.anio}">
+                            <f:convertNumber pattern="#,##0"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Monto Estimado">
+                        <h:outputText value="#{fila.montoEstimado}">
+                            <f:convertNumber pattern="#,##0"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Monto Recaudado">
+                        <h:outputText value="#{fila.montoIngreso}">
+                            <f:convertNumber pattern="#,##0"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Faltante">
+                        <h:outputText value="#{fila.montoFaltante}">
+                            <f:convertNumber pattern="#,##0"/>
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </b:panel>
+            <p:toolbar id="tbar2">
+                <f:facet name="left">
+                    <p:commandButton value="Imprimir" 
+                        type="button" 
+                        icon="pi pi-print" style="display:block;margin-bottom: 20px">
+                        <p:printer target="pnl2" />
+                    </p:commandButton>
+                </f:facet>
+                <f:facet name="right">    
+                    <p:commandButton title="Salir" 
+                                     action="inicio" 
+                                     icon="ui-icon-extlink" 
+                                     ajax="false" 
+                                     immediate="true"/>
+                </f:facet>
+            </p:toolbar>
         </h:form>
-    </ui:define>  
-</ui:composition> 
+    </ui:define>                
+</ui:composition>
 

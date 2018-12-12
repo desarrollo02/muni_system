@@ -20,7 +20,7 @@
     <navigation-rule>
         <navigation-case>
             <redirect/>
-            <from-outcome>ingreso_por_impuesto</from-outcome>
+            <from-outcome>ingresos</from-outcome>
             <to-view-id>/seguro/reporte/ingreso_por_impuesto.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
