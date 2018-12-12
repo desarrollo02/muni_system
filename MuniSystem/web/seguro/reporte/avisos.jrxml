@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="avisos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="632ce44e-5e11-4656-860f-5c0bc061cc0a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="41"/>
+	<parameter name="FECHA_ACTUAL" class="java.util.Date"/>
+	<parameter name="ID_TRIBUTO" class="java.lang.Integer"/>
+	<parameter name="ANIO" class="java.lang.Integer"/>
+	<parameter name="ANULADO" class="java.lang.Boolean"/>
+	<parameter name="PAGADO" class="java.lang.Boolean"/>
+	<parameter name="DESC_TRIBUTO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT F.TOTAL_PAGAR, F.ANIO, C.ID_CONTRIBUYENTE, C.CEDULA,
+	C.NOMBRES, C.APELLIDOS, C.RUC, C.RAZON_SOCIAL
+ FROM COMPROBANTE_CABECERA F, CONTRIBUYENTE C
+ WHERE
+ F.ID_CONTRIBUYENTE = C.ID_CONTRIBUYENTE AND
+ F.ANIO=$P{ANIO} AND
+ F.ANULADO=$P{ANULADO} AND
+ F.PAGADO=$P{PAGADO} AND
+ F.ID_TRIBUTO = $P{ID_TRIBUTO}]]>
+	</queryString>
+	<field name="total_pagar" class="java.lang.Double"/>
+	<field name="anio" class="java.lang.Integer"/>
+	<field name="id_contribuyente" class="java.lang.Integer"/>
+	<field name="cedula" class="java.lang.String"/>
+	<field name="nombres" class="java.lang.String"/>
+	<field name="apellidos" class="java.lang.String"/>
+	<field name="ruc" class="java.lang.String"/>
+	<field name="razon_social" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<rectangle>
+				<reportElement x="20" y="15" width="519" height="53" uuid="e6b090f3-ba79-438b-8251-7d666c8f21fa"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="123" y="15" width="321" height="53" uuid="7b0f9ccb-abad-4120-9528-02a61de8660d"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="126" y="28" width="316" height="27" uuid="95735917-17b9-4cdd-b70d-44209cf1eb16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MUNICIPALIDAD DE ISLA PUCU-CORDILLERA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="483" y="33" width="54" height="13" uuid="a883af34-5659-462f-8aea-adfeb0c76f7c"/>
+				<textFieldExpression><![CDATA[$P{FECHA_ACTUAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="445" y="33" width="38" height="13" uuid="7d4b8a49-8d0d-4b05-a1f6-cb8d14d3dd07"/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" x="118" y="4" width="316" height="27" uuid="ed04947a-78a7-4e28-9c64-85fd542f1d30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AVISOS A CONTRIBUYENTES]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="150" splitType="Stretch">
+			<textField>
+				<reportElement x="47" y="16" width="243" height="20" uuid="685beb40-6923-4b51-823b-5565254dca5f"/>
+				<textFieldExpression><![CDATA["Estimado " + $F{nombres} + " " + $F{apellidos}+"."]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="123" y="46" width="432" height="20" uuid="33fc1b62-f31d-4bd3-9310-3dfbd69e11b2"/>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA["Nos dirigimos a Ud. con el objetivo de informarle que se encuentra "+
+"pendiente el pago del " + $P{DESC_TRIBUTO} + " correspondiente al año " +
+$F{anio} + ". El monto a abonar es " + $F{total_pagar}+ ", este monto podria " +
+"aumentar por la mora en caso de no abonar en los 5 dias siguientes."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="124" y="88" width="325" height="20" uuid="02163eb1-5602-4bff-9e03-58e4e8a91f8b"/>
+				<text><![CDATA[Se saluda atentamente, el intentedete y los miembros de la junta]]></text>
+			</staticText>
+			<line>
+				<reportElement x="25" y="3" width="520" height="1" uuid="402450e9-69e7-40e7-84eb-d0a78fdea4ac"/>
+			</line>
+			<line>
+				<reportElement x="106" y="127" width="200" height="1" uuid="9c358c0f-cea1-4d84-a16b-578b65372fdd"/>
+			</line>
+			<line>
+				<reportElement x="339" y="127" width="200" height="1" uuid="54fa1a0f-5bbf-4a7f-88d7-d8248a7632b4"/>
+			</line>
+			<staticText>
+				<reportElement x="175" y="130" width="100" height="20" uuid="70ff465c-097c-4ca1-8618-5fb08427a16c"/>
+				<text><![CDATA[Intendente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="405" y="128" width="100" height="20" uuid="91bcb1d4-abfc-44d3-a0c9-92b6511c7a4d"/>
+				<text><![CDATA[Pte. de la Junta]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

@@ -4,6 +4,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import jpa.Contribuyente;
+import jpa.Tributo;
 
 public class ContribuyenteDAO {
     
@@ -57,211 +58,17 @@ public class ContribuyenteDAO {
         }
     }
     
-    public List<Contribuyente> getContribuyentesInmobiliario(Integer idCondribuyente, 
-                                        String cedula, 
-                                        String ruc, 
-                                        String nombres,
-                                        String apellidos){
-        String sql = "select o from Inmueble o where 1 = 1";
-        if(idCondribuyente != null && idCondribuyente > 0){
-            sql = sql + " and o.idContribuyente.idContribuyente = :idContribuyente";
-        }
-        if(cedula != null && !cedula.equals("")){
-            sql =  sql + " and o.idContribuyente.cedula = :cedula";
-        }
-        if(ruc != null && !ruc.equals("")){
-            sql = sql + " and o.idContribuyente.ruc = :ruc";
-        }
-        if(nombres != null && !nombres.equals("")){
-            sql = sql + " and o.idContribuyente.nombres = :nombres";
-        }
-        if(apellidos != null && !apellidos.equals("")){
-            sql =  sql + " and o.idContribuyente.apellidos = :apellidos";
-        }
-    
-        Query query = em.createQuery(sql);
-    
-        if(idCondribuyente != null && idCondribuyente > 0){
-            query.setParameter("idContribuyente", idCondribuyente);
-        }
-        if(cedula != null && !cedula.equals("")){
-            query.setParameter("cedula", cedula);
-        }
-        if(ruc != null && !ruc.equals("")){
-            query.setParameter("ruc", ruc);
-        }
-        if(nombres != null && !nombres.equals("")){
-            query.setParameter("nombres", nombres);
-        }
-        if(apellidos != null && !apellidos.equals("")){
-            query.setParameter("apellidos", apellidos);
-        }
-        return query.getResultList();
-    }
-    
-    public List<Contribuyente> getContribuyentesPantente(Integer idCondribuyente, 
-                                        String cedula, 
-                                        String ruc, 
-                                        String nombres,
-                                        String apellidos){
-        String sql = "select o from Comercio o where 1 = 1";
-        if(idCondribuyente != null && idCondribuyente > 0){
-            sql = sql + " and o.idContribuyente.idContribuyente = :idContribuyente";
-        }
-        if(cedula != null && !cedula.equals("")){
-            sql =  sql + " and o.idContribuyente.cedula = :cedula";
-        }
-        if(ruc != null && !ruc.equals("")){
-            sql = sql + " and o.idContribuyente.ruc = :ruc";
-        }
-        if(nombres != null && !nombres.equals("")){
-            sql = sql + " and o.idContribuyente.nombres = :nombres";
-        }
-        if(apellidos != null && !apellidos.equals("")){
-            sql =  sql + " and o.idContribuyente.apellidos = :apellidos";
-        }
+    public List<Contribuyente> getContribuyentes( 
+                                        Tributo tributo,
+                                        Integer anio){
+        String sql = "select o.idContribuyente from ComprobanteCabecera o where o.anulado = :anulado"
+                + " and o.pagado = :pagado and o.idTributo = :tributo and o.anio = :anio";
         
         Query query = em.createQuery(sql);
-        if(idCondribuyente != null && idCondribuyente > 0){
-            query.setParameter("idContribuyente", idCondribuyente);
-        }
-        if(cedula != null && !cedula.equals("")){
-            query.setParameter("cedula", cedula);
-        }
-        if(ruc != null && !ruc.equals("")){
-            query.setParameter("ruc", ruc);
-        }
-        if(nombres != null && !nombres.equals("")){
-            query.setParameter("nombres", nombres);
-        }
-        if(apellidos != null && !apellidos.equals("")){
-            query.setParameter("apellidos", apellidos);
-        }
-        return query.getResultList();
-    }
-    
-    public List<Contribuyente> getContribuyentesCementerio(Integer idCondribuyente, 
-                                        String cedula, 
-                                        String ruc, 
-                                        String nombres,
-                                        String apellidos){
-        String sql = "select o from Cementerio o where 1 = 1";
-        if(idCondribuyente != null && idCondribuyente > 0){
-            sql = sql + " and o.idContribuyente.idContribuyente = :idContribuyente";
-        }
-        if(cedula != null && !cedula.equals("")){
-            sql =  sql + " and o.idContribuyente.cedula = :cedula";
-        }
-        if(ruc != null && !ruc.equals("")){
-            sql = sql + " and o.idContribuyente.ruc = :ruc";
-        }
-        if(nombres != null && !nombres.equals("")){
-            sql = sql + " and o.idContribuyente.nombres = :nombres";
-        }
-        if(apellidos != null && !apellidos.equals("")){
-            sql =  sql + " and o.idContribuyente.apellidos = :apellidos";
-        }
-    
-        Query query = em.createQuery(sql);
-    
-        if(idCondribuyente != null && idCondribuyente > 0){
-            query.setParameter("idContribuyente", idCondribuyente);
-        }
-        if(cedula != null && !cedula.equals("")){
-            query.setParameter("cedula", cedula);
-        }
-        if(ruc != null && !ruc.equals("")){
-            query.setParameter("ruc", ruc);
-        }
-        if(nombres != null && !nombres.equals("")){
-            query.setParameter("nombres", nombres);
-        }
-        if(apellidos != null && !apellidos.equals("")){
-            query.setParameter("apellidos", apellidos);
-        }
-        return query.getResultList();
-    }
-    
-    public List<Contribuyente> getContribuyentesHabilitacion(Integer idCondribuyente, 
-                                        String cedula, 
-                                        String ruc, 
-                                        String nombres,
-                                        String apellidos){
-        String sql = "select o from Vehiculo o where 1 = 1";
-        if(idCondribuyente != null && idCondribuyente > 0){
-            sql = sql + " and o.idContribuyente.idContribuyente = :idContribuyente";
-        }
-        if(cedula != null && !cedula.equals("")){
-            sql =  sql + " and o.idContribuyente.cedula = :cedula";
-        }
-        if(ruc != null && !ruc.equals("")){
-            sql = sql + " and o.idContribuyente.ruc = :ruc";
-        }
-        if(nombres != null && !nombres.equals("")){
-            sql = sql + " and o.idContribuyente.nombres = :nombres";
-        }
-        if(apellidos != null && !apellidos.equals("")){
-            sql =  sql + " and o.idContribuyente.apellidos = :apellidos";
-        }
-        
-        Query query = em.createQuery(sql);
-        if(idCondribuyente != null && idCondribuyente > 0){
-            query.setParameter("idContribuyente", idCondribuyente);
-        }
-        if(cedula != null && !cedula.equals("")){
-            query.setParameter("cedula", cedula);
-        }
-        if(ruc != null && !ruc.equals("")){
-            query.setParameter("ruc", ruc);
-        }
-        if(nombres != null && !nombres.equals("")){
-            query.setParameter("nombres", nombres);
-        }
-        if(apellidos != null && !apellidos.equals("")){
-            query.setParameter("apellidos", apellidos);
-        }
-        return query.getResultList();
-    }
-    
-    public List<Contribuyente> getContribuyentesRegistro(Integer idCondribuyente, 
-                                        String cedula, 
-                                        String ruc, 
-                                        String nombres,
-                                        String apellidos){
-        String sql = "select o from RegistroConducir o where 1 = 1";
-        if(idCondribuyente != null && idCondribuyente > 0){
-            sql = sql + " and o.idContribuyente.idContribuyente = :idContribuyente";
-        }
-        if(cedula != null && !cedula.equals("")){
-            sql =  sql + " and o.idContribuyente.cedula = :cedula";
-        }
-        if(ruc != null && !ruc.equals("")){
-            sql = sql + " and o.idContribuyente.ruc = :ruc";
-        }
-        if(nombres != null && !nombres.equals("")){
-            sql = sql + " and o.idContribuyente.nombres = :nombres";
-        }
-        if(apellidos != null && !apellidos.equals("")){
-            sql =  sql + " and o.idContribuyente.apellidos = :apellidos";
-        }
-        
-        Query query = em.createQuery(sql);
-        
-        if(idCondribuyente != null && idCondribuyente > 0){
-            query.setParameter("idContribuyente", idCondribuyente);
-        }
-        if(cedula != null && !cedula.equals("")){
-            query.setParameter("cedula", cedula);
-        }
-        if(ruc != null && !ruc.equals("")){
-            query.setParameter("ruc", ruc);
-        }
-        if(nombres != null && !nombres.equals("")){
-            query.setParameter("nombres", nombres);
-        }
-        if(apellidos != null && !apellidos.equals("")){
-            query.setParameter("apellidos", apellidos);
-        }
+        query.setParameter("anulado", false);
+        query.setParameter("pagado", false);
+        query.setParameter("tributo", tributo);
+        query.setParameter("anio", anio);
         return query.getResultList();
     }
 }

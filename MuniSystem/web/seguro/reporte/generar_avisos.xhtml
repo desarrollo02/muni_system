@@ -9,11 +9,7 @@
         <h:form id="form" prependId="false">
             <p:growl id="ms"/> 
             <b:panel title="Generar Avisos" id="pnl">
-                <p:panelGrid columns="6" style="margin-left: auto; margin-right: auto;">        
-                    <p:outputLabel value="R.M.C."/> 
-                    <p:inputNumber decimalPlaces="0" value="#{generarAvisosBean.idCondribuyente}"/>
-                    <p:outputLabel value="C.I.Nº"/> 
-                    <p:inputText value="#{generarAvisosBean.cedula}"/>
+                <p:panelGrid columns="4" style="margin-left: auto; margin-right: auto;">        
                     <p:outputLabel value="Tipo"/>
                     <p:selectOneMenu value="#{generarAvisosBean.nombreTributo}"
                         id="tipo"
@@ -32,19 +28,17 @@
                         <f:selectItem itemLabel="Registro de Conducir"
                             itemValue="REGISTRO"/>
                     </p:selectOneMenu>
-                    <p:outputLabel value="R.U.C."/> 
-                    <p:inputText value="#{generarAvisosBean.ruc}"/>
-                    <p:outputLabel value="Nombres"/> 
-                    <p:inputText value="#{generarAvisosBean.nombres}"/>
-                    <p:outputLabel value="Apellidos"/> 
-                    <p:inputText value="#{generarAvisosBean.apellidos}"/>
+                    <p:outputLabel value="Año:"/> 
+                    <p:inputText value="#{generarAvisosBean.anio}"
+                        required="true"
+                        requiredMessage="Debe ingresar el año"/>
                 </p:panelGrid>
             </b:panel>
             <p:toolbar id="tbar">
                 <f:facet name="left">
-                    <p:outputLabel value="Año:"/> 
+                    
                     <p:spacer width="6"/>
-                    <p:inputText value="#{generarFactIndividualBean.anio}"/>
+                    
                     <span class="ui-separator">
                         <span class="ui-icon ui-icon-grip-dotted-vertical" />
                     </span>
@@ -87,8 +81,8 @@
                     <p:commandButton value="Generar" 
                                     icon="ui-icon-document"
                                     id="generar2"
-                                    actionListener="#{generarFactIndividualBean.generar}"
-                                    update="@form"/>    
+                                    action="#{generarAvisosBean.descargarReporte()}"
+                                    ajax="false"/>    
                 </f:facet>
                 <f:facet name="right">    
                     <p:commandButton title="Salir" 

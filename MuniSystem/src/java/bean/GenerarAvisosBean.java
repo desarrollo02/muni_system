@@ -6,8 +6,14 @@ import enumerados.TributoConRegistro;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.event.ActionEvent;
+import reporte.CobranzasDelDiaBean;
+import util.JasperReportUtils;
 
 /**
  *
@@ -15,7 +21,7 @@ import javax.faces.event.ActionEvent;
  */
 @Named(value = "generarAvisosBean")
 @SessionScoped
-public class GenerarAvisosBean implements Serializable {
+public class GenerarAvisosBean extends BaseBean implements Serializable {
     
     private String nombreTributo;
     private Integer idCondribuyente;
@@ -46,25 +52,72 @@ public class GenerarAvisosBean implements Serializable {
     }
     
     public void buscar(ActionEvent evento){
-        //agregar al DAO para que filtre solo los que tienen facturas pendientes de pago
         switch (nombreTributo) {
             case "INMOBILIARIO":
-                contribuyentes = controller.getContribuyentes(TributoConRegistro.INMOBILIARIO, idCondribuyente, cedula, ruc, nombres, apellidos);
+                contribuyentes = controller.getContribuyentes(TributoConRegistro.INMOBILIARIO,anio);
                 break;
             case "PATENTE":
-                contribuyentes = controller.getContribuyentes(TributoConRegistro.PATENTE, idCondribuyente, cedula, ruc, nombres, apellidos);
+                contribuyentes = controller.getContribuyentes(TributoConRegistro.PATENTE, anio);
                 break;
             case "CEMENTERIO":
-                contribuyentes = controller.getContribuyentes(TributoConRegistro.CEMENTERIO, idCondribuyente, cedula, ruc, nombres, apellidos);
+                contribuyentes = controller.getContribuyentes(TributoConRegistro.CEMENTERIO, anio);
                 break;
             case "VEHICULO":
-                contribuyentes = controller.getContribuyentes(TributoConRegistro.VEHICULO, idCondribuyente, cedula, ruc, nombres, apellidos);
+                contribuyentes = controller.getContribuyentes(TributoConRegistro.VEHICULO, anio);
                 break;
             case "REGISTRO":
-                contribuyentes = controller.getContribuyentes(TributoConRegistro.REGISTRO, idCondribuyente, cedula, ruc, nombres, apellidos);
+                contribuyentes = controller.getContribuyentes(TributoConRegistro.REGISTRO, anio);
                 break;
             default:
                 break;
+        }
+    }
+    
+    public String descargarReporte(){
+        try {
+            Integer idTributo=0;
+            String descTributo="";
+            switch (nombreTributo) {
+                case "INMOBILIARIO":
+                    idTributo = controller.getIdTributo(TributoConRegistro.INMOBILIARIO);
+                    descTributo = "Impuesto inmobiliario";
+                    break;
+                case "PATENTE":
+                    idTributo = controller.getIdTributo(TributoConRegistro.PATENTE);
+                    descTributo = "Patente Comercial";
+                    break;
+                case "CEMENTERIO":
+                    idTributo = controller.getIdTributo(TributoConRegistro.CEMENTERIO);
+                    descTributo = "Lote en Cementerio";
+                    break;
+                case "VEHICULO":
+                    idTributo = controller.getIdTributo(TributoConRegistro.VEHICULO);
+                    descTributo = "Habilitacion de Vehiculo";
+                    break;
+                case "REGISTRO":
+                    idTributo = controller.getIdTributo(TributoConRegistro.REGISTRO);
+                    descTributo = "Registro de Conducir";
+                    break;
+                default:
+                    break;
+            }
+            if(contribuyentes == null || contribuyentes.isEmpty()){
+                super.setMensajeError("No se encontraron contribuyentes para el aviso");
+                return null;
+            }
+            
+            HashMap<String, Object> parametros = new HashMap<String, Object>();
+            parametros.put("FECHA_ACTUAL",new Date());
+            parametros.put("DESC_TRIBUTO", descTributo);
+            parametros.put("ANULADO", false);
+            parametros.put("PAGADO", false);
+            parametros.put("ID_TRIBUTO", idTributo);
+            parametros.put("ANIO", anio);
+            JasperReportUtils.runReportB("avisos","/seguro/reporte/avisos.jasper",parametros);
+            return null;
+        }catch(Exception ex){
+            Logger.getLogger(CobranzasDelDiaBean.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
         }
     }
 
