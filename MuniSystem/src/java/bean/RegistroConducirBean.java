@@ -60,6 +60,7 @@ public class RegistroConducirBean extends MensajeBean implements Serializable {
         getFormEnable().nuevo();
         registroConducir = new RegistroConducir();
         registroConducir.setIdContribuyente(new Contribuyente());
+        registroConducirSelect=null;
     }
     
     public void cancelar(ActionEvent evento){

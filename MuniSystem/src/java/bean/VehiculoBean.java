@@ -67,6 +67,7 @@ public class VehiculoBean extends MensajeBean implements Serializable {
         getFormEnable().nuevo();
         vehiculo = new Vehiculo();
         vehiculo.setIdContribuyente(new Contribuyente());
+        vehiculoSelect=null;
     }
     
     public void cancelar(ActionEvent evento){

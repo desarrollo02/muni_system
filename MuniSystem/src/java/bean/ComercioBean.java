@@ -65,6 +65,7 @@ public class ComercioBean extends MensajeBean implements Serializable{
         formEnable.nuevo();
         comercio = new Comercio();
         comercio.setIdContribuyente(new Contribuyente());
+        comercioSelect=null;
     }
     
     public void cancelar(ActionEvent evento){

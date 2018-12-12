@@ -32,6 +32,7 @@ public class ContribuyenteBean extends MensajeBean implements Serializable {
         formEnable.formContribuyenteBotones(false, false, false, true, true);
         formEnable.formContribuyenteCampos(true, false, false, false, false, false, false, false, false, false, false, false);
         contribuyente = new Contribuyente();
+        itemSeleccionado = null;
     }
     
     public void cancelar(ActionEvent evento){

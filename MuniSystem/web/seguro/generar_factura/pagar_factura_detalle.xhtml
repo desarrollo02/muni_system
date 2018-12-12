@@ -16,12 +16,12 @@
                     </h:outputText>
                     <p:outputLabel value="Concepto"/>
                     <h:outputText value="#{pagarBean.facturaSelect.concepto}, #{pagarBean.facturaSelect.variablesParaCalculo}"/>
-                    <p:outputLabel value="Año"/>
-                    <h:outputText value="#{pagarBean.facturaSelect.anio}"/>
                     <p:outputLabel value="Vencimiento"/>
                     <h:outputText value="#{pagarBean.facturaSelect.vencimiento}">
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                     </h:outputText>
+                    <p:outputLabel value="Contribuyente"/>
+                    <h:outputText value="#{pagarBean.facturaSelect.contribuyente}"/>
                 </p:panelGrid>
             </b:panel>
             <b:panel title="Detalle" id="pnl2"

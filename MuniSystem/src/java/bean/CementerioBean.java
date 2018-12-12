@@ -58,6 +58,7 @@ public class CementerioBean extends MensajeBean implements Serializable {
         formEnable.nuevo();
         cementerio = new Cementerio();
         cementerio.setIdContribuyente(new Contribuyente());
+        cementerioSelect = null;
     }
     
     public void cancelar(ActionEvent evento){

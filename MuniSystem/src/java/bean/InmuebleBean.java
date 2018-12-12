@@ -60,6 +60,7 @@ public class InmuebleBean extends MensajeBean implements Serializable {
         formEnable.nuevo();
         inmueble = new Inmueble();
         inmueble.setIdContribuyente(new Contribuyente());
+        inmuebleSelect = null;
     }
     
     public void cancelar(ActionEvent evento){

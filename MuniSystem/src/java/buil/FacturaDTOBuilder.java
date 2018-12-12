@@ -22,6 +22,15 @@ public class FacturaDTOBuilder {
         facturaDTO.setNombreTributo(cabecera.getIdTributo().getNombre());
         facturaDTO.setReferencia(cabecera.getId_ref());
         facturaDTO.setConcepto(cabecera.getIdTributo().getNombre() + " " + cabecera.getAnio());
+        if(cabecera.getIdContribuyente().getPersonaJuridica()){
+            String datos = "Empresa " + cabecera.getIdContribuyente().getRazonSocial() + ", RUC " + cabecera.getIdContribuyente().getRuc();
+            facturaDTO.setContribuyente(datos);
+        }else{
+            String datos2 = "C.I.N°:" + cabecera.getIdContribuyente().getCedula() + 
+                    ", Nombres: " +cabecera.getIdContribuyente().getNombres() +
+                    ", Apellidos: " + cabecera.getIdContribuyente().getApellidos();
+            facturaDTO.setContribuyente(datos2);
+        }
         facturaDTO.setVencimiento(cabecera.getVencimiento());
         if(cabecera.getPagado() != null && cabecera.getPagado()){
             facturaDTO.setPagado("Si");
