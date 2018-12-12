@@ -29,10 +29,14 @@
             </b:panel>
             <p:toolbar id="tbar2">
                 <f:facet name="left">
-                    <p:commandButton value="Aceptar" 
+                    <p:commandButton value="Incio" 
                              id="pagar"
                              action="#{pagarBean.irVista}"
-                             ajax="false"/>                             
+                             ajax="false"/>
+                    <p:commandButton value="Descargar Fact." 
+                             id="imp"
+                             action="#{pagarBean.irVista}"
+                             ajax="false"/>
                 </f:facet>
             </p:toolbar>
         </h:form>

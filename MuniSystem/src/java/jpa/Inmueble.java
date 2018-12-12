@@ -1,8 +1,8 @@
 package jpa;
 
 import factura.BaseCalculo;
-import factura.TributoFacturable;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -235,7 +235,8 @@ public class Inmueble implements Serializable, BaseCalculo {
         }else if(this.nroFinca != null){
             texto ="Nro. de Finca: "+ nroFinca.toString();
         }
-        texto = texto + ", Valuacion:" + this.valuacionFiscal;
+        DecimalFormat formateador = new DecimalFormat("#,##0");
+        texto = texto + ", Valuacion:" + formateador.format(this.valuacionFiscal);
                 
         return texto;
     }

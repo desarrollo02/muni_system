@@ -2,6 +2,7 @@ package jpa;
 
 import factura.BaseCalculo;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -289,7 +290,8 @@ public class Comercio implements Serializable, BaseCalculo {
 
     @Override
     public String getDescripcionCalculo() {
-        return nombreFantasia + ", Nro. Patente: " + nroPatente + ", Valor Activo: " + valorActivo;
+        DecimalFormat formateador = new DecimalFormat("#,##0");
+        return nombreFantasia + ", Nro. Patente: " + nroPatente + ", Valor Activo: " + formateador.format(valorActivo);
     }
     
 }

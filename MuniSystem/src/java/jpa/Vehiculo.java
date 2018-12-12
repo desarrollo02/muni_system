@@ -7,6 +7,7 @@ package jpa;
 
 import factura.BaseCalculo;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -217,8 +218,9 @@ public class Vehiculo implements Serializable, BaseCalculo {
 
     @Override
     public String getDescripcionCalculo() {
+        DecimalFormat formateador = new DecimalFormat("#,##0");
         return "Marca: " + idMarca.getDescripcion() + ", Modelo: " + idModelo.getDescripcion() +
-                ", Año: " + anio + ", Valuacion: " + idValuacion.getMonto();
+                ", Año: " + anio + ", Valuacion: " + formateador.format(idValuacion.getMonto());
     }
     
 }
