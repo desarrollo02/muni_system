@@ -21,6 +21,7 @@ public class FacturaDTOBuilder {
         facturaDTO.setAnio(cabecera.getAnio());
         facturaDTO.setNombreTributo(cabecera.getIdTributo().getNombre());
         facturaDTO.setReferencia(cabecera.getId_ref());
+        facturaDTO.setTipo(cabecera.getIdTributo().getTipo());
         facturaDTO.setConcepto(cabecera.getIdTributo().getNombre() + " " + cabecera.getAnio());
         if(cabecera.getIdContribuyente().getPersonaJuridica()){
             String datos = "Empresa " + cabecera.getIdContribuyente().getRazonSocial() + ", RUC " + cabecera.getIdContribuyente().getRuc();

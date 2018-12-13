@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factura" pageWidth="595" pageHeight="400" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="15465d94-7abb-44e4-812a-7db30041ae4c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="FECHA_ACTUAL" class="java.util.Date"/>
+	<parameter name="NRO_FACTURA" class="java.lang.Integer"/>
+	<parameter name="CONCEPTO" class="java.lang.String"/>
+	<parameter name="CONTRIBUYENTE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT D.ID_COMPROBANTE_CAB, T.NOMBRE, D.MONTO
+FROM COMPROBANTE_DETALLE D, TRIBUTO T WHERE D.ID_TRIBUTO = T.ID_TRIBUTO AND D.ID_COMPROBANTE_CAB=$P{NRO_FACTURA}]]>
+	</queryString>
+	<field name="id_comprobante_cab" class="java.lang.Integer"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="monto" class="java.lang.Double"/>
+	<variable name="monto_1" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<rectangle>
+				<reportElement x="18" y="11" width="519" height="53" uuid="7ed987a0-e2f2-46cb-9cfd-59b149d0ff8e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="123" y="11" width="321" height="53" uuid="869309d9-62d4-4004-a405-ee5dc122ebbc"/>
+			</rectangle>
+			<staticText>
+				<reportElement positionType="Float" x="126" y="26" width="316" height="27" uuid="0863c0be-2876-4316-95e6-494b66f83f0c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MUNICIPALIDAD DE ISLA PUCU-CORDILLERA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="484" y="33" width="54" height="13" uuid="1ae10ee8-afea-4543-9d31-4e069533cd01"/>
+				<textFieldExpression><![CDATA[$P{FECHA_ACTUAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="447" y="33" width="38" height="13" uuid="b7227883-7537-444f-a85b-aec35097340b"/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="110" splitType="Stretch">
+			<staticText>
+				<reportElement x="447" y="-47" width="38" height="13" uuid="60d8aa3e-1a19-4cc3-b308-c8fa9c4a5c51"/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="496" y="0" width="59" height="27" uuid="bd2f38fd-426e-4d35-9098-c6f59288a14e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NRO_FACTURA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="393" y="0" width="104" height="27" uuid="967390e6-6d43-4272-a4e2-47bf642ab9b3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Nro. de Factura:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="19" y="30" width="536" height="27" uuid="45f94d9e-a700-4d6f-a6ac-cb2ac7490150"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CONCEPTO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="19" y="56" width="104" height="27" uuid="c0a63f8c-e059-4cdd-a177-e8bf9daeddc7"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Contribuyente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="122" y="56" width="433" height="27" uuid="3759a55f-7d12-4c9c-9555-fdfb991fcf5a"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{CONTRIBUYENTE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="19" y="90" width="374" height="20" uuid="661e7536-b30f-454e-911c-aea0d2f7da11"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CONCEPTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="393" y="90" width="162" height="20" uuid="834a4284-f9ce-4ebc-8d1b-1fbd88502766"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[MONTO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="19" y="0" width="374" height="20" uuid="543b0b53-2747-4ad7-96d4-54bb96039f50"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="393" y="0" width="162" height="20" uuid="15e82613-879c-4602-bddb-74c37c0bfb7f"/>
+				<box rightPadding="4">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{monto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<textField pattern="#,##0">
+				<reportElement x="392" y="0" width="161" height="27" uuid="d0589568-70b8-48be-951c-a56639efa3db"/>
+				<box rightPadding="4">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{monto_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="288" y="0" width="104" height="27" uuid="4586dab1-2f76-464e-8c1e-3f8346b94a47"/>
+				<box leftPadding="7">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
