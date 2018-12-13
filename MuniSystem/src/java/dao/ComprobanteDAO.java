@@ -149,4 +149,48 @@ public class ComprobanteDAO {
             return (Double) result.get(0);
         }
     }
+    
+    public void elimianarComprobanteCab(Integer anio, Tributo tributo, Integer referencia){
+        Query query = em.createQuery("select o from ComprobanteCabecera o where "
+                + "o.anio = :anio and o.pagado = :pagado and o.idTributo = :tributo and o.id_ref = :referencia");
+        query.setParameter("anio", anio);
+        query.setParameter("pagado", false);
+        query.setParameter("tributo", tributo);
+        query.setParameter("referencia", referencia);
+        List<ComprobanteCabecera> comprobantes = query.getResultList();
+        for(ComprobanteCabecera cabecera : comprobantes){
+            eliminarComprobanteDet(cabecera);
+            em.remove(cabecera);
+        }
+    }
+    
+    public void elimianarComprobanteCab(Integer anio, Tributo tributo){
+        Query query = em.createQuery("select o from ComprobanteCabecera o where "
+                + "o.anio = :anio and o.pagado = :pagado and o.idTributo = :tributo");
+        query.setParameter("anio", anio);
+        query.setParameter("pagado", false);
+        query.setParameter("tributo", tributo);
+        List<ComprobanteCabecera> comprobantes = query.getResultList();
+        for(ComprobanteCabecera cabecera : comprobantes){
+            eliminarComprobanteDet(cabecera);
+            em.remove(cabecera);
+        }
+    }
+    
+    public void eliminarComprobanteDet(ComprobanteCabecera cabecera){
+        Query query = em.createQuery("delete from ComprobanteDetalle o where o.idComprobanteCab = :cabecera");
+        query.setParameter("cabecera", cabecera);
+        query.executeUpdate();
+    
+    }
+    
+    public boolean isPagado(Integer anio, Tributo tributo, Integer referencia){
+        Query query = em.createQuery("select o from ComprobanteCabecera o where o.pagado = :pagado "
+                + "and o.anio = :anio and o.idTributo = :tributo and o.id_ref = :referencia");
+        query.setParameter("pagado", true);
+        query.setParameter("anio", anio);
+        query.setParameter("tributo", tributo);
+        query.setParameter("referencia", referencia);
+        return !query.getResultList().isEmpty();
+    }
 }

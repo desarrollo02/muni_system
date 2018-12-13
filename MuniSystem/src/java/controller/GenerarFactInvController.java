@@ -104,7 +104,15 @@ public class GenerarFactInvController {
         
             List<FacturaDTO> facturasDTOs = new ArrayList<>();
             FacturaDTOBuilder factuaDTOBuilder;
+            boolean pagado = false;
             for(BaseCalculo baseCalculo : listaBase){
+                 //preguntar si no esta pagado, si esta pagado usar continue
+                pagado=comprobanteDAO.isPagado(anio, tributo, baseCalculo.getIdRef());
+                if(pagado){
+                    continue;
+                }else{
+                    comprobanteDAO.elimianarComprobanteCab(anio, tributo, baseCalculo.getIdRef());
+                }
                 for(int i = 1; i <= tributo.getIdPeriodoCobro().getValor();i++){
                     factuaDTOBuilder = new FacturaDTOBuilder();
                     ComprobanteCabecera cabecera = new ComprobanteCabecera();
