@@ -1,2 +1,6 @@
+MuniSystem/dist/
+MuniSystem/build/
+build
+dist
+*.class
 
-MuniSystem/build/web/resources/inc/header.xhtml
