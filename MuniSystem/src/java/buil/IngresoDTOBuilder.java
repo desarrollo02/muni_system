@@ -36,6 +36,11 @@ public class IngresoDTOBuilder {
         return this;
     }
     
+    public IngresoDTOBuilder porcentajeFaltante(Double porcentaje){
+        ingresoDTO.setPorcentajeFaltante(porcentaje);
+        return this;
+    }
+    
     public IngresoDTO build(){
         return ingresoDTO;
     }

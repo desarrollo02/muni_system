@@ -71,8 +71,13 @@
                             <f:convertNumber pattern="#,##0"/>
                         </h:outputText>
                     </p:column>
-                    <p:column headerText="Faltante">
+                    <p:column headerText="Monto Faltante">
                         <h:outputText value="#{fila.montoFaltante}">
+                            <f:convertNumber pattern="#,##0"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="% Faltante">
+                        <h:outputText value="#{fila.porcentajeFaltante}">
                             <f:convertNumber pattern="#,##0"/>
                         </h:outputText>
                     </p:column>

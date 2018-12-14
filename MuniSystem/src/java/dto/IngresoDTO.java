@@ -12,6 +12,7 @@ public class IngresoDTO {
     private Double montoEstimado;
     private Double montoIngreso;
     private Double montoFaltante;
+    private Double porcentajeFaltante;
 
     public String getTributo() {
         return tributo;
@@ -51,5 +52,13 @@ public class IngresoDTO {
 
     public void setAnio(Integer anio) {
         this.anio = anio;
+    }
+
+    public Double getPorcentajeFaltante() {
+        return porcentajeFaltante;
+    }
+
+    public void setPorcentajeFaltante(Double porcentajeFaltante) {
+        this.porcentajeFaltante = porcentajeFaltante;
     }
 }

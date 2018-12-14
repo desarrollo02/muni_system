@@ -1,4 +1,4 @@
-1- Mostrar el porcentaje en reporte de ingresos
+1- Mostrar el porcentaje en reporte de ingresos(ok)
 2- Llevar la impresion de la factura, en la factura individual, y crear un reporte para imprimir 
 todas las facturas
 3- En el estado de cuentas, hacer correr el proceso de generar factura para el contribuyente

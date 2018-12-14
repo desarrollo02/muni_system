@@ -28,12 +28,18 @@ public class IngresosController {
         Double montoEstimado = comprobanteDAO.getMontoEstimado(tributo, anio);
         Double montoIngreso = comprobanteDAO.getMontoIngreso(tributo, anio);
         Double montoFaltante = montoEstimado -  montoIngreso;
+        Double porcentajeFaltante = 0.0;
+        if(montoEstimado > 0.0){
+            porcentajeFaltante = montoFaltante/montoEstimado*100;
+        }
+         
         return new IngresoDTOBuilder()
                 .anio(anio)
                 .tributo(tributo)
                 .montoEstimadio(montoEstimado)
                 .montoIngreso(montoIngreso)
                 .montoFaltante(montoFaltante)
+                .porcentajeFaltante(porcentajeFaltante)
                 .build();
     }
 }
