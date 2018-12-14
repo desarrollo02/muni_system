@@ -8,9 +8,15 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.event.ActionEvent;
 import javax.persistence.PersistenceException;
+import reporte.CobranzasDelDiaBean;
+import util.JasperReportUtils;
 
 @Named(value = "generarFactIndividualBean")
 @SessionScoped
@@ -88,6 +94,21 @@ public class GenerarFactIndividualBean implements Serializable {
     public String mostrarDetalle(FacturaDTO factura){
         facturaSelect = factura;
         return "verfacturaIndividualDetalle";
+    }
+    
+    public String descargarReporte(){
+        try {          
+            HashMap<String, Object> parametros = new HashMap<String, Object>();
+            parametros.put("FECHA_ACTUAL",new Date());
+            parametros.put("NRO_FACTURA", facturaSelect.getNroFactura());
+            parametros.put("CONCEPTO", facturaSelect.getTipo()+ " " +facturaSelect.getConcepto() + ", "+facturaSelect.getVariablesParaCalculo());
+            parametros.put("CONTRIBUYENTE", facturaSelect.getContribuyente());
+            JasperReportUtils.runReportB("factura","/seguro/reporte/factura.jasper",parametros);
+            return null;
+        }catch(Exception ex){
+            Logger.getLogger(CobranzasDelDiaBean.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
 
     public String getNombreTributoSelect() {
