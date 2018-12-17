@@ -7,6 +7,7 @@ package jpa;
 
 import factura.BaseCalculo;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -163,6 +164,13 @@ public class RegistroConducir implements Serializable, BaseCalculo {
     @Override
     public String getDescripcionCalculo() {
         return "Nro. Lincencia: " + licenciaNro + ", Categoria: " + idCategoria.getDescripcion();
+    }
+
+    @Override
+    public Integer getAnioRegistro() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaAlta);
+        return calendar.get(Calendar.YEAR);
     }
     
 }

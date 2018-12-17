@@ -2,7 +2,9 @@ package jpa;
 
 import factura.BaseCalculo;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -175,6 +177,13 @@ public class Cementerio implements Serializable, BaseCalculo {
     @Override
     public String getDescripcionCalculo() {
         return "Cementerio: " + idUbicacionCementerio.getNombre() + ", Nro. Lote: " + nroLote; 
+    }
+
+    @Override
+    public Integer getAnioRegistro() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fecAlta);
+        return calendar.get(Calendar.YEAR);
     }
     
 }

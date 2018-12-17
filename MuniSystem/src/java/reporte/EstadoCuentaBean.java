@@ -1,7 +1,13 @@
 package reporte;
 
 import bean.MensajeBean;
+import controller.GenerarFactInvController;
+import dto.FacturaDTO;
+import dto.TributoFacturableDTO;
+import enumerados.TributoConRegistro;
+import factura.TributoFacturable;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +17,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.persistence.PersistenceException;
 import javax.servlet.ServletContext;
 import jpa.Contribuyente;
 import manager.ContribuyenteManager;
@@ -31,14 +38,38 @@ public class EstadoCuentaBean extends MensajeBean implements Serializable {
     private String filtroEmpresa;
     private ContribuyenteManager managerContribuyente = new ContribuyenteManager();
     private EstadoCuentaManager manager = new EstadoCuentaManager();
+    private GenerarFactInvController controller = new GenerarFactInvController();
+    private List<TributoFacturableDTO> tributosFacturables;
+    
+    private void generarEstado(Contribuyente contribuyente){
+        tributosFacturables = controller.getTributosFacturables(TributoConRegistro.INMOBILIARIO, contribuyente.getIdContribuyente(), null, null, null, null);
+        tributosFacturables.addAll(controller.getTributosFacturables(TributoConRegistro.PATENTE, contribuyente.getIdContribuyente(), null, null, null, null)) ;
+        tributosFacturables.addAll(controller.getTributosFacturables(TributoConRegistro.CEMENTERIO, contribuyente.getIdContribuyente(), null, null, null, null));
+        tributosFacturables.addAll(controller.getTributosFacturables(TributoConRegistro.VEHICULO, contribuyente.getIdContribuyente(), null, null, null, null));
+        tributosFacturables.addAll(controller.getTributosFacturables(TributoConRegistro.REGISTRO, contribuyente.getIdContribuyente(), null, null, null, null));
+        for(int i = 2013; i<=2018; i++){
+            for(TributoFacturableDTO tributoFacturable : tributosFacturables){
+                try {
+                    List<FacturaDTO> facturas = controller.generarComprobantesParaEstadoCuenta(
+                            tributoFacturable,
+                            i,
+                            "admin");
+                } catch (SQLException ex) {
+                    Logger.getLogger(EstadoCuentaBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }    
+        }
+    }
     
     public String descargar(){
         try {
+            generarEstado(contribuyente);
             ServletContext servletContext = (ServletContext)FacesContext.getCurrentInstance().getExternalContext().getContext();
             String separador = System.getProperty("file.separator");
             HashMap<String, Object> parametros = new HashMap<String, Object>();
             parametros.put("FACHA_ACTUAL",new Date());
             parametros.put("RMC",contribuyente.getIdContribuyente());
+            parametros.put("SUBREPORT_DIR", "C:\\Users\\desarrollo2\\Documents\\GitHub\\tesis\\muni_system\\MuniSystem\\web\\seguro\\reporte\\");
             JasperReportUtils.runReportB("estado_cuenta","/seguro/reporte/estado_cuenta.jasper",parametros);
             return null;
         } catch (Exception ex) {

@@ -8,6 +8,7 @@ package jpa;
 import factura.BaseCalculo;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -221,6 +222,13 @@ public class Vehiculo implements Serializable, BaseCalculo {
         DecimalFormat formateador = new DecimalFormat("#,##0");
         return "Marca: " + idMarca.getDescripcion() + ", Modelo: " + idModelo.getDescripcion() +
                 ", Año: " + anio + ", Valuacion: " + formateador.format(idValuacion.getMonto());
+    }
+
+    @Override
+    public Integer getAnioRegistro() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaAlta);
+        return calendar.get(Calendar.YEAR);
     }
     
 }
