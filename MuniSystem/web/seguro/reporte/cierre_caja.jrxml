@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cierre_caja" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3dbe0ca2-ddab-487d-a89a-a726106375b7">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cierre_caja" pageWidth="595" pageHeight="700" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3dbe0ca2-ddab-487d-a89a-a726106375b7">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="324"/>
+	<property name="ireport.y" value="221"/>
 	<parameter name="FECHA_ACTUAL" class="java.util.Date"/>
 	<parameter name="NOMBRE_COMPLETO" class="java.lang.String"/>
 	<parameter name="USUARIO" class="java.lang.String"/>
@@ -13,9 +13,26 @@
 	<parameter name="FECHA_DESDE" class="java.util.Date"/>
 	<parameter name="FECHA_HASTA" class="java.util.Date"/>
 	<queryString>
-		<![CDATA[select 1]]>
+		<![CDATA[select
+t.nombre, sum(d.monto)
+from
+comprobante_detalle d,
+comprobante_cabecera c,
+tributo t
+where
+d.id_comprobante_cab=c.id_comprobante_cabecera
+and
+c.pagado=true
+and
+c.fecha_alta >= $P{FECHA_DESDE}
+and
+c.fecha_alta <= $P{FECHA_HASTA}
+and
+d.id_tributo= t.id_tributo
+group by t.nombre]]>
 	</queryString>
-	<field name="?column?" class="java.lang.Integer"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="sum" class="java.lang.Double"/>
 	<variable name="TOTAL" class="java.lang.Double">
 		<variableExpression><![CDATA[$P{TOTAL_EFECTIVO} + $P{TOTAL_CHEQUE} + $P{TOTAL_TARJETA_DEBITO} + $P{TOTAL_TARJETA_CREDITO}]]></variableExpression>
 	</variable>
@@ -48,7 +65,7 @@
 		</band>
 	</title>
 	<pageHeader>
-		<band height="120" splitType="Stretch">
+		<band height="150" splitType="Stretch">
 			<staticText>
 				<reportElement x="80" y="65" width="136" height="20" uuid="54d942bd-b203-45ee-b91b-de1b4a892cf5"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -110,49 +127,94 @@
 			</staticText>
 		</band>
 	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<staticText>
+				<reportElement x="0" y="1" width="407" height="20" uuid="6683ca9e-0740-4ba3-a823-0a26484a4d64"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[CONCEPTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="407" y="1" width="145" height="20" uuid="ed971c51-7291-4ef4-8f45-4b136e236b1d"/>
+				<box rightPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[MONTO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
 	<detail>
-		<band height="350" splitType="Stretch">
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="407" height="20" uuid="f7efe326-9c94-40c3-964e-64c5d2966a45"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0">
+				<reportElement x="407" y="0" width="145" height="20" uuid="e73b9b1d-7a4b-415b-ac53-44bbdce7a76a"/>
+				<box rightPadding="5">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{sum}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="200">
+			<textField>
+				<reportElement x="302" y="179" width="250" height="20" uuid="bd5d3428-be86-4eda-bdfb-750b9e08103b"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$P{NOMBRE_COMPLETO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="324" y="177" width="200" height="1" uuid="4abacab8-58a2-463a-82b7-62600fab690f"/>
+			</line>
 			<staticText>
-				<reportElement x="132" y="113" width="200" height="20" uuid="6e09608a-75ce-4992-8652-4474c00ed210"/>
-				<box leftPadding="2">
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+				<reportElement x="230" y="124" width="107" height="20" uuid="745318be-ef11-4625-bff5-3fb880ca7a63"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
 				</box>
 				<textElement>
-					<font size="12"/>
+					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total Tarjeta Debito]]></text>
+				<text><![CDATA[TOTAL GENERAL:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="132" y="73" width="200" height="20" uuid="ba325a57-c2d3-42c1-bedb-1ab919a3113f"/>
-				<box leftPadding="2">
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+			<textField pattern="#,##0">
+				<reportElement x="337" y="124" width="100" height="20" uuid="02e13e81-c7a0-4cea-ad8d-83f1c6ac6100"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
 				</box>
-				<textElement>
-					<font size="12"/>
+				<textElement textAlignment="Right">
+					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total Efectivo]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$V{TOTAL}]]></textFieldExpression>
+			</textField>
 			<staticText>
-				<reportElement x="132" y="93" width="200" height="20" uuid="1506cf3e-3c2f-4500-b2aa-ca0d541debd1"/>
-				<box leftPadding="2">
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
-				</box>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[Total Cheque]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="132" y="133" width="200" height="20" uuid="a550e906-62b1-4fd7-a016-50852337c661"/>
+				<reportElement x="132" y="92" width="200" height="20" uuid="a550e906-62b1-4fd7-a016-50852337c661"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -165,7 +227,7 @@
 				<text><![CDATA[Total Tarjeta de Credito]]></text>
 			</staticText>
 			<textField pattern="#,##0">
-				<reportElement x="332" y="73" width="100" height="20" uuid="e5f10892-4035-4e90-93b7-8587de5c5169"/>
+				<reportElement x="332" y="32" width="100" height="20" uuid="e5f10892-4035-4e90-93b7-8587de5c5169"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -178,7 +240,7 @@
 				<textFieldExpression><![CDATA[$P{TOTAL_EFECTIVO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="332" y="93" width="100" height="20" uuid="86a5e6ea-9588-4a77-8f48-30d120ed8206"/>
+				<reportElement x="332" y="52" width="100" height="20" uuid="86a5e6ea-9588-4a77-8f48-30d120ed8206"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -191,7 +253,7 @@
 				<textFieldExpression><![CDATA[$P{TOTAL_CHEQUE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="332" y="113" width="100" height="20" uuid="427b64a3-7bb9-43e5-b0ac-06bc45bb2ee8"/>
+				<reportElement x="332" y="72" width="100" height="20" uuid="427b64a3-7bb9-43e5-b0ac-06bc45bb2ee8"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -204,7 +266,7 @@
 				<textFieldExpression><![CDATA[$P{TOTAL_TARJETA_DEBITO}]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0">
-				<reportElement x="332" y="133" width="100" height="20" uuid="c3b95f3a-8612-48a6-b8ef-43c74bfefc8b"/>
+				<reportElement x="332" y="92" width="100" height="20" uuid="c3b95f3a-8612-48a6-b8ef-43c74bfefc8b"/>
 				<box leftPadding="2">
 					<topPen lineWidth="0.25"/>
 					<leftPen lineWidth="0.25"/>
@@ -217,37 +279,44 @@
 				<textFieldExpression><![CDATA[$P{TOTAL_TARJETA_CREDITO}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="231" y="197" width="107" height="20" uuid="745318be-ef11-4625-bff5-3fb880ca7a63"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<leftPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
+				<reportElement x="132" y="72" width="200" height="20" uuid="6e09608a-75ce-4992-8652-4474c00ed210"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement>
-					<font size="12" isBold="true"/>
+					<font size="12"/>
 				</textElement>
-				<text><![CDATA[TOTAL GENERAL:]]></text>
+				<text><![CDATA[Total Tarjeta Debito]]></text>
 			</staticText>
-			<textField pattern="#,##0">
-				<reportElement x="337" y="197" width="100" height="20" uuid="02e13e81-c7a0-4cea-ad8d-83f1c6ac6100"/>
-				<box>
-					<topPen lineWidth="0.75"/>
-					<bottomPen lineWidth="0.75"/>
-					<rightPen lineWidth="0.75"/>
+			<staticText>
+				<reportElement x="132" y="32" width="200" height="20" uuid="ba325a57-c2d3-42c1-bedb-1ab919a3113f"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
 				</box>
-				<textElement textAlignment="Right">
-					<font size="12" isBold="true"/>
+				<textElement>
+					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{TOTAL}]]></textFieldExpression>
-			</textField>
-			<line>
-				<reportElement x="324" y="320" width="200" height="1" uuid="4abacab8-58a2-463a-82b7-62600fab690f"/>
-			</line>
-			<textField>
-				<reportElement x="298" y="322" width="250" height="20" uuid="bd5d3428-be86-4eda-bdfb-750b9e08103b"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$P{NOMBRE_COMPLETO}]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[Total Efectivo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="132" y="52" width="200" height="20" uuid="1506cf3e-3c2f-4500-b2aa-ca0d541debd1"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Total Cheque]]></text>
+			</staticText>
 		</band>
-	</detail>
+	</pageFooter>
 </jasperReport>
