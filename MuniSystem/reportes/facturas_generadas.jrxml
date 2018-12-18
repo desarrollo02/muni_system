@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="facturas_generadas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="22ae83d9-0d63-4e70-bee0-d0d0c42aafb0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="53"/>
+	<parameter name="FECHA_ACTUAL" class="java.util.Date"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="numero" class="java.lang.Integer"/>
+	<field name="concepto" class="java.lang.String"/>
+	<field name="contribuyente" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="74" splitType="Stretch">
+			<rectangle>
+				<reportElement x="20" y="11" width="519" height="53" uuid="11fdc347-4fdc-493e-9afb-e30b07b21807"/>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="126" y="11" width="320" height="53" uuid="c1a5511d-ea24-4659-b685-12b32c15f9f5"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="447" y="29" width="38" height="13" uuid="a212f74c-ac26-4ed8-a18b-5cc556042ab0"/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="484" y="29" width="54" height="13" uuid="3c7e8360-f882-414e-9736-2f1c2f250795"/>
+				<textFieldExpression><![CDATA[$P{FECHA_ACTUAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="129" y="24" width="316" height="27" uuid="58e44dad-1b8c-4cbd-89d7-395dd7d1ee56"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MUNICIPALIDAD DE ISLA PUCU-CORDILLERA]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement positionType="Float" x="129" y="5" width="316" height="27" uuid="b53a604d-0741-412f-8eba-66c424acf89a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FACTURAS GENERADAS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -2,13 +2,14 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="avisos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="632ce44e-5e11-4656-860f-5c0bc061cc0a">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="14"/>
+	<property name="ireport.y" value="39"/>
 	<parameter name="FECHA_ACTUAL" class="java.util.Date"/>
 	<parameter name="ID_TRIBUTO" class="java.lang.Integer"/>
 	<parameter name="ANIO" class="java.lang.Integer"/>
 	<parameter name="ANULADO" class="java.lang.Boolean"/>
 	<parameter name="PAGADO" class="java.lang.Boolean"/>
 	<parameter name="DESC_TRIBUTO" class="java.lang.String"/>
+	<parameter name="FECHA_STRING" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT F.TOTAL_PAGAR, F.ANIO, C.ID_CONTRIBUYENTE, C.CEDULA,
 	C.NOMBRES, C.APELLIDOS, C.RUC, C.RAZON_SOCIAL
@@ -74,16 +75,16 @@
 				<textFieldExpression><![CDATA["Estimado " + $F{nombres} + " " + $F{apellidos}+"."]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement x="123" y="46" width="432" height="20" uuid="33fc1b62-f31d-4bd3-9310-3dfbd69e11b2"/>
+				<reportElement x="123" y="43" width="432" height="20" uuid="33fc1b62-f31d-4bd3-9310-3dfbd69e11b2"/>
 				<textElement textAlignment="Justified"/>
 				<textFieldExpression><![CDATA["Nos dirigimos a Ud. con el objetivo de informarle que se encuentra "+
 "pendiente el pago del " + $P{DESC_TRIBUTO} + " correspondiente al año " +
-$F{anio} + ". El monto a abonar es " + $F{total_pagar}+ ", este monto podria " +
+$F{anio} + ". El monto a abonar es a la fecha " + $P{FECHA_STRING}+ " es " + $F{total_pagar}+ ", este monto podria " +
 "aumentar por la mora en caso de no abonar en los 5 dias siguientes."]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="124" y="88" width="325" height="20" uuid="02163eb1-5602-4bff-9e03-58e4e8a91f8b"/>
-				<text><![CDATA[Se saluda atentamente, el intentedete y los miembros de la junta]]></text>
+				<reportElement x="124" y="97" width="325" height="20" uuid="02163eb1-5602-4bff-9e03-58e4e8a91f8b"/>
+				<text><![CDATA[Le saluda atentamente, el intentedete y los miembros de la junta]]></text>
 			</staticText>
 			<line>
 				<reportElement x="25" y="3" width="520" height="1" uuid="402450e9-69e7-40e7-84eb-d0a78fdea4ac"/>

@@ -48,6 +48,10 @@
                     </h:outputText>
                 </f:facet>
                 <f:facet name="right">
+                    <p:commandButton value="Descargar Fact." 
+                             id="imp"
+                             action="#{generarFactIndividualBean.descargarReporte}"
+                             ajax="false"/>
                     <p:commandButton title="Salir" 
                                      action="generarIndividual" 
                                      icon="ui-icon-extlink" 

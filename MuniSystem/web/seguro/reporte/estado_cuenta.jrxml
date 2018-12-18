@@ -2,11 +2,11 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estado_cuenta" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aabdc83e-39f4-462a-80a8-47d2c4b1ba15">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="144"/>
 	<parameter name="FACHA_ACTUAL" class="java.util.Date"/>
 	<parameter name="RMC" class="java.lang.Integer"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["C:\\Users\\USUARIO\\Documents\\GitHub\\muni_system\\MuniSystem\\web\\seguro\\reporte\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["C:\\Users\\desarrollo2\\Documents\\GitHub\\tesis\\muni_system\\MuniSystem\\web\\seguro\\reporte\\"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT * FROM CONTRIBUYENTE WHERE ID_CONTRIBUYENTE = $P{RMC}]]>
@@ -51,10 +51,6 @@
 				<reportElement x="486" y="33" width="54" height="13" uuid="d0d606d8-d1d7-4238-8030-12f218e50553"/>
 				<textFieldExpression><![CDATA[$P{FACHA_ACTUAL}]]></textFieldExpression>
 			</textField>
-			<image>
-				<reportElement x="26" y="13" width="234" height="52" uuid="fa57b3e9-8f08-4cd5-a498-d22a0e42ff91"/>
-				<imageExpression><![CDATA["C:\\MuniSystem\\reportes\\logo_muni.png"]]></imageExpression>
-			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -112,44 +108,71 @@
 		<band height="190" splitType="Stretch">
 			<subreport>
 				<reportElement positionType="Float" x="0" y="0" width="555" height="37" uuid="1369cc67-b2b8-49c2-a2ed-c85f009b9664"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="RMC">
 					<subreportParameterExpression><![CDATA[$P{RMC}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FACHA_ACTUAL">
+					<subreportParameterExpression><![CDATA[$P{FACHA_ACTUAL}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "inmueble.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement positionType="Float" x="0" y="37" width="555" height="39" uuid="0cf4dc54-71b3-46c6-9bd5-76086c1fcc8c"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="RMC">
 					<subreportParameterExpression><![CDATA[$P{RMC}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="FACHA_ACTUAL">
+					<subreportParameterExpression><![CDATA[$P{FACHA_ACTUAL}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "cementerio.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement positionType="Float" x="0" y="76" width="555" height="38" uuid="a1c2d17d-6814-44de-b6d1-cd99e521038b"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="RMC">
 					<subreportParameterExpression><![CDATA[$F{id_contribuyente}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="FACHA_ACTUAL">
+					<subreportParameterExpression><![CDATA[$P{FACHA_ACTUAL}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "patente.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement positionType="Float" x="0" y="114" width="555" height="40" uuid="fd069bfe-e578-4048-9140-7af5070fda79"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="RMC">
 					<subreportParameterExpression><![CDATA[$P{RMC}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="FACHA_ACTUAL">
+					<subreportParameterExpression><![CDATA[$P{FACHA_ACTUAL}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "habilitacion.jasper"]]></subreportExpression>
 			</subreport>
 			<subreport>
 				<reportElement positionType="Float" x="0" y="154" width="555" height="36" uuid="92219c5a-c486-4040-b42f-cdba7a5fe619"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="RMC">
 					<subreportParameterExpression><![CDATA[$P{RMC}]]></subreportParameterExpression>
 				</subreportParameter>
-				<subreportParameter name="SUBREPORT_DIR"/>
+				<subreportParameter name="FACHA_ACTUAL">
+					<subreportParameterExpression><![CDATA[$P{FACHA_ACTUAL}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "registro.jasper"]]></subreportExpression>
 			</subreport>

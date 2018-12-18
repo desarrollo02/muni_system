@@ -5,27 +5,27 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="ID_INMUEBLE" class="java.lang.Integer"/>
 	<queryString>
-		<![CDATA[SELECT * FROM COMPROBANTE_CABECERA WHERE ID_REF = $P{ID_INMUEBLE}]]>
+		<![CDATA[SELECT C.id_comprobante_cabecera, C.id_tributo, C.vencimiento, T.NOMBRE ||
+' ' || CASE WHEN d.es_multa=true THEN 'Multa'
+            WHEN d.es_multa=false THEN ' '
+            ELSE ' '
+       END ||
+' Año ' || C.ANIO as CONCEPTO, CASE WHEN c.pagado = true then 0 when c.pagado= false then D.MONTO else 0 end as saldo
+ FROM
+ COMPROBANTE_CABECERA c, COMPROBANTE_DETALLE D, TRIBUTO T
+ WHERE
+ C.ID_COMPROBANTE_CABECERA = D.ID_COMPROBANTE_CAB
+ AND
+ D.ID_TRIBUTO = T.ID_TRIBUTO
+ AND
+ ID_REF = $P{ID_INMUEBLE} and anulado=false
+]]>
 	</queryString>
 	<field name="id_comprobante_cabecera" class="java.lang.Integer"/>
-	<field name="fecha_alta" class="java.sql.Date"/>
-	<field name="usuario_alta" class="java.lang.String"/>
-	<field name="anulado" class="java.lang.Boolean"/>
-	<field name="id_contribuyente" class="java.lang.Integer"/>
-	<field name="anio" class="java.lang.Integer"/>
-	<field name="vencimiento" class="java.sql.Date"/>
-	<field name="pagado" class="java.lang.Boolean"/>
-	<field name="total_pagar" class="java.lang.Double"/>
-	<field name="fecha_pago" class="java.sql.Date"/>
-	<field name="tipo_pago" class="java.lang.String"/>
-	<field name="nro_cheque" class="java.lang.String"/>
-	<field name="usuario_pago" class="java.lang.String"/>
-	<field name="periodo" class="java.lang.Integer"/>
 	<field name="id_tributo" class="java.lang.Integer"/>
-	<field name="id_ref" class="java.lang.Integer"/>
-	<variable name="estado" class="java.lang.String">
-		<variableExpression><![CDATA[$F{pagado}==true?"Si":"No"]]></variableExpression>
-	</variable>
+	<field name="vencimiento" class="java.sql.Date"/>
+	<field name="concepto" class="java.lang.String"/>
+	<field name="saldo" class="java.lang.Double"/>
 	<columnHeader>
 		<band height="22" splitType="Stretch">
 			<staticText>
@@ -50,10 +50,10 @@
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Año]]></text>
+				<text><![CDATA[Vencimiento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="273" y="2" width="100" height="20" uuid="d1ce8eb9-cdc3-4054-b73a-25163481a09d"/>
+				<reportElement x="273" y="2" width="178" height="20" uuid="d1ce8eb9-cdc3-4054-b73a-25163481a09d"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -62,10 +62,10 @@
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[vencimiento]]></text>
+				<text><![CDATA[Concepto]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="473" y="2" width="100" height="20" uuid="cb5d80b6-1aeb-4c87-a6de-502e584e2313"/>
+				<reportElement x="451" y="2" width="100" height="20" uuid="0e9d8c67-3958-452a-b2c5-d9d9eb3a8275"/>
 				<box>
 					<pen lineWidth="0.25"/>
 					<topPen lineWidth="0.25"/>
@@ -74,79 +74,59 @@
 					<rightPen lineWidth="0.25"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Total a Pagar]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="373" y="2" width="100" height="20" uuid="0e9d8c67-3958-452a-b2c5-d9d9eb3a8275"/>
-				<box>
-					<pen lineWidth="0.25"/>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Pagado]]></text>
+				<text><![CDATA[Saldo]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="40" splitType="Stretch">
 			<textField>
-				<reportElement x="73" y="0" width="100" height="20" uuid="cdce46f4-779e-4049-8419-ce5b63d055e4"/>
+				<reportElement x="73" y="0" width="100" height="20" uuid="913dde38-64f0-4d91-b708-880906af01ad"/>
 				<box leftPadding="5">
-					<pen lineWidth="0.25"/>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{id_comprobante_cabecera}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="173" y="0" width="100" height="20" uuid="03b89962-be0b-43a2-916c-b16c2291df73"/>
+			<textField pattern="MM/dd/yyyy">
+				<reportElement x="173" y="0" width="100" height="20" uuid="0bb1b7dd-04dd-4720-aa2b-fdafe2943787"/>
 				<box leftPadding="5">
-					<pen lineWidth="0.25"/>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
-				<textFieldExpression><![CDATA[$F{anio}]]></textFieldExpression>
-			</textField>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="273" y="0" width="100" height="20" uuid="88e9387e-71fa-40ad-b43d-098b7da694dc"/>
-				<box leftPadding="5">
-					<pen lineWidth="0.25"/>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
-				</box>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{vencimiento}]]></textFieldExpression>
 			</textField>
-			<textField pattern="#,##0">
-				<reportElement x="473" y="0" width="100" height="20" uuid="c9d74399-92e4-4cf8-a50a-a5ccbc156aba"/>
-				<box leftPadding="5">
-					<pen lineWidth="0.25"/>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+			<textField>
+				<reportElement x="273" y="0" width="178" height="20" uuid="d332ae98-3dab-466b-8a99-06f73e01cac0"/>
+				<box leftPadding="3">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
-				<textFieldExpression><![CDATA[$F{total_pagar}]]></textFieldExpression>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{concepto}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="373" y="0" width="100" height="20" uuid="4168aced-40b7-4c6f-9c49-4c7c498827c8"/>
+				<reportElement x="451" y="0" width="100" height="20" uuid="c0e03960-7f1c-486f-b0a8-10ae5ea4554a"/>
 				<box>
-					<pen lineWidth="0.25"/>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Top"/>
-				<textFieldExpression><![CDATA[$V{estado}]]></textFieldExpression>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{saldo}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

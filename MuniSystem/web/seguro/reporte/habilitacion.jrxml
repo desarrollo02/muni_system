@@ -100,8 +100,14 @@ V.ID_CONTRIBUYENTE = $P{RMC}]]>
 			</textField>
 			<subreport>
 				<reportElement x="8" y="109" width="580" height="41" uuid="062b6fc2-d7f3-4ece-85fc-6a4dd900db5c"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="ID_INMUEBLE">
 					<subreportParameterExpression><![CDATA[$F{id_vehiculo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="RMC">
+					<subreportParameterExpression><![CDATA[$P{RMC}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "inmueble_comprobantes.jasper"]]></subreportExpression>

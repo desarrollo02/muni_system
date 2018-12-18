@@ -6,6 +6,7 @@ import enumerados.TributoConRegistro;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -113,6 +114,11 @@ public class GenerarAvisosBean extends BaseBean implements Serializable {
             parametros.put("PAGADO", false);
             parametros.put("ID_TRIBUTO", idTributo);
             parametros.put("ANIO", anio);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            parametros.put("FECHA_STRING", String.valueOf(calendar.get(Calendar.DAY_OF_MONTH))
+            +"/"+String.valueOf(calendar.get(Calendar.MONTH) + 1)+"/"+
+            String.valueOf(calendar.get(Calendar.YEAR)));
             JasperReportUtils.runReportB("avisos","/seguro/reporte/avisos.jasper",parametros);
             return null;
         }catch(Exception ex){

@@ -46,8 +46,14 @@
 			</textField>
 			<subreport>
 				<reportElement x="8" y="42" width="580" height="38" uuid="6e8bf37b-4bc3-487e-893c-073de14c9cfc"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="ID_INMUEBLE">
 					<subreportParameterExpression><![CDATA[$F{id_cementerio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="RMC">
+					<subreportParameterExpression><![CDATA[$P{RMC}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "inmueble_comprobantes.jasper"]]></subreportExpression>

@@ -82,8 +82,14 @@
 			</line>
 			<subreport>
 				<reportElement x="3" y="88" width="590" height="38" uuid="e4a91153-1062-4aa7-bdf0-9456816a2dbd"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
 				<subreportParameter name="ID_INMUEBLE">
 					<subreportParameterExpression><![CDATA[$F{id_inmueble}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="RMC">
+					<subreportParameterExpression><![CDATA[$P{RMC}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "inmueble_comprobantes.jasper"]]></subreportExpression>

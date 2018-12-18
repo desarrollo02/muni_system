@@ -3,6 +3,7 @@ package jpa;
 import factura.BaseCalculo;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -239,5 +240,12 @@ public class Inmueble implements Serializable, BaseCalculo {
         texto = texto + ", Valuacion:" + formateador.format(this.valuacionFiscal);
                 
         return texto;
+    }
+
+    @Override
+    public Integer getAnioRegistro() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(fechaAlta);
+        return calendar.get(Calendar.YEAR);
     }
 }

@@ -8,4 +8,5 @@ public interface BaseCalculo {
     public Integer getIdRef();
     public Contribuyente getTitular();
     public String getDescripcionCalculo();
+    public Integer getAnioRegistro();
 }
