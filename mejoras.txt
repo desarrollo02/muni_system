@@ -4,6 +4,6 @@ todas las facturas
 3- En el estado de cuentas, hacer correr el proceso de generar factura para el contribuyente
 pero debe mantener la fecha de vencimiento, ademas debe mostrar el saldo, monto a pagar 0 para los 
 que ya se pago, mostrar tambien la multa
-4- En el reporte de caja, mostrar lo recaudado por concepto
+4- En el reporte de caja, mostrar lo recaudado por concepto(ok)
 5- El los avisos, mostrar la fecha a la cual corresponde el monto y mostrar los datos del
 inmueble, cementerio, etc
