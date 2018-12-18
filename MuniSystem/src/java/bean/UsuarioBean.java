@@ -60,6 +60,7 @@ public class UsuarioBean extends BaseBean implements Serializable {
 
     public void editar(ActionEvent evento){
         formEnable.editar();
+        nombresRoles = usuarioController.getNombresRoles();
     }
     
     public void cancelar(ActionEvent evento){

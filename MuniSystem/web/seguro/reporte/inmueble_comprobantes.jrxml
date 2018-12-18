@@ -18,8 +18,7 @@
  AND
  D.ID_TRIBUTO = T.ID_TRIBUTO
  AND
- ID_REF = $P{ID_INMUEBLE} and anulado=false
-]]>
+ ID_REF = $P{ID_INMUEBLE} and anulado=false]]>
 	</queryString>
 	<field name="id_comprobante_cabecera" class="java.lang.Integer"/>
 	<field name="id_tributo" class="java.lang.Integer"/>
@@ -28,18 +27,6 @@
 	<field name="saldo" class="java.lang.Double"/>
 	<columnHeader>
 		<band height="22" splitType="Stretch">
-			<staticText>
-				<reportElement x="73" y="2" width="100" height="20" uuid="dc20b8f8-6b15-4446-b13e-06f1c480ce01"/>
-				<box>
-					<pen lineWidth="0.25"/>
-					<topPen lineWidth="0.25"/>
-					<leftPen lineWidth="0.25"/>
-					<bottomPen lineWidth="0.25"/>
-					<rightPen lineWidth="0.25"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Nro. Factura]]></text>
-			</staticText>
 			<staticText>
 				<reportElement x="173" y="2" width="100" height="20" uuid="a0cb27ce-f556-42e2-bd6e-276f3c82471f"/>
 				<box>
@@ -80,18 +67,6 @@
 	</columnHeader>
 	<detail>
 		<band height="40" splitType="Stretch">
-			<textField>
-				<reportElement x="73" y="0" width="100" height="20" uuid="913dde38-64f0-4d91-b708-880906af01ad"/>
-				<box leftPadding="5">
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{id_comprobante_cabecera}]]></textFieldExpression>
-			</textField>
 			<textField pattern="MM/dd/yyyy">
 				<reportElement x="173" y="0" width="100" height="20" uuid="0bb1b7dd-04dd-4720-aa2b-fdafe2943787"/>
 				<box leftPadding="5">

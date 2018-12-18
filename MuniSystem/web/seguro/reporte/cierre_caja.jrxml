@@ -14,7 +14,12 @@
 	<parameter name="FECHA_HASTA" class="java.util.Date"/>
 	<queryString>
 		<![CDATA[select
-t.nombre, sum(d.monto)
+t.nombre ||
+ CASE WHEN d.es_multa=true THEN ' Multa'
+      WHEN d.es_multa=false THEN ''
+      ELSE ''
+ END as concepto,
+sum(d.monto)
 from
 comprobante_detalle d,
 comprobante_cabecera c,
@@ -29,9 +34,9 @@ and
 c.fecha_alta <= $P{FECHA_HASTA}
 and
 d.id_tributo= t.id_tributo
-group by t.nombre]]>
+group by t.nombre, d.es_multa]]>
 	</queryString>
-	<field name="nombre" class="java.lang.String"/>
+	<field name="concepto" class="java.lang.String"/>
 	<field name="sum" class="java.lang.Double"/>
 	<variable name="TOTAL" class="java.lang.Double">
 		<variableExpression><![CDATA[$P{TOTAL_EFECTIVO} + $P{TOTAL_CHEQUE} + $P{TOTAL_TARJETA_DEBITO} + $P{TOTAL_TARJETA_CREDITO}]]></variableExpression>
@@ -155,17 +160,6 @@ group by t.nombre]]>
 	</columnHeader>
 	<detail>
 		<band height="21" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="407" height="20" uuid="f7efe326-9c94-40c3-964e-64c5d2966a45"/>
-				<box leftPadding="5">
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
-			</textField>
 			<textField pattern="#,##0">
 				<reportElement x="407" y="0" width="145" height="20" uuid="e73b9b1d-7a4b-415b-ac53-44bbdce7a76a"/>
 				<box rightPadding="5">
@@ -176,6 +170,18 @@ group by t.nombre]]>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{sum}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="1" width="407" height="20" uuid="76c6b763-59e2-42e3-888c-8051ac4f0c6c"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{concepto}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

@@ -69,7 +69,7 @@ public class EstadoCuentaBean extends MensajeBean implements Serializable {
             HashMap<String, Object> parametros = new HashMap<String, Object>();
             parametros.put("FACHA_ACTUAL",new Date());
             parametros.put("RMC",contribuyente.getIdContribuyente());
-            parametros.put("SUBREPORT_DIR", "C:\\Users\\desarrollo2\\Documents\\GitHub\\tesis\\muni_system\\MuniSystem\\web\\seguro\\reporte\\");
+            parametros.put("SUBREPORT_DIR", "C:\\Users\\USUARIO\\Documents\\GitHub\\muni_system\\MuniSystem\\web\\seguro\\reporte\\");
             JasperReportUtils.runReportB("estado_cuenta","/seguro/reporte/estado_cuenta.jasper",parametros);
             return null;
         } catch (Exception ex) {
